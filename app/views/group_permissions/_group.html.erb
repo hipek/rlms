@@ -1,0 +1,11 @@
+<td>
+<%= check_box_tag "#{group.name}_#{permission}", 1, group_permissions.include?({group.id => permission}), 
+      :onchange => remote_function(
+        :url => group_permission_path,
+        :with => "'group_id=#{group.id}&permission=#{permission}&value='+this.checked",
+        :loading  => "Element.show('indicator_#{group.name}_#{permission}')",
+        :complete => "Element.hide('indicator_#{group.name}_#{permission}')",
+        :method => :put
+      ) -%>
+<%= indicator_tag "_#{group.name}_#{permission}" %>
+</td>

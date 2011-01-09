@@ -1,0 +1,17 @@
+<td>
+  <%= check_box_tag(
+        "user_#{user.id}_group_#{group.id}",
+        1,
+        user.in_group?(group.name),
+        :onchange => remote_function(
+          :url => {
+            :action  => "update", 
+            :user_id => user.id,
+            :group_id => group.id
+            },
+          :loading  => "Element.show('indicator_#{user.id}_#{group.id}')",
+          :complete => "Element.hide('indicator_#{user.id}_#{group.id}')",
+          :with     => "'value='+this.checked",
+          :method   => :put)) %>
+  <%= indicator_tag "_#{user.id}_#{group.id}" %>
+</td>

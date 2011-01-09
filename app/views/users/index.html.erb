@@ -1,0 +1,29 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/admin' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Login</th>
+    <th>Email</th>
+    <th>Action</th>
+  </tr>
+
+<% for user in @users %>
+  <tr>
+    <td><%=h user.id %></td>
+    <td><%=h user.login %></td>
+    <td><%=h user.email %></td>
+    <td>
+    <%= link_to 'Show', user_path(user) %>
+    <%= link_to 'Edit', edit_user_path(user) %>
+    <%= link_to 'Delete', user_path(user), :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'New User', new_user_path -%>
+<% end %>

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Rails Lan Management System</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <!-- add your meta tags here -->
+
+  <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  <!--[if lte IE 7]>
+      <link href="/stylesheets/patch.css" rel="stylesheet" type="text/css" />
+  <![endif]-->
+  <%= javascript_include_tag :defaults %>
+</head>
+<body>
+  <div id="page_margins">
+    <div id="border-top">
+      <div id="edge-tl"></div>
+      <div id="edge-tr"></div>
+    </div>
+    <div id="page">
+      <div id="header">
+        <h1>Rails Lan Management System</h1>
+        <div id="topnav">
+          <%= logged_in? ? link_to('Logout', logout_path) : link_to('Login', login_path) -%> |
+          <a href="#">Contact</a> | <a href="#">Imprint</a>
+        </div>
+      </div>
+      <div id="nav">
+        <!-- skiplink anchor: navigation -->
+        <a id="navigation" name="navigation"></a>
+        <div id="nav_main">
+          <!-- main navigation: #nav_main -->
+	  <% if logged_in? %>
+          <ul>
+             <%= content_tag :li, link_to('Admin', users_path), selected_option("user", "group") if current_user.has_permission?('admin') -%>
+             <%= content_tag :li, link_to('Computers', computers_path), selected_option("computer") if current_user.has_permission?('computers') -%>
+             <%= content_tag :li, link_to('Firewall', fw_rules_path), selected_option("fw", "firewall") if current_user.has_permission?('firewalls') -%>
+             <%= content_tag :li, link_to('Service', services_path), selected_option("serv") if current_user.has_permission?('services') -%>
+             <%= content_tag :li, link_to('Local Network', local_networks_path), selected_option("network") if current_user.has_permission?('networks') -%>
+             <%= content_tag :li, link_to('Web Jobs', dwnl_web_jobs_path), selected_option("web_jobs") if current_user.has_permission?('admin') -%>
+             <%= content_tag :li, link_to('Torents', torrents_path), selected_option("torrents") if current_user.has_permission?('admin') -%>
+          </ul>
+	  <% end %>
+        </div>
+      </div>
+      <div id="flash" class="bold center">
+        <p class="green"><%= flash[:notice] -%></p>
+        <p class="red"><%= flash[:error] -%></p>
+        <div class="blue"><%= simple_format(flash[:warn]) -%></div>
+      </div>
+      <div id="main">
+        <div id="col1">
+          <div id="col1_content" class="clearfix">
+            <%= yield(:col1) -%>
+          </div>
+        </div>
+        <div id="col3">
+          <div id="col3_content" class="clearfix">
+            <%= yield(:col2) -%>
+          </div>
+          <!-- IE Column Clearing -->
+          <div id="ie_clearing"> &#160; </div>
+        </div>
+      </div>
+      <!-- begin: #footer -->
+      <div id="footer">Layout based on <a href="http://www.yaml.de/">YAML</a>
+      </div>
+    </div>
+    <div id="border-bottom">
+      <div id="edge-bl"></div>
+      <div id="edge-br"></div>
+    </div>
+  </div>
+</body>
+</html>

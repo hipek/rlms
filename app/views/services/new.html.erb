@@ -1,0 +1,16 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/service' -%>
+<% end %>
+
+<% content_for :col2 do %>
+
+<% form_for(@service) do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial => 'form', :locals => {:f => f} -%>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', services_path %>
+<% end %>

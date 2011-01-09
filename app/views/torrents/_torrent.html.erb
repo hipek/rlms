@@ -1,0 +1,17 @@
+<tr>
+  <td><%= check_box_tag "hashes[]", torrent.id, hashes.include?(torrent.id), :id => "hash_#{torrent.id}" %></td>
+  <td><%= label_tag("hash_#{torrent.id}", h(torrent.name)) %></td>
+  <td><%=h torrent.bytes.to_mb -%></td>
+  <td><%=h torrent.bytes_completed.to_mb %></td>
+  <td><%=h torrent.percent_complete %></td>
+  <td><%=h torrent.status %></td>
+  <td><%=h torrent.down_rate.to_mb %></td>
+  <td><%=h torrent.up_rate.to_mb %></td>
+  <td><%=h torrent.display_priority %></td>
+  <td><%=h torrent.time_left %></td>
+  <td>
+    <%= link_to 'Info', torrent_path(torrent) %>
+    <%= link_to 'Files', torrent_files_path(torrent) %>
+    <%= link_to 'Peers', torrent_peers_path(torrent) %>
+  </td>
+</tr>

@@ -1,0 +1,2 @@
+module Dwnl::WebJobsHelper
+end

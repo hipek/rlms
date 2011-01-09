@@ -1,0 +1,27 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/torrent' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1>New torrent</h1>
+
+<% form_for(:torrent, :url => torrents_path, :html => {:multipart => true}) do |f| %>
+
+  <p>
+    <%= content_tag :label, 'Torrent file name' %><br />
+    <%= file_field_tag "torrents[]" %>
+  </p>
+
+
+  <p>
+    <%= content_tag :label, 'Torrent Url' %><br />
+    <%= text_field_tag "torrent_url", '', :size => 50 %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', torrents_path %>
+<% end %>

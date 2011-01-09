@@ -1,0 +1,73 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/firewall' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<p>
+  <b>Order:</b>
+  <%=h @fw_rule.order %>
+</p>
+
+<p>
+  <b>Ip table:</b>
+  <%=h @fw_rule.ip_table %>
+</p>
+
+<p>
+  <b>Cmd:</b>
+  <%=h @fw_rule.cmd %>
+</p>
+
+<p>
+  <b>Chain name:</b>
+  <%=h @fw_rule.chain_name %>
+</p>
+
+<p>
+  <b>In int:</b>
+  <%=h @fw_rule.in_int %>
+</p>
+
+<p>
+  <b>Out int:</b>
+  <%=h @fw_rule.out_int %>
+</p>
+
+<p>
+  <b>Protocol:</b>
+  <%=h @fw_rule.protocol %>
+</p>
+
+<p>
+  <b>Src ip:</b>
+  <%=h @fw_rule.src_ip %>
+</p>
+
+<p>
+  <b>Src port:</b>
+  <%=h @fw_rule.src_port %>
+</p>
+
+<p>
+  <b>Dest ip:</b>
+  <%=h @fw_rule.dest_ip %>
+</p>
+
+<p>
+  <b>Dest port:</b>
+  <%=h @fw_rule.dest_port %>
+</p>
+
+<p>
+  <b>Mod:</b>
+  <%=h @fw_rule.mod %>
+</p>
+
+<p>
+  <b>Target:</b>
+  <%=h @fw_rule.target %>
+</p>
+
+<%= link_to 'Edit', edit_fw_rule_path(@fw_rule) %> |
+<%= link_to 'Back', fw_rules_path %>
+<% end %>

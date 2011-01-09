@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: jacek
+  mac_address: "00:02:ab:cd:0f:0a"
+  ip_address: 10.5.5.10
+
+two:
+  name: placek
+  mac_address: "00:10:12:13:14:15"
+  ip_address: 10.5.5.11

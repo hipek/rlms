@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../config/boot'
+require RAILS_ROOT + '/config/environment'
+
+# create admin in db unless exists
+
+admin = User.find_by_login('admin')
+
+unless admin
+  admin = User.new(:login => 'admin', :password => 'test', :password_confirmation => 'test', :email => 'admin@test.pl')
+  admin.save!
+end
+
+# add admin to group administrator
+admin.groups << Group.administrator unless admin.groups.include?(Group.administrator)
+
+# add all permissions for administrator group
+Permission::PERMISSIONS.each do |perm|
+  Permission.find_or_create_by_group_id_and_action Group.administrator.id, perm
+end
+
+puts "Successfully added admin with all admin permissions..."

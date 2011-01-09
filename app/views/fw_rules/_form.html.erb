@@ -1,0 +1,56 @@
+<p>
+  <%= f.label :firewall %><br />
+  <%= f.select :firewall_id, Firewall.all_as_pairs %>
+</p>
+<p>
+  <%= f.label :order %><br />
+  <%= f.select :order, (1..FwRule.count+1).to_a %>
+</p>
+<p>
+  <%= f.label :ip_table %><br />
+  <%= f.select :ip_table, FwRule::IP_TABLES %>
+</p>
+<p>
+  <%= f.label :cmd %><br />
+  <%= f.select :cmd, FwRule::CMDS %>
+</p>
+<p>
+  <%= f.label :chain_name %><br />
+  <%= f.select :chain_name, FwRule::CHAIN_NAMES %>
+</p>
+<p>
+  <%= f.label :in_int %><br />
+  <%= f.text_field :in_int %>
+</p>
+<p>
+  <%= f.label :out_int %><br />
+  <%= f.text_field :out_int %>
+</p>
+<p>
+  <%= f.label :protocol %><br />
+  <%= f.select :protocol, FwRule::PROTOCOLS %>
+</p>
+<p>
+  <%= f.label :src_ip %><br />
+  <%= f.text_field :src_ip %>
+</p>
+<p>
+  <%= f.label :src_port %><br />
+  <%= f.text_field :src_port %>
+</p>
+<p>
+  <%= f.label :dest_ip %><br />
+  <%= f.text_field :dest_ip %>
+</p>
+<p>
+  <%= f.label :dest_port %><br />
+  <%= f.text_field :dest_port %>
+</p>
+<p>
+  <%= f.label :mod %><br />
+  <%= f.text_field :mod %>
+</p>
+<p>
+  <%= f.label :target %><br />
+  <%= f.select :target, FwRule::TARGETS %>
+</p>

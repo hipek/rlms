@@ -1,0 +1,35 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  order: 1
+  ip_table: MyString
+  cmd: MyString
+  chain_name: MyString
+  in_int: MyString
+  out_int: MyString
+  protocol: MyString
+  src_ip: MyString
+  src_port: MyString
+  dest_ip: MyString
+  dest_port: MyString
+  mod: MyString
+  log: MyString
+  log_msg: MyString
+  description: MyText
+
+two:
+  order: 1
+  ip_table: MyString
+  cmd: MyString
+  chain_name: MyString
+  in_int: MyString
+  out_int: MyString
+  protocol: MyString
+  src_ip: MyString
+  src_port: MyString
+  dest_ip: MyString
+  dest_port: MyString
+  mod: MyString
+  log: MyString
+  log_msg: MyString
+  description: MyText

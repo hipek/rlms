@@ -1,0 +1,11 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/computer' -%>
+<% end %>
+
+<% content_for :col2 do %>
+
+<pre>
+<%= @conf_template.render -%>
+</pre>
+
+<% end %>

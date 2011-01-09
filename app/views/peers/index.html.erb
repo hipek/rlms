@@ -1,0 +1,38 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/torrent' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1>Listing torrent peers</h1>
+
+<table class="centerAll">
+  <tr>
+    <th>IP address</th>
+    <th>Uploaded</th>
+    <th>Downloaded</th>
+    <th>Peer</th>
+    <th>Up rate</th>
+    <th>Down rate</th>
+    <th>Done</th>
+    <th>Client name</th>
+  </tr>
+
+<% @peers.each do |peer| %>
+  <tr>
+    <td><%=h peer.address -%></td>
+    <td><%=h peer.up_total.to_mb -%></td>
+    <td><%=h peer.down_total.to_mb -%></td>
+    <td><%=h peer.peer_total.to_mb -%></td>
+    <td><%=h peer.up_rate.to_mb -%></td>
+    <td><%=h peer.down_rate.to_mb -%></td>
+    <td><%=h peer.completed_percent  -%></td>
+    <td><%=h peer.client_version  -%></td>
+    <td></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Back', torrents_path %>
+<% end %>

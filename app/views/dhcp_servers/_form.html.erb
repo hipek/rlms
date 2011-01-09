@@ -1,0 +1,43 @@
+<p>
+  <%= f.label :domain_name %>: <strong><%= @dhcp_server.domain_name %></strong>
+</p>
+<p>
+  <%= f.label :domain_name_server1 %><br />
+  <%= f.text_field :domain_name_server1 %>
+</p>
+<p>
+  <%= f.label :domain_name_server2 %><br />
+  <%= f.text_field :domain_name_server2 %>
+</p>
+<p>
+  <%= f.label :subnet_mask %><br />
+  <%= f.text_field :subnet_mask %>
+</p>
+<p>
+  <%= f.label :default_lease_time %><br />
+  <%= f.text_field :default_lease_time %>
+</p>
+<p>
+  <%= f.label :max_lease_time %><br />
+  <%= f.text_field :max_lease_time %>
+</p>
+<p>
+  <%= f.label :subnet %><br />
+  <%= f.text_field :subnet %>
+</p>
+<p>
+  <%= f.label :broadcast_address %><br />
+  <%= f.text_field :broadcast_address %>
+</p>
+<p>
+  <%= f.label :router %><br />
+  <%= f.text_field :router %>
+</p>
+<p>
+  <%= f.label :range_from %><br />
+  <%= f.text_field :range_from %>
+</p>
+<p>
+  <%= f.label :range_to %><br />
+  <%= f.text_field :range_to %>
+</p>

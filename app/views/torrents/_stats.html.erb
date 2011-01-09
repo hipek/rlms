@@ -1,0 +1,5 @@
+Bandwidth: 
+[<%= RTorrent::Client.download_rate.to_kb -%>] <%= RTorrent::Client.down_rate.to_kb -%> 
+[<%= RTorrent::Client.upload_rate.to_kb -%>] <%= RTorrent::Client.up_rate.to_kb -%>
+
+<%= link_to_function 'Change', "$('bandwidth_form').toggle();" -%>

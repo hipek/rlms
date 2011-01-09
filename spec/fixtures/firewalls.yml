@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  visibility: 1
+  start_date: 2008-06-01 22:34:39
+  end_date: 2008-06-01 22:34:39
+
+two:
+  name: MyString
+  visibility: 1
+  start_date: 2008-06-01 22:34:39
+  end_date: 2008-06-01 22:34:39

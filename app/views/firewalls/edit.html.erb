@@ -1,0 +1,18 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/firewall' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1>Editing firewall</h1>
+
+<% form_for(@firewall) do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial => 'form', :locals => {:f => f} -%>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @firewall %> |
+<%= link_to 'Back', firewalls_path %>
+<% end %>

@@ -1,0 +1,22 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/admin' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1><%= "Group permissions" -%></h1>
+
+<table>
+  <tr>
+    <th><%= "Permission" -%></th>
+    <% @groups.each do |group| %>
+      <th><%= group.name -%></th>
+    <% end %>
+  </tr>
+  <% @permissions.each do |permission| %>
+    <tr>
+      <td><%= permission  %></td>
+      <%= render :partial => 'group', :collection => @groups, :locals => {:permission => permission, :group_permissions => @group_permissions} -%>
+    </tr>
+  <% end %>
+</table>
+<% end %>

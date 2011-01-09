@@ -1,0 +1,33 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/firewall' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1>Listing firewalls</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Action</th>
+  </tr>
+
+<% for firewall in @firewalls %>
+  <tr>
+    <td><%=h firewall.name %></td>
+    <td><%=h firewall.start_date %></td>
+    <td><%=h firewall.end_date %></td>
+    <td>
+      <%= link_to 'Show', firewall %>
+      <%= link_to 'Edit', edit_firewall_path(firewall) %>
+      <%= link_to 'Destroy', firewall, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New firewall', new_firewall_path %>
+<% end %>

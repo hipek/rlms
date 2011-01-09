@@ -1,0 +1,24 @@
+<p>
+  <%= f.label :name %><br />
+  <%= f.text_field :name %>
+</p>
+<p>
+ Ext INF: <%= @firewall.ext_inf -%><br />
+ Ext IP: <%= @firewall.auto_ext_ip -%><br />
+ Int INF: <%= @firewall.int_inf -%><br />
+ Int IP: <%= @firewall.auto_int_ip -%><br />
+</p>
+<p>
+  <%= f.label :visibility %><br />
+  <%= f.text_field :visibility %>
+</p>
+<p>
+  <%= f.label :start_date %><br />
+  <%= f.datetime_select :start_date %>
+</p>
+<p>
+  <%= f.label :end_date %><br />
+  <%= f.datetime_select :end_date %>
+</p>
+
+<%= hidden_field_tag "firewall[lan_id]", current_lan.id, :id => "firewall_lan_id" -%>

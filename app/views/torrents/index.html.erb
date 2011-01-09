@@ -1,0 +1,59 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/torrent' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1>Listing torrents</h1>
+
+<% form_tag torrent_path(0), :method => :put, :id => "rform" do %>
+
+<%#= render :partial => 'actions' -%>
+
+<table class="centerAll">
+  <thead>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Downloaded</th>
+    <th>Done</th>
+    <th>Status</th>
+    <th>Down speed</th>
+    <th>Up speed</th>
+    <th>Priority</th>
+    <th>Time left</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+
+  <tbody id="downloading">
+    <%= render :partial => 'torrent', :collection => @torrents, :locals => {:hashes => []} -%>
+  </tbody>
+</table>
+
+<%= render :partial => 'actions' -%>
+
+<% end %>
+
+<div id="stats">
+  <%= render :partial => 'stats' %>
+</div>
+
+<div id="bandwidth_form" style="display: none;">
+  <% form_remote_tag :url => set_rate_torrents_path, :success => "$('bandwidth_form').hide();" do %>
+    Down: <%= text_field_tag "bandwidth[down]", RTorrent::Client.download_rate.to_kb, :size => 3 -%>
+    Up: <%= text_field_tag "bandwidth[up]", RTorrent::Client.upload_rate.to_kb, :size => 3 -%>
+    <%= submit_tag "Update" -%>
+  <% end %>
+</div>
+
+<br /><br />
+
+<%= link_to 'New torrent', new_torrent_path %>
+<%= periodically_call_remote :url => torrents_path, :frequency => '8', :method => :get, :with => "Form.serialize($('rform'))" -%>
+
+<% end unless @r_error %>
+
+<% content_for :col2 do %>
+  <%= @r_error %>
+<% end if @r_error %>

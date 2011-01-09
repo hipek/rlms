@@ -1,0 +1,29 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/firewall' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<p>
+  <b>Name:</b>
+  <%=h @firewall.name %>
+</p>
+
+<p>
+  <b>Visibility:</b>
+  <%=h @firewall.visibility %>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <%=h @firewall.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%=h @firewall.end_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_firewall_path(@firewall) %> |
+<%= link_to 'Back', firewalls_path %>
+<% end %>

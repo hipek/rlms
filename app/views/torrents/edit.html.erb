@@ -1,0 +1,32 @@
+<% content_for :col2 do %>
+<h1>Editing torrent</h1>
+
+<% form_for(:torrent, :url => torrent_path(@torrent), :html => {:method => :put}) do |f| %>
+  <p>
+    <%= f.label :id %><br />
+    <%= f.text_field :id %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :bytes %><br />
+    <%= f.text_field :bytes %>
+  </p>
+  <p>
+    <%= f.label :bytes_completed %><br />
+    <%= f.text_field :bytes_completed %>
+  </p>
+  <p>
+    <%= f.label :bytes_left %><br />
+    <%= f.text_field :bytes_left %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', torrent_path(@torrent) %> |
+<%= link_to 'Back', torrents_path %>
+<% end %>

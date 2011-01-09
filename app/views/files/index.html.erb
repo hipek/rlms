@@ -1,0 +1,37 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/torrent' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1>Listing torrent files</h1>
+
+<% form_tag torrent_file_path(params[:torrent_id], 0), :method => :put do %>
+
+<table class="centerAll">
+  <tr>
+    <th>Name</th>
+    <th>Size</th>
+    <th>Downloaded</th>
+    <th>Done</th>
+    <th>Priority</th>
+  </tr>
+
+<% @files.each_with_index do |f, i| %>
+  <tr>
+    <td><%= label_tag("file_#{i}", h(f.path)) %></td>
+    <td><%=h f.bytes.to_mb -%></td>
+    <td><%=h f.bytes_completed.to_mb %></td>
+    <td><%=h f.percent_complete %></td>
+    <td><%= select_tag "priorities[#{i}]", options_for_select(RTorrent::File::PRIORITIES, f.priority) %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= submit_tag "Update" %>
+
+<% end %>
+
+<br />
+
+<%= link_to 'Back', torrents_path %>
+<% end %>

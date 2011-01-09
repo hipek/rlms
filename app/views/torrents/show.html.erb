@@ -1,0 +1,35 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/torrent' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<table class="noborder">
+  <tbody>
+    <%= tr_td_row 'Name:', @torrent.name %>
+    <%= tr_td_row 'Local id:', @torrent.local_id %>
+    <%= tr_td_row 'Info hash:', @torrent.id %>
+    <%= tr_td_row 'Created:', @torrent.created_at -%>
+    <%= tr_td_row 'Tracker info', @torrent.message %>
+
+    <%= tr_td_row_spacer -%>
+
+    <%= tr_td_row 'Directory:', @torrent.directory %>
+    <%= tr_td_row 'Base Path:', @torrent.path %>
+    <%= tr_td_row 'Priority:', @torrent.display_priority %>
+
+    <%= tr_td_row_spacer -%>
+
+    <%= tr_td_row 'Connection type:', @torrent.conn_type %>
+    <%= tr_td_row 'Bytes:', @torrent.bytes.to_mb %>
+    <%= tr_td_row 'Bytes done:', @torrent.bytes_completed.to_mb %>
+
+    <%= tr_td_row_spacer -%>
+
+    <%= tr_td_row 'Download:', @torrent.down_rate.to_kb %>
+    <%= tr_td_row 'Upload:', @torrent.up_rate.to_kb %>
+  </tbody>
+</table>
+
+<%= link_to 'Files', torrent_files_path(@torrent) %> |
+<%= link_to 'Back', torrents_path %>
+<% end %>

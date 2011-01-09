@@ -1,0 +1,30 @@
+<% content_for :col2 do %>
+<p>
+  <b>Name:</b>
+  <%=h @web_job.name %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%=h @web_job.state %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= text_area_tag :source, @web_job.body, :cols => 100, :rows => 10 %>
+</p>
+
+<p>
+  <b>Started at:</b>
+  <%=h @web_job.started_at %>
+</p>
+
+<p>
+  <b>Ended at:</b>
+  <%=h @web_job.ended_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_dwnl_web_job_path(@web_job) %> |
+<%= link_to 'Back', dwnl_web_jobs_path %>
+<% end %>

@@ -1,0 +1,82 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/firewall' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<h1>Listing <%= @filter.camelize -%> Rules</h1>
+
+<div class="form">
+  <% form_tag fw_rules_path, :method => :get do %>
+    <%#= select_tag 'firewall_id', options_for_select([['select','']] + Firewall.all_as_pairs, @firewall_id), :onchange => "submit();" -%>
+    IP table
+    <%= select_tag 'filter', options_for_select(FwRule.ip_tables, @filter), :onchange => "submit();" -%>
+    IP chain
+    <%= select_tag 'filter_chain', options_for_select([['select','']] + FwRule.chain_names(@filter), @filter_chain), :onchange => "submit();" -%>
+    <%= link_to_function 'Raw Iptables', :onclick => "$('iptables_raw').toggle();" %>
+  <% end %>
+</div>
+
+<pre id="iptables_raw" style="display: none;">
+  <%= ShellCommand.ip_tables_list(@filter) -%>
+</pre>
+
+<table>
+  <tr>
+    <th>Order</th>
+    <th>Target</th>
+    <th>Src/Dest<br />ip</th>
+    <th>In/Out int</th>
+    <th>Protocol</th>
+    <th>Mod<br />Protocol</th>
+    <th>Src/Dest<br />port</th>
+    <th>Mod</th>
+    <th>Action</th>
+  </tr>
+
+
+<% @fw_rules.each do |chain_name,rules| %>
+  <tr>
+    <td colspan="9"><h3><%= chain_name -%></h3></td>
+  </tr>
+  <% for fw_rule in rules do %>
+    <% klass = cycle('',"gray") -%>
+    <tr class="<%= klass -%>">
+      <td><%=h fw_rule.order %></td>
+      <td><%=h fw_rule.target %></td>
+      <td>
+	si: <%=h fw_rule.src_ip %><br />
+	di: <%=h fw_rule.dest_ip %>
+      </td>
+      <td>
+	i: <%=h fw_rule.in_int %><br />
+	o: <%=h fw_rule.out_int %>
+      </td>
+      <td><%=h fw_rule.protocol %></td>
+      <td><%=h fw_rule.mod_protocol %></td>
+      <td>
+	sp: <%=h fw_rule.src_port %><br />
+	dp: <%=h fw_rule.dest_port %>
+      </td>
+      <td><%=h fw_rule.mod %></td>
+      <td>
+	<%#= link_to 'Show', fw_rule %>
+	<%= link_to 'Edit', edit_fw_rule_path(0) %>
+	<%#= link_to 'Destroy', fw_rule_path(fw_rule), :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+    <tr class="<%= klass -%>">
+      <td>&nbsp;</td>
+      <td colspan="8">
+	<%=h fw_rule.aft_option %> <%=h fw_rule.aft_argument %> 
+	<%=h fw_rule.mod_option %> <%=h fw_rule.tcp_flags %> 
+	<%=h fw_rule.tcp_flags_option %> 
+      </td>
+    </tr>
+  <% end %>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New fw rule', new_fw_rule_path %>
+<% end %>

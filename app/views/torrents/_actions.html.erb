@@ -1,0 +1,7 @@
+<p>
+  <%= submit_tag "Start" %>
+  <%= submit_tag "Stop" %>
+  <%= submit_tag "Delete" %>
+  <%= select_tag "priority", options_for_select(RTorrent::Item::PRIORITIES) %>
+  <%= submit_tag "Update" %>
+</p>

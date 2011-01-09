@@ -1,0 +1,15 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/service' -%>
+<% end %>
+
+<% content_for :col2 do %>
+
+<% form_for(:dhcp_server, :url => dhcp_server_path(0), :html => {:method => :put}) do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial => 'form', :locals => {:f => f} -%>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<% end %>

@@ -1,0 +1,18 @@
+ddns-update-style ad-hoc;
+option domain-name <%= @data[:dhcp].domain_name %>;
+option domain-name-servers <%= @data[:dhcp].domain_name_servers.join(',') %>;
+option subnet-mask <%= @data[:dhcp].subnet_mask %>;
+default-lease-time <%= @data[:dhcp].default_lease_time %>;
+max-lease-time <%= @data[:dhcp].max_lease_time %>;
+
+subnet <%= @data[:dhcp].subnet %> netmask <%= @data[:dhcp].subnet_mask %> {
+    range <%= "#{@data[:dhcp].range_from} #{@data[:dhcp].range_to}" %>;
+    option broadcast-address <%= @data[:dhcp].broadcast_address %>;
+    option routers <%= @data[:dhcp].router %>;
+}
+<% @data[:computers].each do |comp| %>
+host <%= comp.valid_name %> {
+    hardware ethernet <%= comp.mac_address %>;
+    fixed-address <%= comp.ip_address %>;
+}
+<% end %>
