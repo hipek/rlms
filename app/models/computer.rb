@@ -5,7 +5,7 @@ class Computer < ActiveRecord::Base
 
   before_validation :upcase_mac
 
-  SORT_BY_IP = "SUBSTRING_INDEX( `ip_address` , '.', -1 ) + 0"
+  SORT_BY_IP = "substr( `ip_address` , '.', -1 ) + 0"
   
   def upcase_mac
     self.mac_address = self.mac_address.to_s.upcase
