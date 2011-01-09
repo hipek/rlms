@@ -6,7 +6,7 @@ class FwRuleParser
   end
 
   def parse
-    ip_table_rule =~/(-A\s\S+\s)?(-s\s\d+\.\d+\.\d+\.\d+\/?\d*\.*\d*\.*\d*\.*\d*\s)?(-d\s\d+\.\d+\.\d+\.\d+\/?\d*\.*\d*\.*\d*\.*\d*\s)?(-i\s\w+\d?\s)?(-o\s\w+\d?\s)?(-p\s!?\s?\w+\s)?(-m\s\w+\s)?(--\w+\s\S+\s)?(-m\s\w+\s)?(--sport\s\d+:?\d+\s)?(--dport\s\d+:?\d+\s)?(--tcp-flags\s\S+\sSYN\s)?(-m\sconnlimit\s--connlimit-above\s\d+\s--connlimit-mask\s\d+\s)?(-j\s\S+)(\s\S+)?(\s\S+)?/
+    ip_table_rule =~/(-A\s\S+\s)?(-s\s\d+\.\d+\.\d+\.\d+\/?\d*\.*\d*\.*\d*\.*\d*\s)?(-d\s\d+\.\d+\.\d+\.\d+\/?\d*\.*\d*\.*\d*\.*\d*\s)?(-i\s\w+\d?\s)?(-o\s\w+\d?\s)?([!,\s]{0,2}-p\s!?\s?\w+\s)?(-m\s\w+\s)?(--\w+\s\S+\s)?(-m\s\w+\s)?(--sport\s\d+:?\d+\s)?(--dport\s\d+:?\d+\s)?(--tcp-flags\s\S+\sSYN\s)?(-m\sconnlimit\s--connlimit-above\s\d+\s--connlimit-mask\s\d+\s)?(-j\s\S+)(\s\S+)?(\s\S+)?/
 
     fw_rule = FwRule.new :cmd => extract_option($1),
       :chain_name => extract_value($1),
