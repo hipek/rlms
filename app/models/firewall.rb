@@ -25,6 +25,6 @@ class Firewall < ActiveRecord::Base
   end
   
   def dest_path
-    RAILS_ROOT + "/tmp/iptables.conf"
+    Rails.root.join("tmp", "iptables.conf")
   end
 end

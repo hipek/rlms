@@ -26,7 +26,7 @@ describe ConfTemplate do
   end
   
   it "should return path to rendered file" do
-    @conf_template.dest_path.should == RAILS_ROOT + "/tmp/dhcpd.conf"
+    @conf_template.dest_path.should == Rails.root.join("tmp", "dhcpd.conf")
   end
   
   it "should save rendered file in tmp dir" do

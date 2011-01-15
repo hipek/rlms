@@ -35,7 +35,7 @@ describe FwRulesController do
   
     it "should assign the found fw_rules for the view" do
       do_get
-      assigns[:fw_rules].should == {:input => [@fw_rule]}
+      assigns[:fw_rules].should == {'input' => [@fw_rule]}
     end
   end
 

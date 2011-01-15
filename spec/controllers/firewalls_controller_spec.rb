@@ -11,7 +11,7 @@ describe FirewallsController do
 
     before(:each) do
       @firewall = mock_model(Firewall)
-      Firewall.stub!(:find).and_return([@firewall])
+      controller.stub_chain(:current_lan, :firewalls, :find).with(:all).and_return([@firewall])
     end
   
     def do_get
