@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe DhcpServersController do
   fixtures :users
+  render_views
 
   before(:each) do
     login_as(:quentin)
@@ -57,7 +58,7 @@ describe DhcpServersController do
   describe "handling PUT /dhcp_servers/1" do
 
     before(:each) do
-      @dhcp_server = mock_model(DhcpServer, :to_param => "1")
+      @dhcp_server = build_dhcp_server
       DhcpServer.stub!(:find).and_return(@dhcp_server)
     end
     

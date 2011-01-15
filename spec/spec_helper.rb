@@ -73,14 +73,16 @@ def build_local_network params={}
 end
 
 def build_dhcp_server(options={})
-  DhcpServer.new({
-                   :router => '10.5.5.1',
-                   :subnet => '10.0.0.0',
-                   :broadcast_address => '10.255.255.255',
-                   :range_from => '10.5.5.10',
-                   :range_to => '10.5.5.20',
-                   :subnet_mask => '255.0.0.0',
-                   :domain_name_server1 => '194.204.159.1',
-                   :domain_name_server2 => '194.204.152.34',
-                 }.merge(options))
+  d = DhcpServer.new({
+       :router => '10.5.5.1',
+       :subnet => '10.0.0.0',
+       :broadcast_address => '10.255.255.255',
+       :range_from => '10.5.5.10',
+       :range_to => '10.5.5.20',
+       :subnet_mask => '255.0.0.0',
+       :domain_name_server1 => '194.204.159.1',
+       :domain_name_server2 => '194.204.152.34',
+     }.merge(options))
+  d.stub!(:id).and_return(options[:id])
+  d
 end
