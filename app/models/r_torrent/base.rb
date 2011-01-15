@@ -1,6 +1,7 @@
 class RTorrent::Base
-  SOCKET_PATH = YAML.load_file(RAILS_ROOT + '/config/rtorrent.yml')['socket']
-  WATCH_PATH = YAML.load_file(RAILS_ROOT + '/config/rtorrent.yml')['watch']
+  CONFIG = Rails.root.join('config', 'rtorrent.yml')
+  SOCKET_PATH = YAML.load_file(CONFIG)['socket']
+  WATCH_PATH = YAML.load_file(CONFIG)['watch']
 
   def call *args
     self.class.call(*args)
