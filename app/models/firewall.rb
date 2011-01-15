@@ -3,7 +3,7 @@ class Firewall < ActiveRecord::Base
 
   has_many :fw_rules
 
-  named_scope :lan, lambda {|l| { :conditions => {:lan_id => l.id} }}
+  scope :lan, lambda {|l| { :conditions => {:lan_id => l.id} }}
 
   delegate :ext_inf, :to => :lan
   delegate :ext_ip, :to => :lan

@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
+  include AuthenticatedSystem
+
   helper :all
   helper_method :current_lan
 
   layout 'application'
-
-  include AuthenticatedSystem
 
   before_filter :login_required, :authorize
 

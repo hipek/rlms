@@ -1,11 +1,11 @@
 class FwRule < ActiveRecord::Base
   belongs_to :firewall
 
-  named_scope :ip_table, lambda {|filter|
+  scope :ip_table, lambda {|filter|
     filter = '%' if filter.nil? || (!filter.nil? && filter == '')
     {:conditions => ['lower(ip_table) like lower(?)', filter ]}
   }
-  named_scope :chain, lambda {|filter|
+  scope :chain, lambda {|filter|
     filter = '%' if filter.nil? || (!filter.nil? && filter == '')
     {:conditions => ['lower(chain_name) like lower(?)', filter ]}
   }

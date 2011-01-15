@@ -1,6 +1,4 @@
-# This controller handles the login/logout function of the site.
 class SessionsController < ApplicationController
-
   skip_filter :login_required, :local_network_required, :authorize
 
   def new

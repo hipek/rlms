@@ -22,7 +22,7 @@ class ConfTemplate
   end
 
   def dest_path
-    RAILS_ROOT + "/tmp/#{name}"
+    Rails.root.join("tmp", name)
   end
 
   def write_tmp_file
@@ -40,6 +40,6 @@ class ConfTemplate
   protected
 
   def template_path
-    RAILS_ROOT + "/lib/conf_templates/#{name}.erb" 
+    Rails.root.join("lib/conf_templates/#{name}.erb")
   end
 end

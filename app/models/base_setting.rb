@@ -14,13 +14,13 @@ class BaseSetting < ActiveRecord::Base
         has_one(:"#{field}_setting", 
                 :class_name => 'Setting', 
                 :foreign_key => 'base_setting_id' , 
-                :conditions => ["field = ?", field.to_s], :dependent => :destroy)
+                :conditions => ["field_name = ?", field.to_s], :dependent => :destroy)
         define_method field do
           result = self.send(:"#{field}_setting") || Setting.new
           result.value
         end
         define_method "#{field}=" do |arg|
-          self.send(:"#{field}_setting=", Setting.new(:value => arg, :field => field.to_s))
+          self.send(:"#{field}_setting=", Setting.new(:value => arg, :field_name => field.to_s))
         end
       end
     end

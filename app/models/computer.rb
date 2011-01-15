@@ -8,6 +8,7 @@ class Computer < ActiveRecord::Base
   SORT_BY_IP = "substr( `ip_address` , '.', -1 ) + 0"
   
   def upcase_mac
+    self.mac_address = self.mac_address.gsub(/-|;|,|\./, ':')
     self.mac_address = self.mac_address.to_s.upcase
   end
 
@@ -26,11 +27,7 @@ class Computer < ActiveRecord::Base
     elements[elements.length - 1] = (elements.last.to_i + 1).to_s
     elements.join('.')
   end
-  
-  def before_validation
-    self.mac_address = mac_address.gsub(/-|;|,|\./, ':')
-  end
-  
+
   def self.all_online
     lines = ShellCommand.arp.delete('(/)/[/]').gsub('?','unknown').strip.split(/\n/)
     computers = []

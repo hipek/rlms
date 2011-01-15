@@ -1,91 +1,61 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :torrents, :collection => {:set_rate => :post} do |torrent|
-    torrent.resources :files
-    torrent.resources :peers
+Rlms::Application.routes.draw do
+  resources :torrents do
+      resources :files
+    resources :peers
   end
 
-  map.namespace :dwnl do |dwnl|
-    dwnl.resources :web_jobs,
-      :member => { 
-        :start => :get
-      }
+  namespace :dwnl do
+    resources :web_jobs do
+      member do
+        get :start
+      end
+    end
   end
 
-  map.with_options :controller => 'user_groups' do |ur|
-    ur.user_groups       'user_groups',                   :action => "index"
-    ur.update_user_group 'user_group/:user_id/:group_id', :action => "update" 
+  match 'user_groups' => 'user_groups#index', :as => :user_groups
+  match 'user_group/:user_id/:group_id' => 'user_groups#update', :as => :update_user_group
+  match 'group_permissions/' => 'group_permissions#index', :as => :group_permissions
+  match 'group_permission/' => 'group_permissions#update', :as => :group_permission
+
+  resources :local_networks do
+    collection do
+      post :set
+    end
+    member do
+      post :get_ip
+    end
   end
-  map.with_options :controller => 'group_permissions' do |ug|
-    ug.group_permissions 'group_permissions/',            :action => "index"
-    ug.group_permission  'group_permission/',             :action => "update"
-  end  
 
-  map.resources :local_networks, 
-    :collection => { :set => :post },
-    :member => { :get_ip => :post }
-  map.resources :firewalls
-  map.resources :fw_rules,
-    :collection => { :nat => :get }
-  map.resources :forward_ports
-  map.resources :open_ports
-  map.resources :dhcp_servers
-  map.resources :services,
-    :member => {
-      :find => :post
-    }
-  map.resources :computers,
-    :member => {
-      :pass => :post,
-      :block => :post,
-    },
-    :collection => { 
-      :dhcp_list => :get
-    }
-  map.resources :users
+  resources :firewalls
+  resources :fw_rules do
+    collection do
+      get :nat
+    end
+  end
 
-  map.resource :session
+  resources :forward_ports
+  resources :open_ports
+  resources :dhcp_servers
+  resources :services do
+    member do
+      post :find
+    end
+  end
 
-  map.root :controller => 'sessions', :action => 'new'
+  resources :computers do
+    collection do
+      get :dhcp_list
+    end
+    member do
+      post :pass
+      post :block
+    end
+  end
 
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  # The priority is based upon order of creation: first created -> highest priority.
+  resources :users
+  resource :session
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  # map.connect ':controller/:action/:id'
-  # map.connect ':controller/:action/:id.:format'
+  match '/' => 'sessions#new'
+  match '/logout' => 'sessions#destroy', :as => :logout
+  match '/login' => 'sessions#new', :as => :login
 end

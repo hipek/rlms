@@ -13,10 +13,10 @@ class GroupMembership < ActiveRecord::Base
   def group_does_not_belong_to_itself_in_a_loop
     if roleable_type == "Group"
       if group_id == roleable_id
-        errors.add_to_base("A group cannot belong to itself.")
+        errors.add(:base, "A group cannot belong to itself.")
       else
         if belongs_to_itself_through_other?(roleable_id, group_id)
-          errors.add_to_base("A group cannot belong to a group which belongs to it.")
+          errors.add(:base, "A group cannot belong to a group which belongs to it.")
         end
       end
     end
