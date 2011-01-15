@@ -20,7 +20,7 @@ class Computer < ActiveRecord::Base
   end
 
   def self.next_ip
-    ip = all_for_dhcpd.last.andand.ip_address
+    ip = all_for_dhcpd.last.try:ip_address
     return ip if ip.blank?
     elements = ip.split('.')
     elements[elements.length - 1] = (elements.last.to_i + 1).to_s

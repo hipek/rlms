@@ -50,11 +50,11 @@ class WebJob < ActiveRecord::Base
   end
 
   def get_start_end part_url, split_char="-"
-    result, s_char = part_url.split(split_char).andand.last, split_char
-    result, s_char = part_url.split("/").andand.last, "/" if result.to_i == 0
+    result, s_char = part_url.split(split_char).try(:last), split_char
+    result, s_char = part_url.split("/").try(:last), "/" if result.to_i == 0
     url = part_url.split(s_char)
     url.delete(url.last)
-    [start_num_img.to_i, result.andand.to_i, "#{url.join(s_char)}#{s_char}"]
+    [start_num_img.to_i, result.try(:to_i), "#{url.join(s_char)}#{s_char}"]
   end
   
   def create_directory

@@ -16,12 +16,12 @@ class FwRuleParser
       :out_int => extract_value($5),
       :protocol => extract_all_values($6),
       :mod => extract_value($7),
-      :mod_option => ($8).andand.strip,
+      :mod_option => ($8).try(:strip),
       :mod_protocol => extract_value($9),
       :src_port => extract_value($10),
       :dest_port => extract_value($11),
       :tcp_flags => extract_all_values($12),
-      :tcp_flags_option => ($13).andand.strip,
+      :tcp_flags_option => ($13).try(:strip),
       :target => extract_value($14),
       :aft_option => extract_value($15),
       :aft_argument => extract_value($16)
@@ -45,15 +45,15 @@ class FwRuleParser
   end
 
   def extract_option o
-    o.andand.split(' ').andand.first.andand.delete('-')
+    o.try(:split, ' ').try(:first).try(:delete, '-')
   end
 
   def extract_value v
-    v.andand.split(' ').andand.last
+    v.try(:split, ' ').try(:last)
   end
 
   def extract_all_values ov
-    if a = ov.andand.split(' ')
+    if a = ov.try(:split, ' ')
       a.delete_at(0)
       a.join(' ')
     end

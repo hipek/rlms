@@ -17,7 +17,7 @@
   </p>
   <p>
     <%= 'Group'%><br />
-    <%= select_tag 'group_id', options_for_select([['All','']] + Group.all_as_pairs, params[:group_id].andand.to_i), :onchange => "submit();" -%>
+    <%= select_tag 'group_id', options_for_select([['All','']] + Group.all_as_pairs, params[:group_id].try(:to_i)), :onchange => "submit();" -%>
   </p>
 <% end %>
 

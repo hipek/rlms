@@ -11,7 +11,7 @@ class GroupPermissionsController < ApplicationController
     if params[:value] == 'true'
       @permission = Permission.find_or_create_by_group_id_and_action(params[:group_id], params[:permission])
     else
-      Permission.find_by_group_id_and_action(params[:group_id], params[:permission]).andand.destroy
+      Permission.find_by_group_id_and_action(params[:group_id], params[:permission]).try:destroy
     end
     render :nothing => true
   end
