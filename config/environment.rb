@@ -26,7 +26,6 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
 
-  config.gem "andand"
   config.gem 'will_paginate', :version => '2.3.15', :lib => 'will_paginate'
 
   # config.gem "rspec", :version => "1.1.11", :source => 'http://gems.github.com'
