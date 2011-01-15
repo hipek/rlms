@@ -1,5 +1,5 @@
 ddns-update-style ad-hoc;
-option domain-name <%= @data[:dhcp].domain_name %>;
+option domain-name '<%= @data[:dhcp].domain_name %>';
 option domain-name-servers <%= @data[:dhcp].domain_name_servers.join(',') %>;
 option subnet-mask <%= @data[:dhcp].subnet_mask %>;
 default-lease-time <%= @data[:dhcp].default_lease_time %>;
