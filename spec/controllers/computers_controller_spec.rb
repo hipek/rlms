@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ComputersController do
   fixtures :users, :groups, :group_memberships, :computers
+  render_views
 
   before(:each) do
     login_as(:admin)
@@ -15,7 +16,7 @@ describe ComputersController do
   describe "handling GET /computers" do
 
     before(:each) do
-      @computer = mock_model(Computer)
+      @computer = build_computer
       Computer.stub!(:find).and_return([@computer])
     end
 
@@ -47,7 +48,7 @@ describe ComputersController do
   describe "handling GET /computers/1" do
 
     before(:each) do
-      @computer = mock_model(Computer)
+      @computer = build_computer
       Computer.stub!(:find).and_return(@computer)
     end
 
@@ -79,7 +80,7 @@ describe ComputersController do
   describe "handling GET /computers/1/pass" do
 
     before(:each) do
-      @computer = mock_model(Computer)
+      @computer = build_computer
       Computer.stub!(:find_by_id).with("1").and_return(@computer)
     end
 
@@ -98,7 +99,7 @@ describe ComputersController do
   describe "handling GET /computers/1/block" do
 
     before(:each) do
-      @computer = mock_model(Computer)
+      @computer = build_computer
       Computer.stub!(:find_by_id).with("1").and_return(@computer)
     end
 
@@ -117,7 +118,7 @@ describe ComputersController do
   describe "handling GET /computers/new" do
 
     before(:each) do
-      @computer = mock_model(Computer, :ip_address= => nil)
+      @computer = build_computer(:ip_address= => nil)
       Computer.stub!(:new).and_return(@computer)
     end
 
@@ -154,7 +155,7 @@ describe ComputersController do
   describe "handling GET /computers/1/edit" do
 
     before(:each) do
-      @computer = mock_model(Computer)
+      @computer = build_computer
       Computer.stub!(:find).and_return(@computer)
     end
 
@@ -186,7 +187,7 @@ describe ComputersController do
   describe "handling POST /computers" do
 
     before(:each) do
-      @computer = mock_model(Computer, :to_param => "1", :new_record? => true)
+      @computer = build_computer(:to_param => "1", :new_record? => true)
       Computer.stub!(:new).and_return(@computer)
       DhcpServer.stub!(:lan).and_return(mock('lan', :find => build_dhcp_server))
     end
