@@ -25,7 +25,7 @@ module NoamBenAri
         # Helper method to lookup for permissions for a given object.
         # This method is equivalent to obj.permissions.
         def find_permissions_for(obj)
-          permissible = ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
+          permissible = obj.class.base_class.name
          
           Permission.find(:all,
             :conditions => ["permissible_id = ? and permissible_type = ?", obj.id, permissible]

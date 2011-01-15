@@ -10,7 +10,7 @@ describe TorrentsController do
 
   
   def mock_torrent(stubs={})
-    @mock_torrent ||= mock_model(RTorrent::Item, stubs)
+    @mock_torrent ||= mock_model('RTorrentItem', stubs)
   end
   
   describe "responding to GET index" do
