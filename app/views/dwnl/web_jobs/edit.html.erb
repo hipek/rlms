@@ -1,7 +1,7 @@
 <% content_for :col2 do %>
 <h1>Editing job</h1>
 
-<% form_for(:web_job, :url => dwnl_web_job_path(@web_job), :html => {:method => :put}) do |f| %>
+<%= form_for(:web_job, :url => dwnl_web_job_path(@web_job), :html => {:method => :put}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'form', :locals => {:f => f} %>
   <p>

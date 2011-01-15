@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Dwnl::WebJobsController do
   fixtures :users, :groups, :group_memberships
+  render_views
 
   before(:each) do
     login_as(:admin)
@@ -12,7 +13,7 @@ describe Dwnl::WebJobsController do
   describe "handling GET /dwnl_web_jobs" do
 
     before(:each) do
-      @web_job = mock_model(WebJob)
+      @web_job = build_model(WebJob, :id => 123, :state => 'pending')
       WebJob.stub!(:find).and_return([@web_job])
     end
   
@@ -44,7 +45,7 @@ describe Dwnl::WebJobsController do
   describe "handling GET /dwnl_web_jobs/1" do
 
     before(:each) do
-      @web_job = mock_model(WebJob)
+      @web_job = build_model(WebJob, :id => 123)
       WebJob.stub!(:find).and_return(@web_job)
     end
   
@@ -76,7 +77,7 @@ describe Dwnl::WebJobsController do
   describe "handling GET /dwnl_web_jobs/new" do
 
     before(:each) do
-      @web_job = mock_model(WebJob)
+      @web_job = build_model(WebJob)
       WebJob.stub!(:new).and_return(@web_job)
     end
   
@@ -113,7 +114,7 @@ describe Dwnl::WebJobsController do
   describe "handling GET /dwnl_web_jobs/1/edit" do
 
     before(:each) do
-      @web_job = mock_model(WebJob)
+      @web_job = build_model(WebJob, :id => 122)
       WebJob.stub!(:find).and_return(@web_job)
     end
   
@@ -145,7 +146,7 @@ describe Dwnl::WebJobsController do
   describe "handling POST /dwnl_web_jobs" do
 
     before(:each) do
-      @web_job = mock_model(WebJob, :to_param => "1")
+      @web_job = build_model(WebJob, :id => 1)
       @web_job.stub!(:create_directory)
       WebJob.stub!(:new).and_return(@web_job)
     end
@@ -187,7 +188,7 @@ describe Dwnl::WebJobsController do
   describe "handling PUT /dwnl_web_jobs/1" do
 
     before(:each) do
-      @web_job = mock_model(WebJob, :to_param => "1")
+      @web_job = build_model(WebJob, :id => 1)
       WebJob.stub!(:find).and_return(@web_job)
     end
     
@@ -238,7 +239,8 @@ describe Dwnl::WebJobsController do
   describe "handling DELETE /dwnl_web_jobs/1" do
 
     before(:each) do
-      @web_job = mock_model(WebJob, :destroy => true)
+      @web_job = build_model(WebJob)
+      @web_job.stub!(:destroy).and_return(true)
       WebJob.stub!(:find).and_return(@web_job)
     end
   

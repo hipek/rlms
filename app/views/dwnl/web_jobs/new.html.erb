@@ -1,7 +1,7 @@
 <% content_for :col2 do %>
 <h1>New job</h1>
 
-<% form_for(:web_job, :url => dwnl_web_jobs_path) do |f| %>
+<%= form_for(:web_job, :url => dwnl_web_jobs_path) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'form', :locals => {:f => f} %>
   <p>

@@ -86,3 +86,9 @@ def build_dhcp_server(options={})
   d.stub!(:id).and_return(options[:id])
   d
 end
+
+def build_model model, options={}
+  m = model.new options
+  m.stub!(:id).and_return(options[:id])
+  m
+end

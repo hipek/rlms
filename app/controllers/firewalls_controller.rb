@@ -35,6 +35,7 @@ class FirewallsController < ApplicationController
 
     respond_to do |format|
       if @firewall.update_attributes(params[:firewall])
+        p :here
         flash[:notice] = 'Firewall was successfully updated.'
         format.html { redirect_to(@firewall) }
       else

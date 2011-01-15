@@ -2,16 +2,18 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FirewallsController do
   fixtures :users
+  render_views
 
   before(:each) do
     login_as(:quentin)
+    controller.stub!(:current_lan).and_return(@ln = build_local_network)
   end
 
   describe "handling GET /firewalls" do
 
     before(:each) do
-      @firewall = mock_model(Firewall)
-      controller.stub_chain(:current_lan, :firewalls, :find).with(:all).and_return([@firewall])
+      @firewall = build_model(Firewall, :id => 122)
+      @ln.stub_chain(:firewalls, :find).with(:all).and_return([@firewall])
     end
   
     def do_get
@@ -42,12 +44,12 @@ describe FirewallsController do
   describe "handling GET /firewalls/1" do
 
     before(:each) do
-      @firewall = mock_model(Firewall)
-      LocalNetwork.stub!(:find).and_return(mock('lan', :firewalls => mock('firewalls', :find_by_id => @firewall)))
+      @firewall = build_model(Firewall, :id => 1211)
+      @ln.stub_chain(:firewalls, :find_by_id).and_return(@firewall)
     end
   
     def do_get
-      get :show, :id => "1"
+      get :show, :id => @firewall.id
     end
 
     it "should be successful" do
@@ -73,7 +75,7 @@ describe FirewallsController do
   describe "handling GET /firewalls/new" do
 
     before(:each) do
-      @firewall = Firewall.new
+      @firewall = build_model(Firewall, :lan => build_local_network, :start_date => Time.now)
       Firewall.stub!(:new).and_return(@firewall)
     end
   
@@ -110,8 +112,9 @@ describe FirewallsController do
   describe "handling GET /firewalls/1/edit" do
 
     before(:each) do
-      @firewall = mock_model(Firewall)
-      LocalNetwork.stub!(:find).and_return(mock('lan', :firewalls => mock('firewalls', :find_by_id => @firewall)))
+      @firewall = build_model(Firewall)
+      @ln.stub_chain(:firewalls, :find_by_id).and_return(@firewall)
+      @firewall.stub!(:lan).and_return(@ln)
     end
   
     def do_get
@@ -156,8 +159,9 @@ describe FirewallsController do
     describe "with failed save" do
 
       before(:each) do
-        @firewall = mock_model(Firewall, :to_param => "1")
-        LocalNetwork.stub!(:find).and_return mock('LocalNetwork', :firewalls => mock('firewalls', :build => @firewall))
+        @firewall = build_model(Firewall, :id => 1)
+        @firewall.stub!(:lan).and_return(@ln)
+        @ln.stub_chain(:firewalls, :build).and_return(@firewall)
       end
 
       def do_post
@@ -176,8 +180,9 @@ describe FirewallsController do
   describe "handling PUT /firewalls/1" do
 
     before(:each) do
-      @firewall = mock_model(Firewall, :to_param => "1")
-      LocalNetwork.stub!(:find).and_return(mock('lan', :firewalls => mock('firewalls', :find_by_id => @firewall)))
+      @firewall = build_model(Firewall, :id => 1)
+      @firewall.stub!(:lan).and_return(@ln)
+      @ln.stub_chain(:firewalls, :find_by_id).and_return(@firewall)
     end
     
     describe "with successful update" do
@@ -192,11 +197,6 @@ describe FirewallsController do
       end
 
       it "should update the found firewall" do
-        do_put
-        assigns(:firewall).should equal(@firewall)
-      end
-
-      it "should assign the found firewall for the view" do
         do_put
         assigns(:firewall).should equal(@firewall)
       end
@@ -226,8 +226,9 @@ describe FirewallsController do
   describe "handling DELETE /firewalls/1" do
 
     before(:each) do
-      @firewall = mock_model(Firewall, :destroy => true)
-      LocalNetwork.stub!(:find).and_return(mock('lan', :firewalls => mock('firewalls', :find_by_id => @firewall)))
+      @firewall = build_model(Firewall)
+      @firewall.stub!(:destroy).and_return(true)
+      @ln.stub_chain(:firewalls, :find_by_id).and_return(@firewall)
     end
   
     def do_delete

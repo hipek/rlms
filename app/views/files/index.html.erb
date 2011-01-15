@@ -5,7 +5,7 @@
 <% content_for :col2 do %>
 <h1>Listing torrent files</h1>
 
-<% form_tag torrent_file_path(params[:torrent_id], 0), :method => :put do %>
+<%= form_tag torrent_file_path(params[:torrent_id], 0), :method => :put do %>
 
 <table class="centerAll">
   <tr>
