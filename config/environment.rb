@@ -30,7 +30,7 @@ Rails::Initializer.run do |config|
   config.gem 'will_paginate', :version => '2.3.15', :lib => 'will_paginate'
 
   # config.gem "rspec", :version => "1.1.11", :source => 'http://gems.github.com'
-  # config.gem "rspec-rails", :version => "1.1.11"
+  config.gem "rspec-rails", :version => "1.3.3", :lib => "spec"
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -54,7 +54,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_r-lms_session',
+    :key => '_r-lms_session',
     :secret      => 'ba0c1b64489bfa2da680cbf5c81c985688e0a426c4359800af169debea8dbce614dba57b1dde564851d566c4a206f6ceec44ccc62a74efbd3e6e73c23164eaa3'
   }
 
