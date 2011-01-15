@@ -53,11 +53,13 @@ def build_service params={}
 end
 
 def build_computer params={}
-  Computer.new({
+  c = Computer.new({
     :mac_address => "00:ab:bc:cd:12:12", 
     :name => 'iT a cool Bame', 
     :ip_address => "1.1.1.1"  
   }.merge(params))
+  c.stub!(:id).and_return(params[:id])
+  c
 end
 
 def build_local_network params={}

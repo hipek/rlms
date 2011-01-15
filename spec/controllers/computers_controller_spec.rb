@@ -16,7 +16,7 @@ describe ComputersController do
   describe "handling GET /computers" do
 
     before(:each) do
-      @computer = build_computer
+      @computer = build_computer(:id => 112)
       Computer.stub!(:find).and_return([@computer])
     end
 
@@ -48,7 +48,7 @@ describe ComputersController do
   describe "handling GET /computers/1" do
 
     before(:each) do
-      @computer = build_computer
+      @computer = build_computer(:id => 122)
       Computer.stub!(:find).and_return(@computer)
     end
 
@@ -118,7 +118,7 @@ describe ComputersController do
   describe "handling GET /computers/new" do
 
     before(:each) do
-      @computer = build_computer(:ip_address= => nil)
+      @computer = build_computer
       Computer.stub!(:new).and_return(@computer)
     end
 
@@ -187,7 +187,7 @@ describe ComputersController do
   describe "handling POST /computers" do
 
     before(:each) do
-      @computer = build_computer(:to_param => "1", :new_record? => true)
+      @computer = build_computer
       Computer.stub!(:new).and_return(@computer)
       DhcpServer.stub!(:lan).and_return(mock('lan', :find => build_dhcp_server))
     end
@@ -229,7 +229,7 @@ describe ComputersController do
   describe "handling PUT /computers/1" do
 
     before(:each) do
-      @computer = mock_model(Computer, :to_param => "1")
+      @computer = build_computer
       Computer.stub!(:find).and_return(@computer)
       DhcpServer.stub!(:lan).and_return(mock('lan', :find => build_dhcp_server))
       Computer.stub!(:all_for_dhcpd).and_return([build_computer])
@@ -282,7 +282,8 @@ describe ComputersController do
   describe "handling DELETE /computers/1" do
 
     before(:each) do
-      @computer = mock_model(Computer, :destroy => true)
+      @computer = build_computer
+      @computer.stub!(:destroy).and_return(true)
       Computer.stub!(:find).and_return(@computer)
     end
 
