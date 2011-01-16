@@ -12,7 +12,7 @@
     <%= select_tag 'filter', options_for_select(FwRule.ip_tables, @filter), :onchange => "submit();" -%>
     IP chain
     <%= select_tag 'filter_chain', options_for_select([['select','']] + FwRule.chain_names(@filter), @filter_chain), :onchange => "submit();" -%>
-    <%= link_to_function 'Raw Iptables', :onclick => "$('iptables_raw').toggle();" %>
+    <%= link_to_function 'Raw Iptables', :onclick => "$('#iptables_raw').toggle();" %>
   <% end %>
 </div>
 
