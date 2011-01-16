@@ -1,7 +1,9 @@
 class LocalNetworksController < ApplicationController
   requires_permission "networks"
+  
+  before_filter :load_interfaces, :only => [:index, :update]
+  
   def index
-    @interfaces = ShellCommand.read_interfaces
     @local_network = current_lan
   end
 
@@ -20,5 +22,11 @@ class LocalNetworksController < ApplicationController
     render :update do |page|
       page << "$('local_network_#{params[:id]}').value = '#{ip_address}';"
     end
+  end
+  
+  protected
+  
+  def load_interfaces
+    @interfaces = ShellCommand.read_interfaces
   end
 end

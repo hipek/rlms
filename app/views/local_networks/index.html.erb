@@ -1,5 +1,5 @@
 <% content_for :col2 do %>
-<% form_for(:local_network, :url => local_network_path(0), :html => {:method => :put}) do |f| %>
+<%= form_for(:local_network, :url => local_network_path(0), :html => {:method => :put}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'form', :locals => {:f => f} %>
   <p>

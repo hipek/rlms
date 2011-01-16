@@ -2,17 +2,19 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe LocalNetworksController do
   fixtures :users, :groups, :group_memberships
+  render_views
 
   before(:each) do
     login_as(:admin)
     add_permission groups(:administrator), "networks"
     stub_shell_commands
+    ShellCommand.stub!(:read_interfaces).and_return(['eth1', 'eth0'])
   end
 
   describe "handling GET /local_networks" do
 
     before(:each) do
-      @local_network = mock_model(LocalNetwork)
+      @local_network = build_model(LocalNetwork)
       LocalNetwork.stub!(:find).and_return(@local_network)
     end
   
@@ -44,7 +46,7 @@ describe LocalNetworksController do
   describe "handling PUT /local_networks/1" do
 
     before(:each) do
-      @local_network = mock_model(LocalNetwork, :to_param => "1")
+      @local_network = build_model(LocalNetwork, :id => "1")
       LocalNetwork.stub!(:find).and_return(@local_network)
     end
     
