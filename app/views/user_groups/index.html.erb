@@ -40,7 +40,7 @@
      <%= will_paginate @users %>
   </p>
 
-  <% javascript_tag do %>
+  <%= javascript_tag do %>
     $(function() {
       $('input[name="user_group"]').change( function() {
         result = this.value.split('_');
