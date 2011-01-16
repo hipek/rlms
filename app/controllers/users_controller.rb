@@ -18,4 +18,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    u = User.find_by_id(params[:id])
+    u.try(:destroy)
+    redirect_to users_url
+  end
 end
