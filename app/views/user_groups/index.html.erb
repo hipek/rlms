@@ -40,11 +40,5 @@
      <%= will_paginate @users %>
   </p>
 
-  <%= javascript_tag do %>
-    $(function() {
-      $('input[name="user_group"]').change( function() {
-        $.post(this.getAttribute("data-url") + "?value=" + this.checked);
-      })
-    })
-  <% end %>
+  <%= observe_input_field "name='user_group'", :with => "'?value=' + this.checked" %>
 <% end %>
