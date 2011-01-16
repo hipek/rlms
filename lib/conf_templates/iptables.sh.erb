@@ -1,431 +1,201 @@
 #!/bin/bash
-IPTABLES=/usr/local/sbin/iptables
-LSMOD=/sbin/lsmod
-DEPMOD=/sbin/depmod
-MODPROBE=/sbin/modprobe
-GREP=/bin/grep
-AWK=/usr/bin/awk
-SED=/bin/sed
-IFCONFIG=/sbin/ifconfig
-
-EXTIF="eth1"
-INTIF="eth0"
-EXTIP="`$IFCONFIG $EXTIF | $AWK /$EXTIF/'{next}//{split($0,a,":");split(a[2],a," ");print a[1];exit}'`"
-#EXTIP="10.4.4.200"
-INTNET="10.0.0.0/8"
-INTIP="10.5.5.100"
-UNIVERSE="0.0.0.0/0"
-NETWORK="10.5.5."               #ip kompow bez ostatniej liczby
-NETCOUNT=48                     #liczba kompow w sieci
-NETBLOCK=("10.5.5.50")          #blokada netu
-IN_PORTS_TCP="21 22 25 80 110 113 443 1099 3690 27015 1550:1555 3000 3306 4000 4001 4080 4662 5080 5222 5269 6661:6665 6112:6119 6881:6899 7000 7777:7778 9000 9010 40000:44999 48000 49000"
-IN_PORTS_UDP="3690 4001 4672 5080 6112:6119 6662 6665 7777:7778 27010:27030 44002 44672 40000:40020 48000"
-OUT_PORTS_TCP=""
-OUT_PORTS_UDP=""
-CLIMIT=300
-
-$DEPMOD -a
-
-$MODPROBE ip_tables &> /dev/null
-$MODPROBE ip_conntrack &> /dev/null
-$MODPROBE ip_conntrack_ftp
-$MODPROBE ip_conntrack_irc
-$MODPROBE iptable_nat &> /dev/null
-$MODPROBE ip_nat_ftp
-$MODPROBE ip_nat_irc
-
-#########################################################################################################
-# ustawiamy czas zycia pakietu - TTL
-#echo 32 > /proc/sys/net/ipv4/ip_default_ttl
-#
-# pozwalamy na kontakt z serwerem sygnalem PING
-echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_all
-echo 1 > /proc/sys/net/ipv4/ip_forward
-# wlaczenie mechanizmu zapobiegajacemu atakowi typu SYN-FLOOD - antiflood syn
-echo  1 > /proc/sys/net/ipv4/tcp_syncookies
-# ignorowanie pingow na adresie rozgloszeniowym
-echo 1 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+<% 
+  iptables = @data[:iptables]
+  extif    = @data[:extif]
+  extip    = @data[:extip]
+  intif    = @data[:intif]
+  intip    = @data[:intip]
+  intnet   = @data[:intnet]
+  universe = "0.0.0.0/0"
+  connlimit = @data[:connlimit]
+  grep     = @data[:grep]
+%>
 # wlaczenie mechanizmu antyspoofingu - filtrowanie falszywych adresow IP
 for f in /proc/sys/net/ipv4/conf/*/rp_filter
   do
   echo 1 > $f
 done
-# ignorowanie bledow ICMP przez komputery zle reagujace na ramki TCP/IP
-echo 1 > /proc/sys/net/ipv4/icmp_ignore_bogus_error_responses
+
 # wylaczenie mozliwosci IP zrodlowego routingu
 for f in /proc/sys/net/ipv4/conf/*/accept_source_route
   do
   echo 0 > $f
 done
-#
+
 # wylaczenie akceptacji przekierowania ICMP
 for f in /proc/sys/net/ipv4/conf/*/accept_redirects
   do
   echo 0 > $f
 done
-#
+
 # logowanie wszystkich pakietow spofowanych , redirect i source routed
 for f in /proc/sys/net/ipv4/conf/*/log_martians
   do
   echo 1 > $f
 done
-#
-# wylaczamy ECN
-echo 0 > /proc/sys/net/ipv4/tcp_ecn
-# czas przez ktory utzymywane bedzie gniazdo w stanie FIN-WAIT-2 jezeli
-# zostalo zamkniete przez druga strone
-echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
-# jak czesto TCP wysyla widomosci 'keepalive' , jesli wlaczono te funkcje
-# - domyslnie co 2 godziny
+
+echo 0    > /proc/sys/net/ipv4/icmp_echo_ignore_all
+echo 1    > /proc/sys/net/ipv4/ip_forward
+echo 1    > /proc/sys/net/ipv4/tcp_syncookies
+echo 1    > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
+echo 1    > /proc/sys/net/ipv4/icmp_ignore_bogus_error_responses
+echo 0    > /proc/sys/net/ipv4/tcp_ecn
+echo 30   > /proc/sys/net/ipv4/tcp_fin_timeout
 echo 2400 > /proc/sys/net/ipv4/tcp_keepalive_time
-# czas w sekundach , przez ktory fragmenty IP sa przetrzymywane w pamieci
-echo 20 > /proc/sys/net/ipv4/ipfrag_time
-# wylaczenie mozliwosci skalowania okien TCP/IP
-echo 0 > /proc/sys/net/ipv4/tcp_window_scaling
-# maxymalna ilosc pamietanych polaczen , ktore nie zostaly potwiedzone przez klienta
-# ( domyslna warosc 1024 , dla komputerow z niewielka pamiecia zalecane 128 )
-echo 512 > /proc/sys/net/ipv4/tcp_max_syn_backlog
-# zakres portow serwera dla polaczen wychodzacych
-#echo "32768 61000" > /proc/sys/net/ipv4/ip_local_port_range
-# wylaczenie selektywnego ACK odzyskiwania pakietow
-echo 0 > /proc/sys/net/ipv4/tcp_sack
-# wylaczenie dodatkowych znacznikow utrzymujacych polaczenie
-echo 0 > /proc/sys/net/ipv4/tcp_timestamps
-# (432000 ( 2560))
+echo 20   > /proc/sys/net/ipv4/ipfrag_time
+echo 0    > /proc/sys/net/ipv4/tcp_window_scaling
+echo 512  > /proc/sys/net/ipv4/tcp_max_syn_backlog
+echo 0    > /proc/sys/net/ipv4/tcp_sack
+echo 0    > /proc/sys/net/ipv4/tcp_timestamps
 echo 4320 > /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_timeout_established
-# (60)
-echo 30 > /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_timeout_close_wait
-#
+echo 30   > /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_timeout_close_wait
+
 ######################################################################################
 
-$IPTABLES -P INPUT DROP
-$IPTABLES -F INPUT
-$IPTABLES -P OUTPUT DROP
-$IPTABLES -F OUTPUT
-$IPTABLES -P FORWARD DROP
-$IPTABLES -F FORWARD
-$IPTABLES -F -t nat
-if [ -n "`$IPTABLES -L | $GREP drop-and-log-it`" ]; then
-   $IPTABLES -F drop-and-log-it
-fi
-if [ -n "`$IPTABLES -L | $GREP lstat`" ]; then
-   $IPTABLES -F lstat
-fi
-$IPTABLES -X
-$IPTABLES -Z
+<%= iptables %> -P INPUT DROP
+<%= iptables %> -F INPUT
+<%= iptables %> -P OUTPUT DROP
+<%= iptables %> -F OUTPUT
+<%= iptables %> -P FORWARD DROP
+<%= iptables %> -F FORWARD
+<%= iptables %> -F -t nat
 
-$IPTABLES -t mangle -D PREROUTING -i $EXTIF -j MYSHAPER-IN 2> /dev/null > /dev/null
-$IPTABLES -t mangle -F MYSHAPER-IN 2> /dev/null > /dev/null
-$IPTABLES -t mangle -X MYSHAPER-IN 2> /dev/null > /dev/null
-$IPTABLES -t mangle -F PREROUTING
-$IPTABLES -t mangle -F INPUT
-$IPTABLES -t mangle -F OUTPUT
-$IPTABLES -t mangle -F FORWARD
-$IPTABLES -t mangle -D POSTROUTING -o $EXTIF -j MYSHAPER-OUT 2> /dev/null > /dev/null
-$IPTABLES -t mangle -F MYSHAPER-OUT 2> /dev/null > /dev/null
-$IPTABLES -t mangle -X MYSHAPER-OUT 2> /dev/null > /dev/null
-$IPTABLES -t mangle -F POSTROUTING
+if [ -n "`<%= iptables %> -L | <%= grep %> drop-and-log-it`" ]; then
+   <%= iptables %> -F drop-and-log-it
+fi
+if [ -n "`<%= iptables %> -L | <%= grep %> lstat`" ]; then
+   <%= iptables %> -F lstat
+fi
+
+<%= iptables %> -X
+<%= iptables %> -Z
+
+<%= iptables %> -t mangle -D PREROUTING -i <%= extif %> -j MYSHAPER-IN 2> /dev/null > /dev/null
+<%= iptables %> -t mangle -F MYSHAPER-IN 2> /dev/null > /dev/null
+<%= iptables %> -t mangle -X MYSHAPER-IN 2> /dev/null > /dev/null
+<%= iptables %> -t mangle -F PREROUTING
+<%= iptables %> -t mangle -F INPUT
+<%= iptables %> -t mangle -F OUTPUT
+<%= iptables %> -t mangle -F FORWARD
+<%= iptables %> -t mangle -D POSTROUTING -o <%= extif %> -j MYSHAPER-OUT 2> /dev/null > /dev/null
+<%= iptables %> -t mangle -F MYSHAPER-OUT 2> /dev/null > /dev/null
+<%= iptables %> -t mangle -X MYSHAPER-OUT 2> /dev/null > /dev/null
+<%= iptables %> -t mangle -F POSTROUTING
+
 ##################################################################################
-# lstat: download, upload
-$IPTABLES -N lstat
-x=1;
-while [ $x -le $NETCOUNT ]; do
-    $IPTABLES -A lstat -i $INTIF -s ${NETWORK}$x -j ACCEPT
-    $IPTABLES -A lstat -m state --state ESTABLISHED,RELATED \
-         -d ${NETWORK}$x -j ACCEPT
-    x=$[x + 1]
-done
-###################################################################################
-#squid stat: download
-x=1;
-while [ $x -le $NETCOUNT ]; do
-    $IPTABLES -t mangle -A OUTPUT -o $INTIF -p tcp --sport 8080 \
-        -d ${NETWORK}$x -j MARK --set-mark $[50+$x]
-    x=$[x + 1]
-done
+# lstat:
+<%= iptables %> -N lstat
+<% if false %>
+  <%= iptables %> -A lstat -i <%= intif %> -s IP_ADDRESS -j ACCEPT
+  <%= iptables %> -A lstat -m state --state ESTABLISHED,RELATED -d IP_ADDRESS -j ACCEPT
+  <%= iptables %> -t mangle -A OUTPUT -o <%= intif %> -p tcp --sport 8080 -d IP_ADDRESS -j MARK --set-mark 50+i
+<% end %>
 ###################################################################################
 
 ###################################################################################
-$IPTABLES -N drop-and-log-it
-#$IPTABLES -A drop-and-log-it -j LOG --log-level info
-$IPTABLES -A drop-and-log-it -j REJECT
+<%= iptables %> -N drop-and-log-it
+<%= iptables %> -A drop-and-log-it -j REJECT
 ####################################################################################
 
 #####################################################################################
 # INPUT CHAIN
-# loopback interfaces are valid.
-#
-$IPTABLES -A INPUT -i lo -s $UNIVERSE -d $UNIVERSE -j ACCEPT
-$IPTABLES -A INPUT -i $INTIF -s $INTNET -d $UNIVERSE -j ACCEPT
-$IPTABLES -A INPUT -i $EXTIF -s $INTNET -d $UNIVERSE -j drop-and-log-it
-$IPTABLES -A INPUT -i $EXTIF -p ICMP -s $UNIVERSE -d $EXTIP -j ACCEPT
-#$IPTABLES -A INPUT -i $EXTIF -s $UNIVERSE -d $EXTIP -j ACCEPT
-$IPTABLES -A INPUT -i $EXTIF -s $UNIVERSE -d $EXTIP -m state --state \
- ESTABLISHED,RELATED -j ACCEPT
-# ----- Begin OPTIONAL INPUT Section -----
-# DHCPd - Enable the following lines if you run an INTERNAL DHCPd server
-$IPTABLES -A INPUT -i $INTIF -p tcp --sport 68 --dport 67 -j ACCEPT
-$IPTABLES -A INPUT -i $INTIF -p udp --sport 68 --dport 67 -j ACCEPT
-#
-$IPTABLES -A INPUT -i $EXTIF -s 89.171.148.82 -p tcp --dport 80 -j DROP
-# tcp ports
-for w in $IN_PORTS_TCP
-do
-    $IPTABLES -A INPUT -i $EXTIF -m state --state NEW,ESTABLISHED,RELATED \
-     -p tcp -s $UNIVERSE -d $EXTIP --dport $w -j ACCEPT
-done
-# udp ports
-for w in $IN_PORTS_UDP
-do
-    $IPTABLES -A INPUT -i $EXTIF -m state --state NEW,ESTABLISHED,RELATED \
-     -p udp -s $UNIVERSE -d $EXTIP --dport $w -j ACCEPT
-done
-#    $IPTABLES -A INPUT -m state --state NEW,ESTABLISHED,RELATED \
-#     -p udp -s $UNIVERSE -d $EXTIP2 --dport 80 -j ACCEPT
-#
-# ----- End OPTIONAL INPUT Section -----
-# Catch all rule, all other incoming is denied and logged.
-#
-$IPTABLES -A INPUT -s $UNIVERSE -d $UNIVERSE -j drop-and-log-it
+<%= iptables %> -A INPUT -i lo -s <%= universe %> -d <%= universe %> -j ACCEPT
+<%= iptables %> -A INPUT -i <%= intif %> -s <%= intnet %> -d <%= universe %> -j ACCEPT
+<%= iptables %> -A INPUT -i <%= extif %> -s <%= intnet %> -d <%= universe %> -j drop-and-log-it
+<%= iptables %> -A INPUT -i <%= extif %> -p ICMP -s <%= universe %> -d <%= extip %> -j ACCEPT
+<%= iptables %> -A INPUT -i <%= extif %> -s <%= universe %> -d <%= extip %> -m state --state ESTABLISHED,RELATED -j ACCEPT
+<%= iptables %> -A INPUT -i <%= intif %> -p tcp --sport 68 --dport 67 -j ACCEPT
+<%= iptables %> -A INPUT -i <%= intif %> -p udp --sport 68 --dport 67 -j ACCEPT
+
+<% if false %>
+  <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p tcp -s <%= universe %> -d <%= extip %> --dport PORT -j ACCEPT
+  <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p udp -s <%= universe %> -d <%= extip %> --dport PORT -j ACCEPT
+<% end %>
+
+<%= iptables %> -A INPUT -s <%= universe %> -d <%= universe %> -j drop-and-log-it
 #######################################################################
 
 #######################################################################
 # OUTPUT: Outgoing traffic from various interfaces.  All rulesets are
 #         already flushed and set to a default policy of DROP.
-#
-# loopback interface is valid.
-#
-$IPTABLES -A OUTPUT -o lo -s $UNIVERSE -d $UNIVERSE -j ACCEPT
-# local interfaces, any source going to local net is valid
-#
-$IPTABLES -A OUTPUT -o $INTIF -s $EXTIP -d $INTNET -j ACCEPT
-# local interface, any source going to local net is valid
-#
-$IPTABLES -A OUTPUT -o $INTIF -s $INTIP -d $INTNET -j ACCEPT
-# outgoing to local net on remote interface, stuffed routing, deny
-#
-$IPTABLES -A OUTPUT -o $EXTIF -s $UNIVERSE -d $INTNET -j drop-and-log-it
-# anything else outgoing on remote interface is valid
-#
-$IPTABLES -A OUTPUT -o $EXTIF -s $EXTIP -d $UNIVERSE -j ACCEPT
-# ----- Begin OPTIONAL OUTPUT Section -----
-# DHCPd - Enable the following lines if you run an INTERNAL DHCPd server
-#         - Remove BOTH #s all the #s if you need this functionality.
-$IPTABLES -A OUTPUT -o $INTIF -p tcp -s $INTIP --sport 67 \
- -d 255.255.255.255 --dport 68 -j ACCEPT
-$IPTABLES -A OUTPUT -o $INTIF -p udp -s $INTIP --sport 67 \
- -d 255.255.255.255 --dport 68 -j ACCEPT
-$IPTABLES -A OUTPUT -o $EXTIF -m state --state NEW,ESTABLISHED,RELATED \
- -p tcp -s $EXTIP -d $UNIVERSE  --sport 20 -j ACCEPT
-# ----- End OPTIONAL OUTPUT Section -----
-# Catch all rule, all other outgoing is denied and logged.
-$IPTABLES -A OUTPUT -s $UNIVERSE -d $UNIVERSE -j drop-and-log-it
+<%= iptables %> -A OUTPUT -o lo -s <%= universe %> -d <%= universe %> -j ACCEPT
+<%= iptables %> -A OUTPUT -o <%= intif %> -s <%= extip %> -d <%= intnet %> -j ACCEPT
+<%= iptables %> -A OUTPUT -o <%= intif %> -s <%= intip %> -d <%= intnet %> -j ACCEPT
+<%= iptables %> -A OUTPUT -o <%= extif %> -s <%= universe %> -d <%= intnet %> -j drop-and-log-it
+<%= iptables %> -A OUTPUT -o <%= extif %> -s <%= extip %> -d <%= universe %> -j ACCEPT
+<%= iptables %> -A OUTPUT -o <%= intif %> -p tcp -s <%= intip %> --sport 67 -d 255.255.255.255 --dport 68 -j ACCEPT
+<%= iptables %> -A OUTPUT -o <%= intif %> -p udp -s <%= intip %> --sport 67 -d 255.255.255.255 --dport 68 -j ACCEPT
+<%= iptables %> -A OUTPUT -o <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p tcp -s <%= extip %> -d <%= universe %>  --sport 20 -j ACCEPT
+<%= iptables %> -A OUTPUT -s <%= universe %> -d <%= universe %> -j drop-and-log-it
 ################################################################################
 
 #################################################################################
 # mtu mss
-$IPTABLES -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
-# SNAT, maskarada, internet w lanie, blokada netu z przekierowaniem na 9000
-x=1;
-i=0;
-while [ $x -le $[$NETCOUNT+7] ]; do
-    if [ "${NETWORK}$x" == "${NETBLOCK[$i]}" ]; then
-        $IPTABLES -A PREROUTING -t nat -s ${NETWORK}$x -p tcp \
-             --dport 1:65535 -j DNAT --to-destination $INTIP:9000
-        x=$[x + 1];
-        i=$[i + 1];
-    else
-        $IPTABLES -t nat -A POSTROUTING -o $EXTIF -s ${NETWORK}$x \
-            -d 0.0.0.0/0 -j SNAT --to $EXTIP
-        $IPTABLES -A FORWARD -p tcp -s ${NETWORK}$x --dport 1024:65535 \
-            --syn -m connlimit --connlimit-above $CLIMIT -j drop-and-log-it
-        x=$[x + 1]
-    fi
-done
-# forward for dnat
-$IPTABLES -A FORWARD -p tcp -d 10.5.5.1 --dport 1551:1555 -j ACCEPT
-$IPTABLES -A FORWARD -p tcp -d 10.5.5.1 --dport 6112:6119 -j ACCEPT
-$IPTABLES -A FORWARD -p udp -d 10.5.5.1 --dport 6112:6119 -j ACCEPT
-$IPTABLES -A FORWARD -p tcp -d 10.5.5.4 --dport 1550 -j ACCEPT
-$IPTABLES -A FORWARD -p tcp -d 10.5.5.1 --dport 4662 -j ACCEPT
-$IPTABLES -A FORWARD -p udp -d 10.5.5.1 --dport 4672 -j ACCEPT
-$IPTABLES -A FORWARD -p tcp -d 10.5.5.6 --dport 44001 -j ACCEPT
-$IPTABLES -A FORWARD -p udp -d 10.5.5.6 --dport 44002 -j ACCEPT
-$IPTABLES -A FORWARD -p tcp -d 10.5.5.5 --dport 44010 -j ACCEPT
-$IPTABLES -A FORWARD -p tcp -d 10.5.5.5 --dport 44662 -j ACCEPT
-$IPTABLES -A FORWARD -p udp -d 10.5.5.5 --dport 44672 -j ACCEPT
-# lstat forward
-$IPTABLES -A FORWARD -j lstat
-$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -m state --state ESTABLISHED,RELATED -j ACCEPT
-$IPTABLES -A FORWARD -i $INTIF -o $EXTIF -j ACCEPT
-# Catch all rule, all other forwarding is denied and logged.
-$IPTABLES -A FORWARD -j drop-and-log-it
+<%= iptables %> -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+
+<% if false %>
+  <%= iptables %> -A PREROUTING -t nat -s IP_ADDRESS -p tcp --dport 1:65535 -j DNAT --to-destination <%= intip %>:9000
+  <%= iptables %> -t nat -A POSTROUTING -o <%= extif %> -s IP_ADDRESS -d 0.0.0.0/0 -j SNAT --to <%= extip %>
+  <%= iptables %> -A FORWARD -p tcp -s IP_ADDRESS --dport 1024:65535 --syn -m connlimit --connlimit-above <%= connlimit %> -j drop-and-log-it
+  <%= iptables %> -A FORWARD -p tcp -d IP_ADDRESS --dport PORT -j ACCEPT
+  <%= iptables %> -t nat -A PREROUTING -i <%= extif %> -p tcp -d <%= extip %> --dport PORT -j DNAT --to IP_ADDRESS:PORT
+<% end %>
+
+<%= iptables %> -A FORWARD -j lstat
+<%= iptables %> -A FORWARD -i <%= extif %> -o <%= intif %> -m state --state ESTABLISHED,RELATED -j ACCEPT
+<%= iptables %> -A FORWARD -i <%= intif %> -o <%= extif %> -j ACCEPT
+<%= iptables %> -A FORWARD -j drop-and-log-it
 ########################################################################################
 
-#######################################################################################
-# DNAT, przekierowanie portow do lanu
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 1550 -j DNAT --to 10.5.5.4:1550
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 1551:1555 -j DNAT --to 10.5.5.1
-# warcraft
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 6112:6119 -j DNAT --to 10.5.5.1
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p udp -d $EXTIP --dport 6112:6119 -j DNAT --to 10.5.5.1
-# jaca emule
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 4662 -j DNAT --to 10.5.5.1:4662
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p udp -d $EXTIP --dport 4672 -j DNAT --to 10.5.5.1:4672
-#maciek
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 44001 -j DNAT --to 10.5.5.6:44001
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p udp -d $EXTIP --dport 44002 -j DNAT --to 10.5.5.6:44002
-# lenovo
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 44010 -j DNAT --to 10.5.5.5:44010
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 44662 -j DNAT --to 10.5.5.5:44662
-$IPTABLES -t nat -A PREROUTING -i $EXTIF -p tcp -d $EXTIP --dport 44672 -j DNAT --to 10.5.5.5:44672
-# transparent proxy
-#$IPTABLES -t nat -A PREROUTING -i $INTIF -p tcp --dport 80 -j REDIRECT --to-port 8080
-########################################################################################
-
-#########################################################################################
-#$IPTABLES -t mangle -A PREROUTING -p udp -j CONNMARK --restore-mark
-#$IPTABLES -t mangle -A PREROUTING -p udp ! -m mark --mark 0 -j ACCEPT
-#$IPTABLES -t mangle -A PREROUTING -p udp -m ipp2p --ipp2p -j MARK --set-mark 1
-#$IPTABLES -t mangle -A PREROUTING -p udp -m mark --mark 1 -j CONNMARK --save-mark
-#$IPTABLES -t mangle -A POSTROUTING -o eth0 -m mark --mark 1 -j MARK --set-mark 14
-#$IPTABLES -t mangle -A POSTROUTING -o imq0 -m mark --mark 1 -j MARK --set-mark 13
 #########################################################################################
 # MYSHAPER-OUT
-$IPTABLES -t mangle -N MYSHAPER-OUT
-$IPTABLES -t mangle -I POSTROUTING -o $EXTIF -j MYSHAPER-OUT
-# add fwmark entries to classify different types of traffic
-# Set fwmark from 20-26 according to desired class. 20 is highest prio.
-#$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 0:1024 -j MARK --set-mark 23
-#$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 0:1024 -j MARK --set-mark 23
-# ftp-data port, low pri
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto ftp -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 20 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 21 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 20 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 21 -j MARK --set-mark 24
-# aol instant messenger
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 5190 -j MARK --set-mark 23
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 5190 -j MARK --set-mark 23
-# gadu gadu
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 8074 -j MARK --set-mark 23
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 8074 -j MARK --set-mark 23
-# games to mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 6112:6119 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 6112:6119 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 4000 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 4000 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 6112:6119 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 6112:6119 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 4000 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 4000 -j MARK --set-mark 22
-# cs
-# $IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto counterstrike-source -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 27010:27030 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 27010:27030 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 5273 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 7002 -j MARK --set-mark 22
-# rctw
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 27910:27996 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 27910:27996 -j MARK --set-mark 22
-# ssh in out
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto ssh -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 22 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 22 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 44000 -j MARK --set-mark 22
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 6000 -j MARK --set-mark 22
-# smtp
-# $IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto smtp -j MARK --set-mark 23
-# $IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto pop3 -j MARK --set-mark 23
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 25 -j MARK --set-mark 23
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 110 -j MARK --set-mark 23
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 995 -j MARK --set-mark 23
-# Local web serve
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto http -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 80 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 80 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 443 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 443 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 3690 -j MARK --set-mark 24
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 3690 -j MARK --set-mark 24
-# ICMP (ping) - high prio, impress friends
-$IPTABLES -t mangle -A MYSHAPER-OUT -p icmp -j MARK --set-mark 20
-# DNS name resolution (small packets)
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp -j MARK --set-mark 23
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto dns -j MARK --set-mark 21
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 53 -j MARK --set-mark 21
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 53 -j MARK --set-mark 21
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 53 -j MARK --set-mark 21
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 53 -j MARK --set-mark 21
-# small packets (probably just ACKs)
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp -m length --length :64 -j MARK --set-mark 21
-# edonkey, torrent, myedonkey 6348
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 6340:6350 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 6340:6350 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 6340:6350 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 6340:6350 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 6662:6665 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 6661:6665 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 6881:6999 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 6881:6999 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --dport 6881:6999 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --dport 6881:6999 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp --sport 40000:40020 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 40000:40020 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp --sport 44010 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp -s 10.5.5.1 --sport 4672 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp -s 10.5.5.1 --sport 4662 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p udp -s 10.5.5.5 --sport 44672 -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -p tcp -s 10.5.5.5 --sport 44662 -j MARK --set-mark 25
-# spowolnienie wysylania poczty przez kasie
-# $IPTABLES -t mangle -A MYSHAPER-OUT -p tcp -s 10.5.5.2 --dport 25 -j MARK --set-mark 25
-# $IPTABLES -t mangle -A MYSHAPER-OUT -p tcp -s 10.5.5.23 -m layer7 --l7proto ssh -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto bittorrent -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto edonkey -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto directconnect -j MARK --set-mark 25
-$IPTABLES -t mangle -A MYSHAPER-OUT -m layer7 --l7proto gnutella -j MARK --set-mark 25
-# redundant- mark any unmarked
-$IPTABLES -t mangle -A MYSHAPER-OUT -m mark --mark 0 -j MARK --set-mark 25
+<%= iptables %> -t mangle -N MYSHAPER-OUT
+<%= iptables %> -t mangle -I POSTROUTING -o <%= extif %> -j MYSHAPER-OUT
+
+<% if false %>
+  <%= iptables %> -t mangle -A MYSHAPER-OUT -m layer7 --l7proto ftp -j MARK --set-mark 24
+  <%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp --dport 20 -j MARK --set-mark 24
+<% end %>
+
+<%= iptables %> -t mangle -A MYSHAPER-OUT -m layer7 --l7proto http -j MARK --set-mark 24
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp --sport 80 -j MARK --set-mark 24
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp --dport 80 -j MARK --set-mark 24
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp --sport 443 -j MARK --set-mark 24
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp --dport 443 -j MARK --set-mark 24
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p icmp -j MARK --set-mark 20
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p udp -j MARK --set-mark 23
+<%= iptables %> -t mangle -A MYSHAPER-OUT -m layer7 --l7proto dns -j MARK --set-mark 21
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p udp --sport 53 -j MARK --set-mark 21
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p udp --dport 53 -j MARK --set-mark 21
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp --sport 53 -j MARK --set-mark 21
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp --dport 53 -j MARK --set-mark 21
+<%= iptables %> -t mangle -A MYSHAPER-OUT -p tcp -m length --length :64 -j MARK --set-mark 21
+
+<%= iptables %> -t mangle -A MYSHAPER-OUT -m mark --mark 0 -j MARK --set-mark 25
 ###########################################################################################
 
 ###########################################################################################
 # MYSHAPER-IN
-$IPTABLES -t mangle -N MYSHAPER-IN
-$IPTABLES -t mangle -I PREROUTING -i $EXTIF -j MYSHAPER-IN
-#$IPTABLES -t mangle -A MYSHAPER-IN -p tcp --sport 0:1024 -j MARK --set-mark 33
-#$IPTABLES -t mangle -A MYSHAPER-IN -p tcp --dport 0:1024 -j MARK --set-mark 33
-$IPTABLES -t mangle -A MYSHAPER-IN ! -p tcp -j MARK --set-mark 30
-$IPTABLES -t mangle -A MYSHAPER-IN -p tcp --dport 22 -j MARK --set-mark 32
-$IPTABLES -t mangle -A MYSHAPER-IN -p tcp --sport 22 -j MARK --set-mark 32
-$IPTABLES -t mangle -A MYSHAPER-IN -p udp --dport 27010:27030 -j MARK --set-mark 32
-$IPTABLES -t mangle -A MYSHAPER-IN -p udp --sport 27010:27030 -j MARK --set-mark 32
-$IPTABLES -t mangle -A MYSHAPER-IN -p tcp -d $EXTIP --sport 80 -j MARK --set-mark 34
-$IPTABLES -t mangle -A MYSHAPER-IN -p icmp -j MARK --set-mark 30
-$IPTABLES -t mangle -A MYSHAPER-IN -p udp -j MARK --set-mark 31
-$IPTABLES -t mangle -A MYSHAPER-IN -p tcp --dport 53 -j MARK --set-mark 30
-$IPTABLES -t mangle -A MYSHAPER-IN -p tcp --sport 53 -j MARK --set-mark 30
-$IPTABLES -t mangle -A MYSHAPER-IN -p udp --dport 53 -j MARK --set-mark 30
-$IPTABLES -t mangle -A MYSHAPER-IN -p udp --sport 53 -j MARK --set-mark 30
-$IPTABLES -t mangle -A MYSHAPER-IN -p tcp -m length --length :64 -j MARK --set-mark 31
-$IPTABLES -t mangle -A MYSHAPER-IN -m mark --mark 0 -j MARK --set-mark 35
-# finally, instruct these packets to go through the imq0 we set up above
-$IPTABLES -t mangle -A MYSHAPER-IN -j IMQ --todev 0
+<%= iptables %> -t mangle -N MYSHAPER-IN
+<%= iptables %> -t mangle -I PREROUTING -i <%= extif %> -j MYSHAPER-IN
+<%= iptables %> -t mangle -A MYSHAPER-IN ! -p tcp -j MARK --set-mark 30
+
+<% if false %>
+  <%= iptables %> -t mangle -A MYSHAPER-IN -p tcp --dport 22 -j MARK --set-mark 32
+  <%= iptables %> -t mangle -A MYSHAPER-IN -p tcp --sport 22 -j MARK --set-mark 32
+  <%= iptables %> -t mangle -A MYSHAPER-IN -p udp --dport 27010:27030 -j MARK --set-mark 32
+  <%= iptables %> -t mangle -A MYSHAPER-IN -p udp --sport 27010:27030 -j MARK --set-mark 32
+<% end %>
+
+<%= iptables %> -t mangle -A MYSHAPER-IN -p tcp -d <%= extip %> --sport 80 -j MARK --set-mark 34
+<%= iptables %> -t mangle -A MYSHAPER-IN -p icmp -j MARK --set-mark 30
+<%= iptables %> -t mangle -A MYSHAPER-IN -p udp -j MARK --set-mark 31
+<%= iptables %> -t mangle -A MYSHAPER-IN -p tcp --dport 53 -j MARK --set-mark 30
+<%= iptables %> -t mangle -A MYSHAPER-IN -p tcp --sport 53 -j MARK --set-mark 30
+<%= iptables %> -t mangle -A MYSHAPER-IN -p udp --dport 53 -j MARK --set-mark 30
+<%= iptables %> -t mangle -A MYSHAPER-IN -p udp --sport 53 -j MARK --set-mark 30
+<%= iptables %> -t mangle -A MYSHAPER-IN -p tcp -m length --length :64 -j MARK --set-mark 31
+
+<%= iptables %> -t mangle -A MYSHAPER-IN -m mark --mark 0 -j MARK --set-mark 35
+<%= iptables %> -t mangle -A MYSHAPER-IN -j IMQ --todev 0
 ##########################################################################################
-
-##############################################################################################
-#  ipp2p
-#$IPTABLES -t mangle -A INPUT -i $EXTIF -j CONNMARK --restore-mark
-#$IPTABLES -t mangle -A INPUT -i $EXTIF ! -m mark --mark 0 -j ACCEPT
-#$IPTABLES -t mangle -A INPUT -i $EXTIF -m ipp2p --edk -j MARK --set-mark 1
-#$IPTABLES -t mangle -A INPUT -i $EXTIF -m ipp2p --dc -j MARK --set-mark 2
-#$IPTABLES -t mangle -A INPUT -i $EXTIF -m ipp2p --gnu -j MARK --set-mark 3
-#$IPTABLES -t mangle -A INPUT -i $EXTIF -m ipp2p --kazaa -j MARK --set-mark 4
-#$IPTABLES -t mangle -A INPUT -i $EXTIF -m ipp2p --bit -j MARK --set-mark 5
-#$IPTABLES -t mangle -A INPUT -i $EXTIF -j CONNMARK --save-mark
-
-#$IPTABLES -t mangle -A OUTPUT -o $EXTIF -m mark --mark 1 -j ACCEPT
-#$IPTABLES -t mangle -A OUTPUT -o $EXTIF -m mark --mark 2 -j ACCEPT
-#$IPTABLES -t mangle -A OUTPUT -o $EXTIF -m mark --mark 3 -j ACCEPT
-#$IPTABLES -t mangle -A OUTPUT -o $EXTIF -m mark --mark 4 -j ACCEPT
-#$IPTABLES -t mangle -A OUTPUT -o $EXTIF -m mark --mark 5 -j ACCEPT
-##############################################################################################
