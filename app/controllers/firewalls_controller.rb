@@ -23,7 +23,7 @@ class FirewallsController < ApplicationController
     respond_to do |format|
       if @firewall.save
         flash[:notice] = 'Firewall was successfully created.'
-        format.html { redirect_to(@firewall) }
+        format.html { redirect_to(firewall_path(@firewall)) }
       else
         format.html { render :action => "new" }
       end
@@ -35,9 +35,8 @@ class FirewallsController < ApplicationController
 
     respond_to do |format|
       if @firewall.update_attributes(params[:firewall])
-        p :here
         flash[:notice] = 'Firewall was successfully updated.'
-        format.html { redirect_to(@firewall) }
+        format.html { redirect_to(firewall_path(@firewall)) }
       else
         format.html { render :action => "edit" }
       end

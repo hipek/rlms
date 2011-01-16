@@ -29,12 +29,7 @@ describe FirewallsController do
       do_get
       response.should render_template('index')
     end
-  
-    it "should find all firewalls" do
-      LocalNetwork.stub!(:find_by_id).and_return(mock('lan', :firewalls => mock('firewalls', :find => [@firewall])))
-      do_get
-    end
-  
+
     it "should assign the found firewalls for the view" do
       do_get
       assigns[:firewalls].should == [@firewall]
@@ -180,7 +175,7 @@ describe FirewallsController do
   describe "handling PUT /firewalls/1" do
 
     before(:each) do
-      @firewall = build_model(Firewall, :id => 1)
+      @firewall = build_model(Firewall, :id => 12)
       @firewall.stub!(:lan).and_return(@ln)
       @ln.stub_chain(:firewalls, :find_by_id).and_return(@firewall)
     end
@@ -189,7 +184,7 @@ describe FirewallsController do
 
       def do_put
         @firewall.should_receive(:update_attributes).and_return(true)
-        put :update, :id => "1"
+        put :update, :id => 12
       end
 
       it "should find the firewall requested" do
@@ -203,7 +198,7 @@ describe FirewallsController do
 
       it "should redirect to the firewall" do
         do_put
-        response.should redirect_to(firewall_url("1"))
+        response.should redirect_to(firewall_url(@firewall))
       end
 
     end
