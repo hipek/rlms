@@ -43,9 +43,7 @@
   <%= javascript_tag do %>
     $(function() {
       $('input[name="user_group"]').change( function() {
-        result = this.value.split('_');
-        $.post("/user_group/" + result[0] + "/" + result[1] + "?value=" + this.checked);
-        return false;
+        $.post(this.getAttribute("data-url") + "?value=" + this.checked);
       })
     })
   <% end %>

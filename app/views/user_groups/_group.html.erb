@@ -1,5 +1,8 @@
 <td>
-  <%= check_box_tag(:user_group, "#{user.id}_#{group.id}", user.in_group?(group.name), :id => "user_#{user.id}_group_#{group.id}") %>
+  <%= check_box_tag(:user_group, "#{user.id}_#{group.id}", user.in_group?(group.name), 
+        :id => "user_#{user.id}_group_#{group.id}",
+        :'data-url' => update_user_group_path(user.id, group.id))
+  %>
   <%#= remote_function :url => {
       :action  => "update", 
       :user_id => user.id,
