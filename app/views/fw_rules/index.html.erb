@@ -6,7 +6,7 @@
 <h1>Listing <%= @filter.camelize -%> Rules</h1>
 
 <div class="form">
-  <% form_tag fw_rules_path, :method => :get do %>
+  <%= form_tag fw_rules_path, :method => :get do %>
     <%#= select_tag 'firewall_id', options_for_select([['select','']] + Firewall.all_as_pairs, @firewall_id), :onchange => "submit();" -%>
     IP table
     <%= select_tag 'filter', options_for_select(FwRule.ip_tables, @filter), :onchange => "submit();" -%>

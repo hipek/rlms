@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FwRulesController do
   fixtures :users
+  render_views
 
   before(:each) do
     login_as(:quentin)
@@ -11,7 +12,7 @@ describe FwRulesController do
   describe "handling GET /fw_rules" do
 
     before(:each) do
-      @fw_rule = mock_model(FwRule)
+      @fw_rule = build_model(FwRule)
       FwRuleContainer.stub!(:rules_for).and_return(:input => [@fw_rule])
     end
   
@@ -42,7 +43,7 @@ describe FwRulesController do
   describe "handling GET /fw_rules/1" do
 
     before(:each) do
-      @fw_rule = mock_model(FwRule)
+      @fw_rule = build_model(FwRule, :id => 1)
       FwRule.stub!(:find_by_id).and_return(@fw_rule)
     end
   
@@ -73,7 +74,7 @@ describe FwRulesController do
   describe "handling GET /fw_rules/new" do
 
     before(:each) do
-      @fw_rule = mock_model(FwRule)
+      @fw_rule = build_model(FwRule)
       FwRule.stub!(:new).and_return(@fw_rule)
     end
   
@@ -110,7 +111,7 @@ describe FwRulesController do
   describe "handling GET /fw_rules/1/edit" do
 
     before(:each) do
-      @fw_rule = mock_model(FwRule)
+      @fw_rule = build_model(FwRule)
       FwRule.stub!(:find_by_id).and_return(@fw_rule)
     end
   
@@ -141,7 +142,7 @@ describe FwRulesController do
   describe "handling POST /fw_rules" do
 
     before(:each) do
-      @fw_rule = mock_model(FwRule, :to_param => "1")
+      @fw_rule = build_model(FwRule, :id => "1")
       FwRule.stub!(:new).and_return(@fw_rule)
     end
     
@@ -182,7 +183,7 @@ describe FwRulesController do
   describe "handling PUT /fw_rules/1" do
 
     before(:each) do
-      @fw_rule = mock_model(FwRule, :to_param => "1")
+      @fw_rule = build_model(FwRule, :id => "1")
       FwRule.stub!(:find_by_id).and_return(@fw_rule)
     end
     
@@ -232,7 +233,8 @@ describe FwRulesController do
   describe "handling DELETE /fw_rules/1" do
 
     before(:each) do
-      @fw_rule = mock_model(FwRule, :destroy => true)
+      @fw_rule = build_model(FwRule)
+      @fw_rule.stub!(:destroy).and_return(true)
       FwRule.stub!(:find_by_id).and_return(@fw_rule)
     end
   

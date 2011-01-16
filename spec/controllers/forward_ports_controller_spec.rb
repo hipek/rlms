@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ForwardPortsController do
   fixtures :users
+  render_views
 
   before(:each) do
     login_as(:quentin)

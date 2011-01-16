@@ -25,7 +25,7 @@ class FwRulesController < ApplicationController
     respond_to do |format|
       if @fw_rule.save
         flash[:notice] = 'FwRule was successfully created.'
-        format.html { redirect_to(@fw_rule) }
+        format.html { redirect_to(fw_rule_url(@fw_rule)) }
       else
         format.html { render :action => "new" }
       end
@@ -38,7 +38,7 @@ class FwRulesController < ApplicationController
     respond_to do |format|
       if @fw_rule.update_attributes(params[:fw_rule])
         flash[:notice] = 'FwRule was successfully updated.'
-        format.html { redirect_to(@fw_rule) }
+        format.html { redirect_to(fw_rule_url(@fw_rule)) }
       else
         format.html { render :action => "edit" }
       end
