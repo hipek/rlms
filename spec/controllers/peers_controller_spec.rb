@@ -2,10 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe PeersController do
   fixtures :users, :groups, :group_memberships
+  render_views
 
   before(:each) do
     login_as(:admin)
-    #add_permission groups(:administrator), "torrent"
   end
 
   describe "GET 'index'" do

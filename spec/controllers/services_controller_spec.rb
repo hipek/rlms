@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ServicesController do
   fixtures :users
+  render_views
 
   before(:each) do
     login_as(:quentin)
@@ -10,7 +11,7 @@ describe ServicesController do
   describe "handling GET /services" do
 
     before(:each) do
-      @service = mock_model(Service)
+      @service = build_model(Service, :id => 1)
       Service.stub!(:find).and_return([@service])
     end
   
@@ -42,7 +43,7 @@ describe ServicesController do
   describe "handling GET /services/1" do
 
     before(:each) do
-      @service = mock_model(Service)
+      @service = build_model(Service, :id => 1)
       Service.stub!(:find).and_return(@service)
     end
   
@@ -74,7 +75,7 @@ describe ServicesController do
   describe "handling GET /services/new" do
 
     before(:each) do
-      @service = mock_model(Service)
+      @service = build_model(Service)
       Service.stub!(:new).and_return(@service)
     end
   
@@ -111,7 +112,7 @@ describe ServicesController do
   describe "handling GET /services/1/edit" do
 
     before(:each) do
-      @service = mock_model(Service)
+      @service = build_model(Service, :id => 1)
       Service.stub!(:find).and_return(@service)
     end
   
@@ -143,7 +144,7 @@ describe ServicesController do
   describe "handling POST /services" do
 
     before(:each) do
-      @service = mock_model(Service, :to_param => "1")
+      @service = build_model(Service, :id => 1)
       Service.stub!(:new).and_return(@service)
     end
     
@@ -184,7 +185,7 @@ describe ServicesController do
   describe "handling PUT /services/1" do
 
     before(:each) do
-      @service = mock_model(Service, :to_param => "1")
+      @service = build_model(Service, :id => 1)
       Service.stub!(:find).and_return(@service)
     end
     
@@ -235,7 +236,8 @@ describe ServicesController do
   describe "handling DELETE /services/1" do
 
     before(:each) do
-      @service = mock_model(Service, :destroy => true)
+      @service = build_model(Service)
+      @service.stub!(:destroy).and_return(true)
       Service.stub!(:find).and_return(@service)
     end
   

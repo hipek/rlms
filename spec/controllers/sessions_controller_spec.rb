@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe SessionsController do
   fixtures :users
+  render_views
 
   it 'logins and redirects' do
     post :create, :login => 'quentin', :password => 'test'

@@ -1,7 +1,10 @@
 Rlms::Application.routes.draw do
   resources :torrents do
-      resources :files
+    resources :files
     resources :peers
+    collection do
+      post :set_rate
+    end
   end
 
   namespace :dwnl do

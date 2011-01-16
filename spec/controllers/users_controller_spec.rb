@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UsersController do
   fixtures :users, :groups, :group_memberships
+  render_views
 
   before(:each) do
     login_as(:admin)

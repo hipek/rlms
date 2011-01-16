@@ -2,15 +2,36 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TorrentsController do
   fixtures :users, :groups, :group_memberships
+  render_views
 
   before(:each) do
     login_as(:admin)
     #add_permission groups(:administrator), "admin"
+    RTorrent::Client.stub!(:download_rate).and_return(100)
+    RTorrent::Client.stub!(:down_rate).and_return(100)
+    RTorrent::Client.stub!(:upload_rate).and_return(100)
+    RTorrent::Client.stub!(:up_rate).and_return(100)
   end
 
   
   def mock_torrent(stubs={})
-    @mock_torrent ||= mock_model('RTorrentItem', stubs)
+    @mock_torrent ||= mock_model('RTorrentItem', {
+      :name => 'name',
+      :bytes => 1231,
+      :bytes_completed => 10,
+      :local_id => 'asdfa',
+      :percent_complete => 60,
+      :created_at => Time.now,
+      :status => 'done',
+      :message => 'ok',
+      :down_rate => 10,
+      :up_rate => 10,
+      :directory => '/tmp/rtorrent',
+      :path => '/aaa/bbb',
+      :display_priority => 2,
+      :conn_type => 'normal',
+      :time_left => '10'
+    }.merge(stubs))
   end
   
   describe "responding to GET index" do

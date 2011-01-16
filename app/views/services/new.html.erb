@@ -4,7 +4,7 @@
 
 <% content_for :col2 do %>
 
-<% form_for(@service) do |f| %>
+<%= form_for(@service) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'form', :locals => {:f => f} -%>
   <p>

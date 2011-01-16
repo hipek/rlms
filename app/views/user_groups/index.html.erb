@@ -9,7 +9,7 @@
    <%= will_paginate @users %>
 </p>
 
-<% form_tag user_groups_path, :method => :get do %>
+<%= form_tag user_groups_path, :method => :get do %>
   <p>
     <%= 'Login'%><br />
     <%= text_field_tag :q, params[:q] %>
