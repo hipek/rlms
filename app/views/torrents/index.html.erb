@@ -40,17 +40,17 @@
 </div>
 
 <div id="bandwidth_form" style="display: none;">
-  <%# form_remote_tag :url => set_rate_torrents_path, :success => "$('bandwidth_form').hide();" do %>
+  <%= form_tag :url => set_rate_torrents_path, :success => "$('bandwidth_form').hide();", :remote => true do %>
     Down: <%= text_field_tag "bandwidth[down]", RTorrent::Client.download_rate.to_kb, :size => 3 -%>
     Up: <%= text_field_tag "bandwidth[up]", RTorrent::Client.upload_rate.to_kb, :size => 3 -%>
     <%= submit_tag "Update" -%>
-  <%# end %>
+  <% end %>
 </div>
 
 <br /><br />
 
 <%= link_to 'New torrent', new_torrent_path %>
-<%#= periodically_call_remote :url => torrents_path, :frequency => '8', :method => :get, :with => "Form.serialize($('rform'))" -%>
+<%#= periodically_call :url => torrents_path, :frequency => '8', :method => :get, :with => "Form.serialize($('rform'))" -%>
 
 <% end unless @r_error %>
 
