@@ -9,7 +9,7 @@ module ApplicationHelper
   end
   
   def indicator_image_tag id='', div='indicator', image = 'ajax_loader.gif'
-    "<span id=\"#{div}#{id}\" style=\"display: none\">#{image_tag image}</span>"
+    content_tag :span, image_tag(image), :id => "#{div}_#{id}", :style => "display: none"
   end
 
   def indicator_tag id='', div='indicator'
