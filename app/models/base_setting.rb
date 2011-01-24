@@ -1,12 +1,16 @@
 class BaseSetting < ActiveRecord::Base
   class << self
+    cattr_accessor :private_fields
+
     def define_fields *args
-      @@fields[self.to_s] = args.flatten.first.keys
+      self.private_fields ||= {}
+      private_fields[self.name] = args.flatten.first.keys
       defaults *args
+      define_instance_methods
     end
     
     def fields
-      @@fields[self.to_s]
+      private_fields[self.to_s]
     end
     
     def define_instance_methods
@@ -34,7 +38,4 @@ class BaseSetting < ActiveRecord::Base
     end
     options
   end
-
-  private
-  @@fields = {}
 end

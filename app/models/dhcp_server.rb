@@ -3,8 +3,7 @@ class DhcpServer < BaseSetting
     :range_from => nil, :range_to => nil, :subnet_mask => nil, 
     :domain_name_server1 => '194.204.159.1', :domain_name_server2 => '194.204.152.34',
     :default_lease_time => '8600', :max_lease_time => '8600'
-  define_instance_methods
-  
+
   validates_format_of :router, :subnet, :broadcast_address, 
     :range_from, :range_to, :subnet_mask, 
     :domain_name_server1, :domain_name_server2,

@@ -3,7 +3,6 @@ class LocalNetwork < BaseSetting
   has_many :firewalls, :class_name => 'Firewall', :foreign_key => 'lan_id'
 
   define_fields :name => 'local.network', :int_inf => 'eth0', :ext_inf => 'eth1', :int_ip => 'auto', :ext_ip => 'auto'
-  define_instance_methods
 
   def self.first
     find(:first) || LocalNetwork.new
@@ -19,5 +18,5 @@ class LocalNetwork < BaseSetting
   
   def auto_int_ip
     int_ip == 'auto' ? ShellCommand.ip(int_inf) : int_ip
-  end  
+  end
 end
