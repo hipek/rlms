@@ -1,0 +1,61 @@
+!!! Strict
+%html{ :xmlns => 'http://www.w3.org/1999/xhtml', :lang => "en" }
+  %head
+    %title Rails Lan Management System
+    %meta{'http-equiv' => "Content-type", :content => "text/html; charset=utf-8"}
+    <!-- add your meta tags here -->
+    = csrf_meta_tag
+    %link{:href => "/stylesheets/style.css", :rel => "stylesheet", :type => "text/css"}
+    <!--[if lte IE 7]>
+    %link{:href => "/stylesheets/patch.css", :rel => "stylesheet", :type => "text/css"}
+    <![endif]-->
+    = javascript_include_tag :defaults
+  %body
+    %div{:id => "page_margins"}
+      %div{:id => "border-top"}
+        %div{:id => "edge-tl"}
+        %div{:id => "edge-tr"}
+      %div{:id => "page"}
+        %div{:id => "header"}
+          %h1 Rails Lan Management System
+          %div{:id => "topnav"}
+            = logged_in? ? link_to('Logout', logout_path) : link_to('Login', login_path)
+            |
+            %a{:href => "#"} Contact
+            |
+            %a{:href => "#"} Imprint
+        %div{:id => "nav"}
+          <!-- skiplink anchor: navigation -->
+          %a{:id => "navigation", :name => "navigation"}
+          %div{:id => "nav_main"}
+            <!-- main navigation: #nav_main -->
+            - if logged_in?
+              %ul
+                = content_tag :li, link_to('Admin', users_path), selected_option("user", "group") if current_user.has_permission?('admin')
+        %div{:id => "flash", :class => "bold center"}
+          %p{:class => "green"}
+            = flash[:notice]
+          %p{:class => "red"}
+            = flash[:error]
+          %div{:class => "blue"}
+            = simple_format(flash[:warn])
+        
+        %div{:id => "main"}
+          %div{:id => "col1"}
+            %div{:id => "col1_content", :class => "clearfix"}
+              = yield(:col1)
+          %div{:id => "col3"}
+            %div{:id => "col3_content", :class => "clearfix"}
+              = yield
+
+            <!-- IE Column Clearing -->
+            %div{:id => "ie_clearing"}
+              &#160; 
+        <!-- begin: #footer -->
+        %div{:id => "footer"}
+          Layout based on 
+          %a{:href => "http://www.yaml.de/"} YAML
+
+      %div{:id => "border-bottom"}
+        %div{:id => "edge-bl"}
+        %div{:id => "edge-br"}

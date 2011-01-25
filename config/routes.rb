@@ -1,4 +1,10 @@
 Rlms::Application.routes.draw do
+  namespace :router do
+    namespace :rule do
+      resources :open_ports
+    end
+  end
+
   resources :torrents do
     resources :files
     resources :peers
