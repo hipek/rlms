@@ -1,0 +1,15 @@
+-if @open_port.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@open_port.errors.count, "error")} prohibited this router_open_port from being saved:"
+    %ul
+      - @open_port.errors.full_messages.each do |msg|
+        %li= msg
+
+.field
+  = f.label :port
+  = f.text_field :port
+.field
+  = f.label :protocol
+  = f.text_field :protocol
+.actions
+  = f.submit 'Save'

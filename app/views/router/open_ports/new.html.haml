@@ -1,0 +1,6 @@
+%h1 New router_open_port
+
+= form_for :open_port, :url => router_open_ports_path,:html => {:method => :post} do |f|
+  = render 'form', :f => f
+
+= link_to 'Back', router_open_ports_path

@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Port:
+  = @open_port.port
+%p
+  %b Protocol:
+  = @open_port.protocol
+
+= link_to 'Edit', edit_router_open_port_path(@open_port)
+\|
+= link_to 'Back', router_open_ports_path

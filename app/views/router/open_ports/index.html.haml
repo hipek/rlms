@@ -1,0 +1,21 @@
+%h1 Listing router_open_ports
+
+%table
+  %tr
+    %th Port
+    %th Protocol
+    %th
+    %th
+    %th
+
+  - @open_ports.each do |open_port|
+    %tr
+      %td= open_port.port
+      %td= open_port.protocol
+      %td= link_to 'Show', router_open_port_path(open_port)
+      %td= link_to 'Edit', edit_router_open_port_path(open_port)
+      %td= link_to 'Destroy', router_open_port_path(open_port), :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Open port', new_router_open_port_path
