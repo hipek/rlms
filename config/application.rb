@@ -40,7 +40,8 @@ module Rlms
     config.filter_parameters += [:password]
 
     config.generators do |g|
-      g.test_framework :rspec, :fixtures => false, :views => false
+      g.test_framework :rspec, :fixtures => false, :view_specs => false, :routing_specs => false
+      g.template_engine :haml
     end
   end
 end

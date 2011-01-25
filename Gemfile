@@ -5,6 +5,7 @@ gem "will_paginate", "~> 3.0.pre2"
 gem 'jquery-rails', '>= 0.2.6'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml'
+gem 'haml-rails'
 
 # gem 'wirble'
 # gem 'looksee'
