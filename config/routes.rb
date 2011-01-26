@@ -1,7 +1,9 @@
 Rlms::Application.routes.draw do
+
   namespace :router do
     resources :open_ports
     resources :forward_ports
+    resources :services
     get "main" => "main#index", :as => :main
     put "main/update",          :as => :update_main
   end
