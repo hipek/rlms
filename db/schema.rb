@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110115193305) do
+ActiveRecord::Schema.define(:version => 20110125224626) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
@@ -34,6 +34,14 @@ ActiveRecord::Schema.define(:version => 20110115193305) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "lan_id"
+  end
+
+  create_table "forward_ports", :force => true do |t|
+    t.string   "port"
+    t.string   "protocol"
+    t.string   "ip_address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "fw_rules", :force => true do |t|
@@ -75,6 +83,13 @@ ActiveRecord::Schema.define(:version => 20110115193305) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "open_ports", :force => true do |t|
+    t.string   "port"
+    t.string   "protocol"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
