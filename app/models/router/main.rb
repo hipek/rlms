@@ -9,4 +9,9 @@ class Router::Main < Router::BaseSetting
     :ext_mask => '',
     :ext_gateway => ''
   )
+  class <<self
+    def instance
+      first || new
+    end
+  end
 end

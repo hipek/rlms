@@ -9,7 +9,11 @@
   = f.label :port
   = f.text_field :port
 .field
+  = f.label :ip_address, _('Dest IP')
+  = f.text_field :ip_address
+.field
   = f.label :protocol
-  = f.text_field :protocol
+  = f.select :protocol, all_protocols
+
 .actions
   = f.submit 'Save'

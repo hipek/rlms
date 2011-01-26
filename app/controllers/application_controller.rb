@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
+  include GetText
 
   helper :all
   helper_method :current_lan

@@ -1,0 +1,37 @@
+-if @router_main.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@router_main.errors.count, "error")} prohibited these settings from being saved:"
+    %ul
+      - @router_main.errors.full_messages.each do |msg|
+        %li= msg
+
+%h3= _('Internet settings')
+.field
+  = f.label :ext_inf, _('Interface')
+  = f.text_field :ext_inf
+.field
+  = f.label :ext_ip, _('IP')
+  = f.text_field :ext_ip
+.field
+  = f.label :ext_mask, _('Mask')
+  = f.text_field :ext_mask
+.field
+  = f.label :ext_mask, _('Gateway')
+  = f.text_field :ext_gateway
+
+%h3= _('LAN settings')
+.field
+  = f.label :int_inf, _('Interface')
+  = f.text_field :int_inf
+.field
+  = f.label :int_ip, _('IP')
+  = f.text_field :int_ip
+.field
+  = f.label :int_mask, _('Mask')
+  = f.text_field :int_mask
+.field
+  = f.label :int_mask, _('Gateway')
+  = f.text_field :int_gateway
+
+.actions
+  = f.submit 'Update'
