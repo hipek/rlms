@@ -1,0 +1,17 @@
+%h1 Listing router_forward_ports
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @forward_ports.each do |forward_port|
+    %tr
+      %td= link_to 'Show', router_forward_port_path(forward_port)
+      %td= link_to 'Edit', edit_router_forward_port_path(forward_port)
+      %td= link_to 'Destroy', router_forward_port_path(forward_port), :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Forward port', new_router_forward_port_path

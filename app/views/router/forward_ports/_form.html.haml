@@ -1,0 +1,10 @@
+= form_for @router_forward_port do |f|
+  -if @router_forward_port.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@router_forward_port.errors.count, "error")} prohibited this router_forward_port from being saved:"
+      %ul
+        - @router_forward_port.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'
