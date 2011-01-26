@@ -1,4 +1,4 @@
-class Router::ForwardPortsController < ApplicationController
+class Router::ForwardPortsController < Router::BaseController
   def index
     @forward_ports = Router::Rule::ForwardPort.all
   end
