@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110125224626) do
+ActiveRecord::Schema.define(:version => 20110126213413) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20110125224626) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "bin_path"
+    t.string   "type",        :limit => 32
   end
 
   create_table "sessions", :force => true do |t|
