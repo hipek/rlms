@@ -7,6 +7,8 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'haml'
 gem 'haml-rails'
 
+# gem 'rails3-generators'
+
 # gem 'wirble'
 # gem 'looksee'
 

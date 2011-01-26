@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110125204235) do
+ActiveRecord::Schema.define(:version => 20110115193305) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
@@ -84,13 +84,6 @@ ActiveRecord::Schema.define(:version => 20110125204235) do
     t.string   "permissible_type"
     t.string   "action"
     t.boolean  "granted"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "router_rule_open_ports", :force => true do |t|
-    t.string   "port"
-    t.string   "protocol"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
