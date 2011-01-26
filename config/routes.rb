@@ -1,10 +1,7 @@
 Rlms::Application.routes.draw do
   namespace :router do
-    resources :forward_ports
-  end
-
-  namespace :router do
     resources :open_ports
+    resources :forward_ports
   end
 
   resources :torrents do

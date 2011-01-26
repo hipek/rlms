@@ -1,7 +1,8 @@
-%h1 Editing router_forward_port
+%h1 Editing forward_port
 
-= render 'form'
+= form_for :forward_port, :url => router_forward_port_path(@forward_port), :html => {:method => :put} do |f|
+  = render 'form', :f => f
 
-= link_to 'Show', @router_forward_port
+= link_to 'Show', router_forward_port_path(@forward_port)
 \|
 = link_to 'Back', router_forward_ports_path

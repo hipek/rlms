@@ -20,7 +20,7 @@ class Router::ForwardPortsController < ApplicationController
 
     respond_to do |format|
       if @forward_port.save
-        format.html { redirect_to(@forward_port, :notice => 'Forward port was successfully created.') }
+        format.html { redirect_to(router_forward_port_url(@forward_port), :notice => 'Forward port was successfully created.') }
       else
         format.html { render :action => "new" }
       end
@@ -32,7 +32,7 @@ class Router::ForwardPortsController < ApplicationController
 
     respond_to do |format|
       if @forward_port.update_attributes(params[:forward_port])
-        format.html { redirect_to(@forward_port, :notice => 'Forward port was successfully updated.') }
+        format.html { redirect_to(router_forward_port_url(@forward_port), :notice => 'Forward port was successfully updated.') }
       else
         format.html { render :action => "edit" }
       end

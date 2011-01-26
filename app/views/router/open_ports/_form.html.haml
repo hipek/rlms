@@ -1,6 +1,6 @@
 -if @open_port.errors.any?
   #error_explanation
-    %h2= "#{pluralize(@open_port.errors.count, "error")} prohibited this router_open_port from being saved:"
+    %h2= "#{pluralize(@open_port.errors.count, "error")} prohibited this open_port from being saved:"
     %ul
       - @open_port.errors.full_messages.each do |msg|
         %li= msg

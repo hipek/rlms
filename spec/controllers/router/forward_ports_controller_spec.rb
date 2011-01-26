@@ -14,7 +14,7 @@ describe Router::ForwardPortsController do
   end
 
   describe "GET index" do
-    it "assigns all router_forward_ports as @router_forward_ports" do
+    it "assigns all forward_ports as @forward_ports" do
       Router::Rule::ForwardPort.stub(:all) { [mock_forward_port] }
       get :index
       assigns(:forward_ports).should eq([mock_forward_port])
@@ -79,7 +79,7 @@ describe Router::ForwardPortsController do
     describe "with valid params" do
       it "updates the requested forward_port" do
         Router::Rule::ForwardPort.stub(:find).with("37") { mock_forward_port }
-        mock_router_forward_port.should_receive(:update_attributes).with({'these' => 'params'})
+        mock_forward_port.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => "37", :forward_port => {'these' => 'params'}
       end
 
@@ -114,11 +114,11 @@ describe Router::ForwardPortsController do
   describe "DELETE destroy" do
     it "destroys the requested forward_port" do
       Router::Rule::ForwardPort.stub(:find).with("37") { mock_forward_port }
-      mock_router_forward_port.should_receive(:destroy)
+      mock_forward_port.should_receive(:destroy)
       delete :destroy, :id => "37"
     end
 
-    it "redirects to the router_forward_ports list" do
+    it "redirects to the forward_ports list" do
       Router::Rule::ForwardPort.stub(:find) { mock_forward_port }
       delete :destroy, :id => "1"
       response.should redirect_to(router_forward_ports_url)

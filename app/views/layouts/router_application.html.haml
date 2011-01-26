@@ -34,7 +34,7 @@
                 = content_tag :li, link_to('Admin', users_path), selected_option("user", "group") if current_user.has_permission?('admin')
         %div{:id => "flash", :class => "bold center"}
           %p{:class => "green"}
-            = flash[:notice]
+            = notice
           %p{:class => "red"}
             = flash[:error]
           %div{:class => "blue"}

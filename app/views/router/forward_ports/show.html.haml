@@ -1,6 +1,10 @@
-%p#notice= notice
+%p
+  %b Port:
+  = @forward_port.port
+%p
+  %b Protocol:
+  = @forward_port.protocol
 
-
-= link_to 'Edit', edit_router_forward_port_path(@router_forward_port)
+= link_to 'Edit', edit_router_forward_port_path(@forward_port)
 \|
 = link_to 'Back', router_forward_ports_path
