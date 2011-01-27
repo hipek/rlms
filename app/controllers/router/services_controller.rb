@@ -12,13 +12,8 @@ class Router::ServicesController < Router::BaseController
   end
 
   def find
-    types = {
-      :config => '/etc', 
-      :init => '/etc/init.d', 
-      :bin => ['/sbin', '/bin', '/usr/sbin', '/usr/bin', '/usr/local/bin', '/usr/local/sbin']
-    }
     results = [""]
-    types[params[:id].to_sym].to_a.each do |t|
+    Router::Service::Base::KINDS[params[:id].to_sym].to_a.each do |t|
       results << ShellCommand.find_file(params[:file]+'*', t).split(/\n/)
     end
     @results = results.flatten
