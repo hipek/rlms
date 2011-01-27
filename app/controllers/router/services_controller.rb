@@ -3,9 +3,11 @@ class Router::ServicesController < Router::BaseController
   end
 
   def update
+    success = true
     Router::Service::Base.all.each do |service|
-      service.update_attributes(params[service.name.downcase.to_sym] || {})
+      success &&= service.update_attributes(params[service.name.downcase.to_sym] || {})
     end
+    flash[:notice] = 'Services have been updated.' if success
     redirect_to(router_services_url)
   end
 
