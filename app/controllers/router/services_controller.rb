@@ -3,6 +3,9 @@ class Router::ServicesController < Router::BaseController
   end
 
   def update
+    Router::Service::Base.all.each do |service|
+      service.update_attributes(params[service.name.downcase.to_sym] || {})
+    end
     redirect_to(router_services_url)
   end
 

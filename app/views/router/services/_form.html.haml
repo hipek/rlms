@@ -4,14 +4,12 @@
     - next if service.class.name =~ /Simple/ && (%w"config init".include?(field))
     .field
       = label_tag :"#{field}_path", _('%{field} path') % {:field => field}
-      = text_field_tag "#{service.name}[#{field}_path]"
+      = text_field_tag "#{service.name}[#{field}_path]", service.send(:"#{field}_path")
       = link_to 'Find', find_router_service_path(field, :file => service.name), |
           :remote => true, :method => :post, 'data-input-id' => "#{service.name}_#{field}_path"
 
 .actions
   = submit_tag _('Update')
-
-%div{:id => 'response'}
 
 :javascript
   $(function($) {
