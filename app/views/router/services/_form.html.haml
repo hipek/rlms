@@ -1,4 +1,21 @@
-%h3= _('DHCP service settings')
-.field
-  = label_tag :ext_inf, _('Bin path')
-  = text_field_tag :ext_inf
+- Router::Service::Base.all.each do |service|
+  %h3= service.name
+  - %w"bin config init".each do |field|
+    - next if service.class.name =~ /Simple/ && (%w"config init".include?(field))
+    .field
+      = label_tag :"#{field}_path", _('%{field} path') % {:field => field}
+      = text_field_tag "#{service.name}[#{field}_path]"
+      = link_to 'Find', find_router_service_path(field, :file => service.name), |
+          :remote => true, :method => :post, 'data-input-id' => "#{service.name}_#{field}_path"
+
+.actions
+  = submit_tag _('Update')
+
+%div{:id => 'response'}
+
+:javascript
+  $(function($) {
+    $("a[data-input-id]").bind("ajax:success", function(event, data, status, xhr) {
+      $('#' + this.getAttribute("data-input-id")).replaceWith(data);
+    });
+  });

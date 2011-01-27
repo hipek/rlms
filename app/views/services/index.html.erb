@@ -20,9 +20,9 @@
     <td><%=h service.config_path %></td>
     <td><%=h service.bin_path %></td>
     <td>
-      <%= link_to 'Show', service %>
+      <%= link_to 'Show', service_path(service) %>
       <%= link_to 'Edit', edit_service_path(service) %>
-      <%= link_to 'Destroy', service, :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to 'Destroy', service_path(service), :confirm => 'Are you sure?', :method => :delete %>
     </td>
   </tr>
 <% end %>
