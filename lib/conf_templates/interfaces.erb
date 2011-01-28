@@ -1,12 +1,15 @@
 auto lo
 iface lo inet loopback
 
-<%= @data[:interfaces].domain_name %>
-
-auto eth0
-iface eth0 inet static
-      address 10.5.5.100
-      netmask 255.0.0.0
-
-auto eth1
-iface eth1 inet dhcp
+<% @data[:interfaces].sort_by(&:name).each do |interface| %>
+  <% if interface.config == 'auto' %>
+auto <%= interface.name %>
+iface <%= interface.name %> inet dhcp
+  <% else %>
+auto <%= interface.name %>
+iface <%= interface.name %> inet static
+      address <%= interface.ip_address %>
+      netmask <%= interface.ip_mask %>
+      <%= "gateway #{interface.ip_gateway}" if interface.ip_gateway.present? %>
+  <% end %>
+<% end %>

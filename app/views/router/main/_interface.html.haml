@@ -1,4 +1,4 @@
-- interface = @router_main.interfaces.select{|a| a.net_type == net_type}.first || Router::Interface.new
+- interface = @router_main.interfaces.find_by_net_type(net_type) || Router::Interface.new
 = f.fields_for "interfaces_attributes[]", interface do |inf|
   .field
     = inf.label :name, _('Interface')
