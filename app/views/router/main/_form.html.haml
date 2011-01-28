@@ -6,21 +6,7 @@
         %li= msg
 
 %h3= _('Internet settings')
-.field
-  = f.label :ext_inf, _('Interface')
-  = f.select :ext_inf, interfaces
-.field
-  = f.label :ext_config, _('Configuration IPv4')
-  = f.select :ext_config, ip_configs
-.field
-  = f.label :ext_ip, _('IP')
-  = f.text_field :ext_ip
-.field
-  = f.label :ext_mask, _('Mask')
-  = f.text_field :ext_mask
-.field
-  = f.label :ext_mask, _('Gateway')
-  = f.text_field :ext_gateway
+= render 'interface', :net_type => 'ext', :f => f
 
 %h3= _('DNS servers')
 .field
@@ -31,21 +17,7 @@
   = f.text_field :dns_server2
 
 %h3= _('LAN settings')
-.field
-  = f.label :int_inf, _('Interface')
-  = f.select :int_inf, interfaces
-.field
-  = f.label :int_config, _('Configuration IPv4')
-  = f.select :int_config, ip_configs
-.field
-  = f.label :int_ip, _('IP')
-  = f.text_field :int_ip
-.field
-  = f.label :int_mask, _('Mask')
-  = f.text_field :int_mask
-.field
-  = f.label :int_mask, _('Gateway')
-  = f.text_field :int_gateway
+= render 'interface', :net_type => 'int', :f => f
 
 .actions
   = f.submit 'Update'

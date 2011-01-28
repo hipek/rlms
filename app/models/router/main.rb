@@ -1,21 +1,20 @@
 class Router::Main < Router::BaseSetting
   define_fields(
-    :int_config => 'manually',
-    :ext_config => 'auto',
-    :int_inf => 'eth0',
-    :ext_inf => 'eth1',
-    :int_ip => '',
-    :int_mask => '',
-    :int_gateway => '',
-    :ext_ip => '',
-    :ext_mask => '',
-    :ext_gateway => '',
     :dns_server1 => '',
     :dns_server2 => ''
   )
+
+  has_many :interfaces, :class_name => 'Router::Interface', :foreign_key => 'parent_id'
+
   class <<self
     def instance
       first || new
     end
+  end
+
+  def interfaces_attributes= attrs
+    self.interfaces = attrs.map{ |key, att|
+      Router::Interface.new(att || key)
+    }
   end
 end

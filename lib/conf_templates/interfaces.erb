@@ -1,6 +1,8 @@
 auto lo
 iface lo inet loopback
 
+<%= @data[:interfaces].domain_name %>
+
 auto eth0
 iface eth0 inet static
       address 10.5.5.100
