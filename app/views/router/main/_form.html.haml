@@ -21,3 +21,15 @@
 
 .actions
   = f.submit 'Update'
+
+:javascript
+  $(function() {
+    $("select[data-ip-config]").change(function() {
+      id = '#' + this.getAttribute("data-ip-config"); 
+      if(this.value == 'auto') {
+        $(id).hide();
+      } else {
+        $(id).show();
+      }
+    });
+  });

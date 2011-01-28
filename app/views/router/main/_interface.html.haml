@@ -6,13 +6,14 @@
     = inf.hidden_field :net_type, :value => net_type
   .field
     = inf.label :config, _('Configuration IPv4')
-    = inf.select :config, ip_configs
-  .field
-    = inf.label :ip_address, _('IP')
-    = inf.text_field :ip_address
-  .field
-    = inf.label :ip_mask, _('Mask')
-    = inf.text_field :ip_mask
-  .field
-    = inf.label :ip_gateway, _('Gateway')
-    = inf.text_field :ip_gateway
+    = inf.select :config, ip_configs, {}, {'data-ip-config' => net_type}
+  %div{:id => net_type, :style => interface.config == 'auto' ? "display: none;" : ''}
+    .field
+      = inf.label :ip_address, _('IP')
+      = inf.text_field :ip_address
+    .field
+      = inf.label :ip_mask, _('Mask')
+      = inf.text_field :ip_mask
+    .field
+      = inf.label :ip_gateway, _('Gateway')
+      = inf.text_field :ip_gateway
