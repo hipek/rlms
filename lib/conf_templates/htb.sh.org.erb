@@ -1,0 +1,141 @@
+#!/bin/bash
+#
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH
+
+INTIP="10.5.5.100"
+INTIF="imq0"
+EXTIF="eth1"
+TYPE="htb"
+
+LANSPEED="92050"		#predkosc max lanu
+LANSPEED2="90000"		#predkosc max bez netu
+
+DL_UMINSPEED="320"		#predkosc min usera
+DL_NETSPEED="1920"		#predkosc netu
+DL_UMAXSPEED="1900"		#predkosc max netu
+
+UL_FTPSPEED="60"
+UL_WWWSPEED="40"
+UL_OTHERSPEED="120"
+UL_NETSPEED="210"		#predkosc max netu - upload
+UL_UMINSPEED="30"		#predkosc min netu - upload (jedna usluga)
+UL_UMAXSPEED="210"		#predkosc max uslugi
+
+NETWORK="10.5.5."
+NETCOUNT=18			#ilosc kompow w sieci
+SERCOUNT=5			#ilosc servisow uploadu
+INSERCOUNT=5			#ilosc serbisow download
+
+if [ "$1" == "start" ]
+then
+    ###############################################################################################
+    # download
+    #
+    tc qdisc del root dev $INTIF 2> /dev/null > /dev/null
+    tc qdisc add dev $INTIF root handle 1:0 $TYPE default 35
+    tc class add dev $INTIF parent 1:0 classid 1:1 $TYPE rate \
+	${DL_NETSPEED}kbit ceil ${DL_NETSPEED}kbit
+    
+    x=0;
+    while [ $x -le $INSERCOUNT ]; do
+	MSPEED=${DL_UMAXSPEED}
+	if [ $x = 4 ]; then
+	    MSPEED=1600
+	fi
+	if [ $x = 5 ]; then
+	    MSPEED=1600
+	fi
+	#echo "$MSPEED"
+        tc class add dev $INTIF parent 1:1 classid 1:$[$x+30] htb rate \
+	${DL_UMINSPEED}kbit ceil ${MSPEED}kbit prio $x \
+	quantum $[$DL_UMINSPEED*1024/8/1500]
+	x=$[x + 1]
+    done
+    
+    x=0;
+    while [ $x -le $INSERCOUNT ]; do
+	tc qdisc add dev $INTIF parent 1:$[$x+30] handle $[$x+30]:0 esfq perturb 10 hash dst
+	x=$[x + 1]
+    done
+
+    x=0;
+    while [ $x -le $INSERCOUNT ]; do
+	tc filter add dev $INTIF parent 1:0 prio 0 protocol ip preference 1 \
+	handle $[$x+30] fw flowid 1:$[$x+30]
+	x=$[x + 1]
+    done
+    #end download
+    ##############################################################################################
+    
+    ###############################################################################################
+    #upload
+    #
+    tc qdisc del root dev $EXTIF 2> /dev/null > /dev/null
+    tc qdisc add dev $EXTIF root handle 1:0 $TYPE default 25
+    tc class add dev $EXTIF parent 1:0 classid 1:1 $TYPE rate \
+	${UL_NETSPEED}kbit ceil ${UL_NETSPEED}kbit
+    
+    x=0;
+    while [ $x -le $SERCOUNT ]; do
+	MSPEED=${UL_UMAXSPEED}
+	if [ $x = 5 ]; then
+	    MSPEED=120
+	fi
+	if [ $x = 4 ]; then
+	    MSPEED=120
+	fi
+	if [ $x = 1 ]; then
+	    MSPEED=128
+	fi
+	#echo "$MSPEED"
+        tc class add dev $EXTIF parent 1:1 classid 1:$[$x+20] htb rate \
+	${UL_UMINSPEED}kbit ceil ${MSPEED}kbit prio $x \
+	quantum $[$UL_UMINSPEED*1024/8/1500]
+	x=$[x + 1]
+    done
+    
+    x=0;
+    while [ $x -le $SERCOUNT ]; do
+	tc qdisc add dev $EXTIF parent 1:$[$x+20] handle $[$x+20]:0 esfq perturb 10 hash dst
+	x=$[x + 1]
+    done
+
+    x=0;
+    while [ $x -le $SERCOUNT ]; do
+	tc filter add dev $EXTIF parent 1:0 prio 0 protocol ip preference 1 \
+	handle $[$x+20] fw flowid 1:$[$x+20]
+	x=$[x + 1]
+    done
+    tc filter add dev $EXTIF parent 1:0 prio 0 protocol ip preference 1 \
+	handle 10 fw flowid 1:25
+    tc filter add dev $EXTIF parent 1:0 prio 0 protocol ip preference 1 \
+	handle 11 fw flowid 1:25
+    tc filter add dev $EXTIF parent 1:0 prio 0 protocol ip preference 1 \
+	handle 12 fw flowid 1:25
+    tc filter add dev $EXTIF parent 1:0 prio 0 protocol ip preference 1 \
+	handle 13 fw flowid 1:25
+    tc filter add dev $EXTIF parent 1:0 prio 0 protocol ip preference 1 \
+	handle 14 fw flowid 1:25
+    # end upload
+    ###############################################################################################
+exit
+fi
+
+if [ "$1" == "stop" ]
+then
+    # download
+    tc qdisc del root dev $INTIF 2> /dev/null > /dev/null
+    #upload
+    tc qdisc del root dev $EXTIF 2> /dev/null > /dev/null
+exit
+fi
+
+if [ "$1" == "status" ]
+then
+    echo $INTIF
+    tc -s qdisc show dev $INTIF
+    echo $EXTIF
+    tc -s qdisc show dev $EXTIF
+exit
+fi
