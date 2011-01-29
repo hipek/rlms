@@ -15,11 +15,11 @@ module Router::TcClassidsHelper
     priorities.find{|o| o.last == prio}.first
   end
 
-  def display_data_transfer d
-    data_transfers.find{|a| a.last == d}.first
+  def display_net_types d
+    net_types.find{|a| a.last == d}.first
   end
 
-  def data_transfers
+  def net_types
     [
       ['Download', 'int'],
       ['Upload', 'ext']

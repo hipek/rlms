@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110129193805) do
+ActiveRecord::Schema.define(:version => 20110129201357) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
@@ -145,11 +145,12 @@ ActiveRecord::Schema.define(:version => 20110129193805) do
 
   create_table "tc_classids", :force => true do |t|
     t.integer  "prio"
-    t.string   "data_transfer"
+    t.string   "net_type"
     t.string   "rate"
     t.string   "ceil"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "router_id"
   end
 
   create_table "users", :force => true do |t|
