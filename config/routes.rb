@@ -1,5 +1,6 @@
 Rlms::Application.routes.draw do
   namespace :router do
+    resources :flows
     resources :open_ports
     resources :forward_ports
     resources :services, :only => [:update, :index] do

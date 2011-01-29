@@ -1,0 +1,23 @@
+%h1 Listing router flows
+
+%table
+  %tr
+    %th Port
+    %th Net type
+    %th Tc classid
+    %th Port type
+    %th= _('Action')
+
+  - @router_flows.each do |router_flow|
+    %tr
+      %td= router_flow.port
+      %td= display_net_type(router_flow.net_type)
+      %td= router_flow.tc_classid_id
+      %td= display_port_type(router_flow.port_type)
+      %td
+        = link_to 'Edit', edit_router_flow_path(router_flow)
+        = link_to 'Destroy', router_flow_path(router_flow), :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Flow', new_router_flow_path

@@ -1,0 +1,21 @@
+-if @router_flow.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@router_flow.errors.count, "error")} prohibited this router_flow from being saved:"
+    %ul
+      - @router_flow.errors.full_messages.each do |msg|
+        %li= msg
+
+.field
+  = f.label :port
+  = f.text_field :port
+.field
+  = f.label :net_type, _('Download/Upload')
+  = f.select :net_type, net_types
+.field
+  = f.label :tc_classid_id
+  = f.text_field :tc_classid_id
+.field
+  = f.label :port_type
+  = f.select :port_type, port_types
+.actions
+  = f.submit 'Save'
