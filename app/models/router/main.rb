@@ -1,7 +1,8 @@
 class Router::Main < Router::BaseSetting
   define_fields(
     :dns_server1 => '',
-    :dns_server2 => ''
+    :dns_server2 => '',
+    :name => 'localhost.localdomain'
   )
 
   has_many :interfaces, :class_name => 'Router::Interface', :foreign_key => 'parent_id' do

@@ -6,6 +6,10 @@
         %li= msg
 
 %h3= _('Internet settings')
+.field
+  = f.label :name, _('Domain name')
+  = f.text_field :name
+
 = render 'interface', :net_type => 'ext', :f => f
 
 %h3= _('DNS servers')

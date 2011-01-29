@@ -16,4 +16,11 @@ describe Router::DhcpsController do
     end
   end
 
+  describe "PUT 'update'" do
+    it "should redirected to router_services_url" do
+      put :update, :id => 0
+      response.should redirect_to(router_dhcps_url)
+    end
+  end
+
 end
