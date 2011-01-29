@@ -30,7 +30,11 @@ class Router::Main < Router::BaseSetting
       :gateway => int_inf.ip_address,
       :domain_name_server1 => dns_server1,
       :domain_name_server2 => dns_server2,
-      :subnet_mask => int_inf.ip_mask
+      :subnet_mask => int_inf.ip_mask,
+      :subnet => int_inf.subnet,
+      :broadcast_address => int_inf.broadcast,
+      :range_from => int_inf.incomplete_ip,
+      :range_to => int_inf.incomplete_ip
     }
   end
 
