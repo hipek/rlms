@@ -34,6 +34,19 @@ module Factory
      }.merge(options)), options
   end
 
+  def stub_shell_commands
+    Service.stub!(:find_by_name).and_return(mock('service', :bin_path => '', :config_path => '/tmp', :init_path => '/tmp'))
+    ShellCommand.stub!(:run_command).and_return('')
+  end
+
+  def array_to_will_paginate elements, page=1, per_page=100
+    WillPaginate::Collection.new(page, per_page, elements.length).concat(elements)
+  end
+
+  def add_permission group, permission
+    Permission.find_or_create_by_group_id_and_action(group.id, permission)
+  end
+
   protected
 
   def stub_others object, options={}
