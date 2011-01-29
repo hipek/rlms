@@ -1,2 +1,21 @@
-%h1 Router::TcClassids#index
-%p Find me in app/views/router/tc_classids/index.html.haml
+%h1 Listing tc classids
+
+%table
+  %tr
+    %th= _('Prio')
+    %th 
+    %th 
+    %th= _('Action')
+
+  - @tc_classids.each do |tc_classid|
+    %tr
+      %td= tc_classid.prio
+      %td
+      %td
+      %td
+        = link_to 'Edit', edit_router_tc_classid_path(tc_classid)
+        = link_to 'Destroy', router_tc_classid_path(tc_classid), :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New tc classid', new_router_tc_classid_path

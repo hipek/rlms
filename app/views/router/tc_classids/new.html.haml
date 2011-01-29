@@ -1,2 +1,6 @@
-%h1 Router::TcClassids#new
-%p Find me in app/views/router/tc_classids/new.html.haml
+%h1= _('New Tc Classid')
+
+= form_for :tc_classid, :url => router_tc_classids_path,:html => {:method => :post} do |f|
+  = render 'form', :f => f
+
+= link_to 'Back', router_tc_classids_path
