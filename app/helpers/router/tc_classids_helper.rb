@@ -2,12 +2,12 @@ module Router::TcClassidsHelper
   def priorities
     [
       ['Network', -1],
-      ['Very High', 0],
-      ['High', 1],
-      ['Medium High', 2],
-      ['Medium Low', 3],
-      ['Low', 4],
-      ['Very Low', 5],
+      ['Highest', 0],
+      ['Higher', 1],
+      ['High', 2],
+      ['Low', 3],
+      ['Lower', 4],
+      ['Lowest', 5],
     ]
   end
 
