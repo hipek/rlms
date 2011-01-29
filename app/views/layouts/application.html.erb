@@ -33,6 +33,7 @@
 	  <% if logged_in? %>
           <ul>
              <%= content_tag :li, link_to('Admin', users_path), selected_option("user", "group") if current_user.has_permission?('admin') -%>
+             <%= content_tag :li, link_to('Router', router_main_path), selected_option("router") if current_user.has_permission?('admin') -%>
              <%= content_tag :li, link_to('Computers', computers_path), selected_option("computer") if current_user.has_permission?('computers') -%>
              <%= content_tag :li, link_to('Firewall', fw_rules_path), selected_option("fw", "firewall") if current_user.has_permission?('firewalls') -%>
              <%= content_tag :li, link_to('Service', services_path), selected_option("serv") if current_user.has_permission?('services') -%>
