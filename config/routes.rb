@@ -1,7 +1,4 @@
 Rlms::Application.routes.draw do
-
-  get "dhcps/index"
-
   namespace :router do
     resources :open_ports
     resources :forward_ports
@@ -10,7 +7,8 @@ Rlms::Application.routes.draw do
         post :find
       end
     end
-    resources :dhcps, :only => [:index, :update, :destroy]
+    resources :dhcps
+    resources :tc_classids
     get "main" => "main#index", :as => :main
     put "main/update",          :as => :update_main
   end

@@ -1,0 +1,2 @@
+module Router::TcClassidsHelper
+end
