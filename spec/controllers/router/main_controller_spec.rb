@@ -11,14 +11,14 @@ describe Router::MainController do
 
   describe "GET 'index'" do
     it "should be successful" do
-      get 'index'
+      get :index
       response.should be_success
     end
   end
 
   describe "PUT 'update'" do
     it "should be successful" do
-      put 'update'
+      put :update, :router_main => { :dns_server1 => '194.204.159.1'}
       response.should redirect_to(router_main_url)
     end
   end
