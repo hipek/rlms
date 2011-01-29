@@ -10,7 +10,7 @@ Rlms::Application.routes.draw do
         post :find
       end
     end
-    resources :dhcps, :only => [:index, :update]
+    resources :dhcps, :only => [:index, :update, :destroy]
     get "main" => "main#index", :as => :main
     put "main/update",          :as => :update_main
   end

@@ -11,4 +11,12 @@ class Router::DhcpsController < Router::BaseController
       render :action => 'index'
     end
   end
+
+  def destroy
+    unless Router::Dhcp.instance.new_record?
+      Router::Dhcp.instance.destroy
+      flash[:notice] = _('Dhcp server settings have been reset to defaults')
+    end
+    redirect_to(router_dhcps_url)
+  end
 end

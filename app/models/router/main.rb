@@ -5,7 +5,7 @@ class Router::Main < Router::BaseSetting
     :name => 'localhost.localdomain'
   )
 
-  validates_presence_of :name
+  validates_presence_of :name, :dns_server1
 
   has_many :interfaces, :class_name => 'Router::Interface', :foreign_key => 'parent_id' do
     def find_by_net_type t

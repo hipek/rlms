@@ -5,8 +5,7 @@ class Router::Dhcp < Router::BaseSetting
     :default_lease_time => '8600', :max_lease_time => '8600'
 
   validates_format_of :subnet, :broadcast_address, 
-    :range_from, :range_to, :subnet_mask, 
-    :domain_name_server1, :domain_name_server2,
+    :range_from, :range_to, :subnet_mask, :domain_name_server1,
     :with => /\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/
 
   belongs_to :router, :class_name => 'Router::Main', :foreign_key => 'parent_id'

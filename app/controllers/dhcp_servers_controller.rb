@@ -14,5 +14,4 @@ class DhcpServersController < ApplicationController
       render :action => 'index'
     end
   end
-
 end
