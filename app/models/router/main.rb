@@ -2,7 +2,8 @@ class Router::Main < Router::BaseSetting
   define_fields(
     :dns_server1 => '',
     :dns_server2 => '',
-    :name => 'localhost.localdomain'
+    :name => 'localhost.localdomain',
+    :int_imq => 'imq0'
   )
 
   validates_presence_of :name, :dns_server1
