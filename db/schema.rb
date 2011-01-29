@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110128185724) do
+ActiveRecord::Schema.define(:version => 20110129130551) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"

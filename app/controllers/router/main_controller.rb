@@ -8,7 +8,7 @@ class Router::MainController < Router::BaseController
     if @router_main.update_attributes params[:router_main]
       redirect_to(router_main_path, :notice => 'Setting updated successfully.')
     else
-
+      render :action => 'index'
     end
   end
 end
