@@ -15,7 +15,7 @@ module Router::TcClassidsHelper
     priorities.find{|o| o.last == prio}.first
   end
 
-  def display_net_types d
+  def display_net_type d
     net_types.find{|a| a.last == d}.first
   end
 

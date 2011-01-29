@@ -10,7 +10,7 @@
   - @tc_classids.each do |tc_classid|
     %tr
       %td= display_priority(tc_classid.prio)
-      %td= display_data_transfer(tc_classid.data_transfer)
+      %td= display_net_type(tc_classid.net_type)
       %td
         = tc_classid.rate
         \/
