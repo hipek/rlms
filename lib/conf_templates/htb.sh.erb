@@ -1,0 +1,90 @@
+#!/bin/bash
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH
+<% 
+  ntype       = @data[:ntype]
+  ext_inf     = @data[:extif]
+  int_inf     = @data[:intif]
+  dnet_speed  = @data[:dnet_speed]
+  unet_speed  = @data[:unet_speed]
+%>
+
+DL_UMINSPEED="320"		#predkosc min usera
+DL_UMAXSPEED="1900"		#predkosc max netu
+
+UL_UMINSPEED="30"		#predkosc min netu - upload (jedna usluga)
+UL_UMAXSPEED="210"		#predkosc max uslugi
+
+SERCOUNT=5			#ilosc servisow uploadu
+INSERCOUNT=5			#ilosc serbisow download
+
+###############################################################################################
+# download
+#
+tc qdisc del root dev <%= int_inf %> 2> /dev/null > /dev/null
+tc qdisc add dev <%= int_inf %> root handle 1:0 <%= ntype %> default 35
+tc class add dev <%= int_inf %> parent 1:0 classid 1:1 <%= ntype %> rate <%= dnet_speed %>kbit ceil <%= dnet_speed %>kbit
+
+x=0;
+while [ $x -le $INSERCOUNT ]; do
+  MSPEED=${DL_UMAXSPEED}
+  if [ $x = 4 ]; then
+      MSPEED=1600
+  fi
+  if [ $x = 5 ]; then
+      MSPEED=1600
+  fi
+  tc class add dev <%= int_inf %> parent 1:1 classid 1:$[$x+30] htb rate ${DL_UMINSPEED}kbit ceil ${MSPEED}kbit prio $x quantum $[$DL_UMINSPEED*1024/8/1500]
+  x=$[x + 1]
+done
+
+x=0;
+while [ $x -le $INSERCOUNT ]; do
+  tc qdisc add dev <%= int_inf %> parent 1:$[$x+30] handle $[$x+30]:0 esfq perturb 10 hash dst
+  x=$[x + 1]
+done
+
+x=0;
+while [ $x -le $INSERCOUNT ]; do
+  tc filter add dev <%= int_inf %> parent 1:0 prio 0 protocol ip preference 1 handle $[$x+30] fw flowid 1:$[$x+30]
+  x=$[x + 1]
+done
+###############################################################################################
+#upload
+#
+tc qdisc del root dev <%= ext_inf %> 2> /dev/null > /dev/null
+tc qdisc add dev <%= ext_inf %> root handle 1:0 <%= ntype %> default 25
+tc class add dev <%= ext_inf %> parent 1:0 classid 1:1 <%= ntype %> rate <%= unet_speed %>kbit ceil <%= unet_speed %>kbit
+
+x=0;
+while [ $x -le $SERCOUNT ]; do
+  MSPEED=${UL_UMAXSPEED}
+  if [ $x = 5 ]; then
+      MSPEED=120
+  fi
+  if [ $x = 4 ]; then
+      MSPEED=120
+  fi
+  if [ $x = 1 ]; then
+      MSPEED=128
+  fi
+  tc class add dev <%= ext_inf %> parent 1:1 classid 1:$[$x+20] htb rate ${UL_UMINSPEED}kbit ceil ${MSPEED}kbit prio $x quantum $[$UL_UMINSPEED*1024/8/1500]
+  x=$[x + 1]
+done
+
+x=0;
+while [ $x -le $SERCOUNT ]; do
+  tc qdisc add dev <%= ext_inf %> parent 1:$[$x+20] handle $[$x+20]:0 esfq perturb 10 hash dst
+  x=$[x + 1]
+done
+
+x=0;
+while [ $x -le $SERCOUNT ]; do
+  tc filter add dev <%= ext_inf %> parent 1:0 prio 0 protocol ip preference 1 handle $[$x+20] fw flowid 1:$[$x+20]
+  x=$[x + 1]
+done
+tc filter add dev <%= ext_inf %> parent 1:0 prio 0 protocol ip preference 1 handle 10 fw flowid 1:25
+tc filter add dev <%= ext_inf %> parent 1:0 prio 0 protocol ip preference 1 handle 11 fw flowid 1:25
+tc filter add dev <%= ext_inf %> parent 1:0 prio 0 protocol ip preference 1 handle 12 fw flowid 1:25
+tc filter add dev <%= ext_inf %> parent 1:0 prio 0 protocol ip preference 1 handle 13 fw flowid 1:25
+tc filter add dev <%= ext_inf %> parent 1:0 prio 0 protocol ip preference 1 handle 14 fw flowid 1:25

@@ -1,4 +1,7 @@
 #!/bin/bash
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH
+
 <% 
   iptables = @data[:iptables]
   extif    = @data[:extif]
