@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110129172000) do
+ActiveRecord::Schema.define(:version => 20110129193805) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
@@ -100,6 +100,15 @@ ActiveRecord::Schema.define(:version => 20110129172000) do
     t.string   "permissible_type"
     t.string   "action"
     t.boolean  "granted"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rule_flows", :force => true do |t|
+    t.string   "port"
+    t.string   "net_type"
+    t.integer  "tc_classid_id"
+    t.string   "port_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
