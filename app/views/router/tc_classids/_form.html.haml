@@ -6,8 +6,19 @@
         %li= msg
 
 .field
-  = f.label :prio
-  = f.text_field :prio
+  = f.label :prio, _('Priority/Network')
+  = f.select :prio, priorities
+.field
+  = f.label :data_transfer, _('Download/Upload')
+  = f.select :data_transfer, data_transfers
+.field
+  = f.label :rate, _('Rate (min speed)')
+  = f.text_field :rate
+  kbit
+.field
+  = f.label :ceil, _('Ceil (max speed)')
+  = f.text_field :ceil
+  kbit
 
 .actions
   = f.submit 'Save'

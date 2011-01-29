@@ -1,20 +1,28 @@
 %h1 Listing tc classids
 
-%table
+%table.centerAll
   %tr
     %th= _('Prio')
-    %th 
-    %th 
+    %th= _('Dw/Up') 
+    %th= _('Rate/Ceil')
     %th= _('Action')
 
   - @tc_classids.each do |tc_classid|
     %tr
-      %td= tc_classid.prio
+      %td= display_priority(tc_classid.prio)
+      %td= display_data_transfer(tc_classid.data_transfer)
       %td
-      %td
+        = tc_classid.rate
+        \/
+        = tc_classid.ceil
       %td
         = link_to 'Edit', edit_router_tc_classid_path(tc_classid)
         = link_to 'Destroy', router_tc_classid_path(tc_classid), :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= form_for :tc_classid, :url => router_tc_classids_path,:html => {:method => :post} do |f|
+  = render 'form', :f => f
 
 %br
 

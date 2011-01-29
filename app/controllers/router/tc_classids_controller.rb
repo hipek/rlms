@@ -1,6 +1,7 @@
 class Router::TcClassidsController < Router::BaseController
   def index
-    @tc_classids = Router::Tc::Classid.all
+    new
+    @tc_classids = Router::Tc::Classid.all(:order => 'data_transfer DESC, prio ASC')
   end
 
   def new
