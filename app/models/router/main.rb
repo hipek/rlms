@@ -25,6 +25,15 @@ class Router::Main < Router::BaseSetting
     interfaces.find_by_net_type('int')
   end
 
+  def dhcp_attrs
+    { :router => self,
+      :gateway => int_inf.ip_address,
+      :domain_name_server1 => dns_server1,
+      :domain_name_server2 => dns_server2,
+      :subnet_mask => int_inf.ip_mask
+    }
+  end
+
   protected
 
   def interfaces_attributes= attrs

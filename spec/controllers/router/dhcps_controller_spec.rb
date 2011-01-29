@@ -7,6 +7,7 @@ describe Router::DhcpsController do
   before(:each) do
     login_as(:quentin)
     stub_shell_commands
+    Router::Dhcp.stub!(:first).and_return(build_router_dhcp)
   end
 
   describe "GET 'index'" do
@@ -22,5 +23,4 @@ describe Router::DhcpsController do
       response.should redirect_to(router_dhcps_url)
     end
   end
-
 end

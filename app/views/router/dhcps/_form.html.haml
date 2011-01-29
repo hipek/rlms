@@ -1,0 +1,44 @@
+-if @dhcp.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@dhcp.errors.count, "error")} prohibited these settings from being saved:"
+    %ul
+      - @dhcp.errors.full_messages.each do |msg|
+        %li= msg
+
+%h3= _('Dhcp server settings')
+.field
+  = f.label :domain_name, _('Domain name')
+  = @dhcp.domain_name
+.field
+  = f.label :domain_name_server1, _('First DNS server')
+  = f.text_field :domain_name_server1
+.field
+  = f.label :domain_name_server2, _('Second DNS server')
+  = f.text_field :domain_name_server2
+.field
+  = f.label :subnet
+  = f.text_field :subnet
+.field
+  = f.label :subnet_mask
+  = f.text_field :subnet_mask
+.field
+  = f.label :broadcast_address
+  = f.text_field :broadcast_address
+.field
+  = f.label :gateway
+  = f.text_field :gateway
+.field
+  = f.label :range_from
+  = f.text_field :range_from
+.field
+  = f.label :range_to
+  = f.text_field :range_to
+.field
+  = f.label :default_lease_time
+  = f.text_field :default_lease_time
+.field
+  = f.label :max_lease_time
+  = f.text_field :max_lease_time
+
+.actions
+  = f.submit _('Update')

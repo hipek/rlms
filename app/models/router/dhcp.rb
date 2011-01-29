@@ -1,5 +1,5 @@
 class Router::Dhcp < Router::BaseSetting
-  define_fields :subnet => nil, :broadcast_address => nil, 
+  define_fields :gateway => nil, :subnet => nil, :broadcast_address => nil, 
     :range_from => nil, :range_to => nil, :subnet_mask => nil, 
     :domain_name_server1 => nil, :domain_name_server2 => nil,
     :default_lease_time => '8600', :max_lease_time => '8600'
@@ -13,12 +13,12 @@ class Router::Dhcp < Router::BaseSetting
 
   class <<self
     def instance
-      first || new(:router => Router::Main.instance)
+      first || new(Router::Main.instance.dhcp_attrs)
     end
   end
 
   def domain_name
-    router.domain
+    router.name
   end
 
   def domain_name_servers
