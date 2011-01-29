@@ -30,7 +30,7 @@
         <a id="navigation" name="navigation"></a>
         <div id="nav_main">
           <!-- main navigation: #nav_main -->
-	  <% if logged_in? %>
+        <% if logged_in? %>
           <ul>
              <%= content_tag :li, link_to('Admin', users_path), selected_option("user", "group") if current_user.has_permission?('admin') -%>
              <%= content_tag :li, link_to('Router', router_main_path), selected_option("router") if current_user.has_permission?('admin') -%>
@@ -41,7 +41,7 @@
              <%= content_tag :li, link_to('Web Jobs', dwnl_web_jobs_path), selected_option("web_jobs") if current_user.has_permission?('admin') -%>
              <%= content_tag :li, link_to('Torents', torrents_path), selected_option("torrents") if current_user.has_permission?('admin') -%>
           </ul>
-	  <% end %>
+        <% end %>
         </div>
       </div>
       <div id="flash" class="bold center">
