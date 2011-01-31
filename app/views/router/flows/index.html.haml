@@ -3,7 +3,6 @@
 %table
   %tr
     %th Port
-    %th Net type
     %th Tc classid
     %th Port type
     %th= _('Action')
@@ -11,8 +10,7 @@
   - @router_flows.each do |router_flow|
     %tr
       %td= router_flow.port
-      %td= display_net_type(router_flow.net_type)
-      %td= router_flow.tc_classid_id
+      %td= router_flow.tc_classid.try(:full_name)
       %td= display_port_type(router_flow.port_type)
       %td
         = link_to 'Edit', edit_router_flow_path(router_flow)
@@ -20,4 +18,6 @@
 
 %br
 
-= link_to 'New Flow', new_router_flow_path
+= link_to 'New IN Flow', new_router_flow_path(:t => 'int')
+|
+= link_to 'New OUT Flow', new_router_flow_path(:t => 'ext')

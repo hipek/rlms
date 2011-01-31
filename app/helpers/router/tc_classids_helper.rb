@@ -1,14 +1,7 @@
 module Router::TcClassidsHelper
   def priorities
-    [
-      ['Network', -1],
-      ['Highest', 0],
-      ['Higher', 1],
-      ['High', 2],
-      ['Low', 3],
-      ['Lower', 4],
-      ['Lowest', 5],
-    ]
+    order = %w'Network Highest Higher High Low Lower Lowest'
+    Router::Tc::Classid.priorities.sort{|x, y| order.index(x.first) <=> order.index(y.first)}
   end
 
   def display_priority prio
