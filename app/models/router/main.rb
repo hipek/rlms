@@ -8,8 +8,8 @@ class Router::Main < Router::BaseSetting
 
   validates_presence_of :name, :dns_server1
 
-  has_many :utc_classids, :class_name => 'Router::Tc::Classid', :foreign_key => 'router_id', :conditions => {:net_type => 'ext'}
-  has_many :dtc_classids, :class_name => 'Router::Tc::Classid', :foreign_key => 'router_id', :conditions => {:net_type => 'int'}
+  has_many :tc_classids, :class_name => 'Router::Tc::Classid', :foreign_key => 'router_id'
+  has_many :flow_rules, :through => :tc_classids, :source => :flow_rules
   has_many :interfaces, :class_name => 'Router::Interface', :foreign_key => 'parent_id' do
     def find_by_net_type t
       select{|a| a.net_type == t}.first
