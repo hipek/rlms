@@ -8,7 +8,7 @@ max-lease-time <%= @data[:dhcp].max_lease_time %>;
 subnet <%= @data[:dhcp].subnet %> netmask <%= @data[:dhcp].subnet_mask %> {
     range <%= "#{@data[:dhcp].range_from} #{@data[:dhcp].range_to}" %>;
     option broadcast-address <%= @data[:dhcp].broadcast_address %>;
-    option routers <%= @data[:dhcp].router %>;
+    option routers <%= @data[:dhcp].gateway %>;
 }
 <% @data[:computers].each do |comp| %>
 host <%= comp.valid_name %> {

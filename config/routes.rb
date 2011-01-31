@@ -1,5 +1,7 @@
 Rlms::Application.routes.draw do
   namespace :router do
+    resources :dhcps
+    resources :tc_classids
     resources :flows
     resources :open_ports
     resources :forward_ports
@@ -8,8 +10,15 @@ Rlms::Application.routes.draw do
         post :find
       end
     end
-    resources :dhcps
-    resources :tc_classids
+    resources :computers do
+      collection do
+        get :dhcp_list
+      end
+      member do
+        post :pass
+        post :block
+      end
+    end
     get "main" => "main#index", :as => :main
     put "main/update",          :as => :update_main
   end

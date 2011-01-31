@@ -1,4 +1,12 @@
 module Factory
+  def build_router_computer options={}
+    stub_others Router::Computer.new({
+      :mac_address => "00:ab:bc:cd:12:12",
+      :name => 'iT a cool Name',
+      :ip_address => "1.1.1.1"
+    }.merge(options)), options
+  end
+
   def build_router_interface options={}
     stub_others Router::Interface.new({
       :ip_address => '10.5.5.10',

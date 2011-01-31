@@ -26,4 +26,8 @@ class DhcpServer < BaseSetting
     dhcpd_conf.write
     dhcpd_conf
   end
+  
+  def gateway
+    router
+  end
 end

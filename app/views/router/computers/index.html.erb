@@ -1,0 +1,71 @@
+<table>
+  <tr>
+    <td colspan="7" style="text-align:center;"><h3>All computers</h3></td>
+  </tr>
+  <tr>
+    <th>Nr</th>
+    <th>Name</th>
+    <th>Mac address</th>
+    <th>IP address</th>
+    <th>Status</th>
+    <th>Access</th>
+    <th>Action</th>
+  </tr>
+
+  <% @computers.each_with_index do |computer,i| %>
+  <tr>
+    <td><%= i+1 %></td>
+    <td><%=h computer.name %></td>
+    <td><%=h computer.mac_address %></td>
+    <td><%=h computer.ip_address %></td>
+    <td><%= @online_ips.include?(computer.ip_address) ? content_tag(:span, 'ONLINE', :style => "color:green;font-weight:bold") : 'OFFLINE' %></td>
+    <td><%= @blocked_ips.include?(computer.ip_address) ? content_tag(:span, 'BLOCKED', :style => "color:red;font-weight:bold") : 'PASSED' -%></td>
+    <td>
+      <% unless computer.router? %>
+      <%= link_to 'Show', computer %>
+      <%= link_to 'Edit', edit_computer_path(computer) if current_user.has_permission?("computer_update") %>
+      <%= link_to 'Destroy', computer, :confirm => 'Are you sure?', :method => :delete if current_user.has_permission?("computer_delete") %> | 
+      <%= link_to 'Block', block_computer_path(computer), :confirm => 'Are you sure?', :method => :post %>
+      <%= link_to 'Pass', pass_computer_path(computer), :confirm => 'Are you sure?', :method => :post %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+
+  <tr>
+    <td colspan="7" style="text-align:center;"><h3>New computers</h3></td>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Name</th>
+    <th>Mac address</th>
+    <th>IP address</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>Action</th>
+  </tr>
+
+  <% for computer in @online_computers %>
+  <tr>
+    <td><%=h computer.name %></td>
+    <td><%=h computer.mac_address %></td>
+    <td><%=h computer.ip_address %></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>
+      <% form_tag new_computer_path, :method => :get do %>
+        <%= hidden_field_tag "computer[name]", computer.name, :id => "name_#{computer.mac_address}" -%>
+        <%= hidden_field_tag "computer[mac_address]", computer.mac_address, :id => "mac_#{computer.mac_address}"  -%>
+        <%= hidden_field_tag "computer[ip_address]", computer.ip_address, :id => "ip_#{computer.mac_address}" -%>
+	<%= submit_tag 'add' -%>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+
+</table>
+
+<br />
+
+<%= link_to 'New computer', new_router_computer_path %>

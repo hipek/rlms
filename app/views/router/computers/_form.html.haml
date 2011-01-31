@@ -1,0 +1,19 @@
+-if @computer.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@computer.errors.count, "error")} prohibited this computer from being saved:"
+    %ul
+      - @computer.errors.full_messages.each do |msg|
+        %li= msg
+
+.field
+  = f.label :name
+  = f.text_field :name
+.field
+  = f.label :mac_address
+  = f.text_field :mac_address
+.field
+  = f.label :ip_address
+  = f.text_field :ip_address
+
+.actions
+  = f.submit 'Save'

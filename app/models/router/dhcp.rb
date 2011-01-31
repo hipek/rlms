@@ -25,7 +25,7 @@ class Router::Dhcp < Router::BaseSetting
   end
 
   def install_conf
-    dhcpd_conf = ConfTemplate.new("dhcpd.conf", :computers => Computer.all_for_dhcpd, :dhcp => self)
+    dhcpd_conf = ConfTemplate.new("dhcpd.conf", :computers => Router::Computer.all_for_dhcpd, :dhcp => self)
     dhcpd_conf.write
     dhcpd_conf
   end

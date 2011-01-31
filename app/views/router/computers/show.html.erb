@@ -1,0 +1,24 @@
+<% content_for :col1 do %>
+  <%= render :partial => 'menus/computer' -%>
+<% end %>
+
+<% content_for :col2 do %>
+<p>
+  <b>Name:</b>
+  <%=h @computer.name %>
+</p>
+
+<p>
+  <b>Mac address:</b>
+  <%=h @computer.mac_address %>
+</p>
+
+<p>
+  <b>IP address:</b>
+  <%=h @computer.ip_address %>
+</p>
+
+
+<%= link_to('Edit', edit_computer_path(@computer)) + " | " if current_user.has_permission?("computer_update") %>
+<%= link_to 'Back', computers_path %>
+<% end %>
