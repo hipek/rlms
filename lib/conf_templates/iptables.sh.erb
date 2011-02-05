@@ -10,9 +10,10 @@ export PATH
   intip     = @data[:intip]
   intnet    = @data[:intnet]
   universe  = "0.0.0.0/0"
-  computers = @data[:computers]
   connlimit = @data[:connlimit] || 30
   grep      = @data[:grep] || 'grep'
+  allow_computers   = @data[:allow_computers]
+  blocked_computers = @data[:blocked_computers]
 %>
 # wlaczenie mechanizmu antyspoofingu - filtrowanie falszywych adresow IP
 for f in /proc/sys/net/ipv4/conf/*/rp_filter
@@ -89,10 +90,10 @@ fi
 ##################################################################################
 # lstat:
 <%= iptables %> -N lstat
-<% if false %>
-  <%= iptables %> -A lstat -i <%= intif %> -s IP_ADDRESS -j ACCEPT
-  <%= iptables %> -A lstat -m state --state ESTABLISHED,RELATED -d IP_ADDRESS -j ACCEPT
-  <%= iptables %> -t mangle -A OUTPUT -o <%= intif %> -p tcp --sport 8080 -d IP_ADDRESS -j MARK --set-mark 50+i
+<% allow_computers.each do |computer| %>
+  <%= iptables %> -A lstat -i <%= intif %> -s <%= computer.ip_address %> -j ACCEPT
+  <%= iptables %> -A lstat -m state --state ESTABLISHED,RELATED -d <%= computer.ip_address %> -j ACCEPT
+  <%= iptables %> -t mangle -A OUTPUT -o <%= intif %> -p tcp --sport 8080 -d <%= computer.ip_address %> -j MARK --set-mark 50+i
 <% end %>
 ###################################################################################
 
@@ -139,10 +140,15 @@ fi
 
 <% if false %>
   <%= iptables %> -A PREROUTING -t nat -s IP_ADDRESS -p tcp --dport 1:65535 -j DNAT --to-destination <%= intip %>:9000
-  <%= iptables %> -t nat -A POSTROUTING -o <%= extif %> -s IP_ADDRESS -d 0.0.0.0/0 -j SNAT --to <%= extip %>
-  <%= iptables %> -A FORWARD -p tcp -s IP_ADDRESS --dport 1024:65535 --syn -m connlimit --connlimit-above <%= connlimit %> -j drop-and-log-it
-  <%= iptables %> -A FORWARD -p tcp -d IP_ADDRESS --dport PORT -j ACCEPT
-  <%= iptables %> -t nat -A PREROUTING -i <%= extif %> -p tcp -d <%= extip %> --dport PORT -j DNAT --to IP_ADDRESS:PORT
+<% end %>
+
+<% allow_computers.each do |computer| %>
+  <%= iptables %> -t nat -A POSTROUTING -o <%= extif %> -s <%= computer.ip_address %> -d 0.0.0.0/0 -j SNAT --to <%= extip %>
+  <%= iptables %> -A FORWARD -p tcp -s <%= computer.ip_address %> --dport 1024:65535 --syn -m connlimit --connlimit-above <%= connlimit %> -j drop-and-log-it
+  <% if false %>
+    <%= iptables %> -A FORWARD -p tcp -d IP_ADDRESS --dport PORT -j ACCEPT
+    <%= iptables %> -t nat -A PREROUTING -i <%= extif %> -p tcp -d <%= extip %> --dport PORT -j DNAT --to IP_ADDRESS:PORT
+  <% end %>
 <% end %>
 
 <%= iptables %> -A FORWARD -j lstat

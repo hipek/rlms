@@ -41,7 +41,8 @@ describe ConfTemplate do
     before :each do
       @conf_template = ConfTemplate.new(
         'iptables.sh', 
-        :computers  => [computers(:one), computers(:two)],
+        :allow_computers    => [computers(:one), computers(:two)],
+        :disabled_computers => [],
         :iptables   => build_router_service(:bin_path => '/usr/local/sbin/iptables'),
         :extif      => 'eth1',
         :intif      => 'eth0',

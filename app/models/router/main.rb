@@ -44,7 +44,8 @@ class Router::Main < Router::BaseSetting
   end
 
   def iptables_attrs
-    { :computers => Router::Computer.all_for_dhcpd,
+    { :allow_computers => Router::Computer.allow_computers,
+      :blocked_computers => Router::Computer.blocked_computers,
       :iptables => Router::Service::Base.iptables,
       :extif => ext_inf.name,
       :extip => ext_inf.ip_auto,
