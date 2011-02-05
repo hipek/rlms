@@ -14,11 +14,6 @@ class Router::ComputersController < Router::BaseController
     @computer = Router::Computer.find(params[:id])
   end
 
-  def dhcp_list
-    @dhcp_server = Router::Dhcp.instance
-    @conf_template = @dhcp_server.install_conf
-  end
-  
   def block
     if @computer = Router::Computer.find_by_id(params[:id])  
       #@computer.block(current_lan.default_firewall)

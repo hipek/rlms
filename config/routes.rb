@@ -1,5 +1,11 @@
 Rlms::Application.routes.draw do
   namespace :router do
+    resources :config_files do
+      collection do
+        get :dhcp
+        get :iptables
+      end
+    end
     resources :dhcps
     resources :tc_classids
     resources :flows
@@ -11,9 +17,6 @@ Rlms::Application.routes.draw do
       end
     end
     resources :computers do
-      collection do
-        get :dhcp_list
-      end
       member do
         post :pass
         post :block
