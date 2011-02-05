@@ -14,6 +14,7 @@ export PATH
   grep      = @data[:grep] || 'grep'
   allow_computers   = @data[:allow_computers]
   blocked_computers = @data[:blocked_computers]
+  open_ports        = @data[:open_ports]
 %>
 # wlaczenie mechanizmu antyspoofingu - filtrowanie falszywych adresow IP
 for f in /proc/sys/net/ipv4/conf/*/rp_filter
@@ -112,9 +113,13 @@ fi
 <%= iptables %> -A INPUT -i <%= intif %> -p tcp --sport 68 --dport 67 -j ACCEPT
 <%= iptables %> -A INPUT -i <%= intif %> -p udp --sport 68 --dport 67 -j ACCEPT
 
-<% if false %>
-  <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p tcp -s <%= universe %> -d <%= extip %> --dport PORT -j ACCEPT
-  <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p udp -s <%= universe %> -d <%= extip %> --dport PORT -j ACCEPT
+<% open_ports.each do |oport| %>
+  <% if %w"tcp all".include?(oport.protocol.downcase) %>
+    <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p tcp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
+  <% end %>
+  <% if %w"udp all".include?(oport.protocol.downcase) %>
+    <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p udp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
+  <% end %>
 <% end %>
 
 <%= iptables %> -A INPUT -s <%= universe %> -d <%= universe %> -j drop-and-log-it

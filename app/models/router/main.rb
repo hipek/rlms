@@ -51,7 +51,8 @@ class Router::Main < Router::BaseSetting
       :extip => ext_inf.ip_auto,
       :intif => int_inf.name,
       :intip => int_inf.ip_auto,
-      :intnet => "#{int_inf.subnet}/#{int_inf.subnet_short_mask}"
+      :intnet => "#{int_inf.subnet}/#{int_inf.subnet_short_mask}",
+      :open_ports => Router::Rule::OpenPort.all
     }
   end
 

@@ -43,6 +43,7 @@ describe ConfTemplate do
         'iptables.sh', 
         :allow_computers    => [computers(:one), computers(:two)],
         :disabled_computers => [],
+        :open_ports => [],
         :iptables   => build_router_service(:bin_path => '/usr/local/sbin/iptables'),
         :extif      => 'eth1',
         :intif      => 'eth0',
