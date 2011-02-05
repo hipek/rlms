@@ -113,13 +113,12 @@ fi
 <%= iptables %> -A INPUT -i <%= intif %> -p tcp --sport 68 --dport 67 -j ACCEPT
 <%= iptables %> -A INPUT -i <%= intif %> -p udp --sport 68 --dport 67 -j ACCEPT
 
-<% open_ports.each do |oport| %>
-<%  if %w"tcp all".include?(oport.protocol.downcase) %>
-<%=   iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p tcp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
-<%  end %>
-<%  if %w"udp all".include?(oport.protocol.downcase) %>
-<%=   iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p udp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
-<%  end %>
+<%  open_ports.each do |oport| %>
+<%    oport.protocols.each do |prot| %>
+<%      oport.ports.each do |port| %>
+<%=       iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p <%= prot %> -s <%= universe %> -d <%= extip %> --dport <%= port %> -j ACCEPT
+<%      end %>
+<%    end %>
 <% end %>
 
 <%= iptables %> -A INPUT -s <%= universe %> -d <%= universe %> -j drop-and-log-it
@@ -151,10 +150,11 @@ fi
 <%=   iptables %> -t nat -A POSTROUTING -o <%= extif %> -s <%= computer.ip_address %> -d 0.0.0.0/0 -j SNAT --to <%= extip %>
 <%=   iptables %> -A FORWARD -p tcp -s <%= computer.ip_address %> --dport 1024:65535 --syn -m connlimit --connlimit-above <%= connlimit %> -j drop-and-log-it
 <%    computer.forward_ports.each do |fport| %>
-<%      fprotocols = fport.protocol.downcase == 'all' ? %w"tcp udp" : [fport.protocol.downcase]  %>
-<%      fprotocols.each do |fpro| %>
-<%=       iptables %> -A FORWARD -p <%= fpro %> -d <%= computer.ip_address %> --dport <%= fport.port %> -j ACCEPT
-<%=       iptables %> -t nat -A PREROUTING -i <%= extif %> -p <%= fpro %> -d <%= extip %> --dport <%= fport.port %> -j DNAT --to <%= computer.ip_address %>
+<%      fport.protocols.each do |fpro| %>
+<%        fport.ports.each do |port| %>
+<%=         iptables %> -A FORWARD -p <%= fpro %> -d <%= computer.ip_address %> --dport <%= port %> -j ACCEPT
+<%=         iptables %> -t nat -A PREROUTING -i <%= extif %> -p <%= fpro %> -d <%= extip %> --dport <%= port %> -j DNAT --to <%= computer.ip_address %>
+<%        end %>
 <%      end %>
 <%    end %>
 <%  end %>
