@@ -21,7 +21,7 @@ class Router::Dhcp < Router::BaseSetting
   end
 
   def domain_name_servers
-    [domain_name_server1, domain_name_server2]
+    [domain_name_server1, domain_name_server2].select{|n| n.present?}
   end
 
   def install_conf
