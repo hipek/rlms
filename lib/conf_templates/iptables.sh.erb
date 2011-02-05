@@ -10,7 +10,7 @@ export PATH
   intip     = @data[:intip]
   intnet    = @data[:intnet]
   universe  = "0.0.0.0/0"
-  connlimit = @data[:connlimit] || 30
+  connlimit = @data[:connlimit] || 300
   grep      = @data[:grep] || 'grep'
   allow_computers   = @data[:allow_computers]
   blocked_computers = @data[:blocked_computers]
@@ -90,10 +90,10 @@ fi
 ##################################################################################
 # lstat:
 <%= iptables %> -N lstat
-<% allow_computers.each do |computer| %>
+<% allow_computers.each_with_index do |computer, i| %>
   <%= iptables %> -A lstat -i <%= intif %> -s <%= computer.ip_address %> -j ACCEPT
   <%= iptables %> -A lstat -m state --state ESTABLISHED,RELATED -d <%= computer.ip_address %> -j ACCEPT
-  <%= iptables %> -t mangle -A OUTPUT -o <%= intif %> -p tcp --sport 8080 -d <%= computer.ip_address %> -j MARK --set-mark 50+i
+  <%= iptables %> -t mangle -A OUTPUT -o <%= intif %> -p tcp --sport 8080 -d <%= computer.ip_address %> -j MARK --set-mark <%= 50 + i %>
 <% end %>
 ###################################################################################
 
