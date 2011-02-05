@@ -62,8 +62,12 @@ class ShellCommand
   
   def self.run_command command, options='', use_sudo = false
     return '' if command.blank?
-    @@password ||= SUDO_PASSWD if use_sudo
+    @@password ||= sudo_passwd if use_sudo
     # p "#{command} #{options}"
     use_sudo ? `echo "#{@@password}" | sudo -S sh -c "#{command} #{options}" 2>&1` : `#{command} #{options} 2>&1`
+  end
+
+  def self.sudo_passwd
+    'kapusta'
   end
 end
