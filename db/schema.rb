@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110129201357) do
+ActiveRecord::Schema.define(:version => 20110205222308) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20110129201357) do
   create_table "forward_ports", :force => true do |t|
     t.string   "port"
     t.string   "protocol"
-    t.string   "ip_address"
+    t.integer  "computer_id", :limit => 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

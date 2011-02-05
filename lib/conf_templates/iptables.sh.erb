@@ -150,9 +150,12 @@ fi
 <%  allow_computers.each do |computer| %>
 <%=   iptables %> -t nat -A POSTROUTING -o <%= extif %> -s <%= computer.ip_address %> -d 0.0.0.0/0 -j SNAT --to <%= extip %>
 <%=   iptables %> -A FORWARD -p tcp -s <%= computer.ip_address %> --dport 1024:65535 --syn -m connlimit --connlimit-above <%= connlimit %> -j drop-and-log-it
-<%    if false %>
-<%=     iptables %> -A FORWARD -p tcp -d IP_ADDRESS --dport PORT -j ACCEPT
-<%=     iptables %> -t nat -A PREROUTING -i <%= extif %> -p tcp -d <%= extip %> --dport PORT -j DNAT --to IP_ADDRESS:PORT
+<%    computer.forward_ports.each do |fport| %>
+<%=     iptables %> -A FORWARD -p tcp -d <%= computer.ip_address %> --dport <%= fport.port %> -j ACCEPT
+<%      fprotocols = fport.protocol.downcase == 'all' ? %w"tcp udp" : [fport.protocol.downcase]  %>
+<%      fprotocols.each do |fpro| %>
+<%=       iptables %> -t nat -A PREROUTING -i <%= extif %> -p <%= fpro %> -d <%= extip %> --dport <%= fport.port %> -j DNAT --to <%= computer.ip_address %>
+<%      end %>
 <%    end %>
 <%  end %>
 

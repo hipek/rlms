@@ -10,6 +10,8 @@ class Router::Computer < ActiveRecord::Base
   scope :without_router, where("name != 'router'")
   scope :sorted_by_ip, order(SORT_BY_IP)
 
+  has_many :forward_ports, :class_name => 'Router::Rule::ForwardPort', :foreign_key => 'computer_id'
+
   class <<self
     def all_for_dhcpd
       without_router.sorted_by_ip.all
@@ -44,6 +46,14 @@ class Router::Computer < ActiveRecord::Base
       end
       computers
     end
+    
+    def all_as_pairs
+      allow_computers.map{|c| [c.name_with_ip, c.id]}
+    end
+  end
+
+  def name_with_ip
+    "#{name} (#{ip_address})"
   end
 
   def block firewall

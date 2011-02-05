@@ -1,17 +1,17 @@
 %h1 Listing forward ports
 
-%table
+%table.centerAll
   %tr
     %th Port
     %th Protocol
-    %th Dest IP
+    %th Computer IP
     %th= _('Action')
 
   - @forward_ports.each do |forward_port|
     %tr
       %td= forward_port.port
       %td= forward_port.protocol
-      %td= forward_port.ip_address
+      %td= forward_port.computer.try:name_with_ip
       %td
         = link_to 'Edit', edit_router_forward_port_path(forward_port)
         = link_to 'Destroy', router_forward_port_path(forward_port), :confirm => 'Are you sure?', :method => :delete

@@ -9,8 +9,8 @@
   = f.label :port
   = f.text_field :port
 .field
-  = f.label :ip_address, _('Dest IP')
-  = f.text_field :ip_address
+  = f.label :computer_id, _('Computer IP')
+  = f.select :computer_id, Router::Computer.all_as_pairs
 .field
   = f.label :protocol
   = f.select :protocol, all_protocols
