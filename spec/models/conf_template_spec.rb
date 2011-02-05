@@ -42,7 +42,7 @@ describe ConfTemplate do
       @conf_template = ConfTemplate.new(
         'iptables.sh', 
         :computers  => [computers(:one), computers(:two)],
-        :iptables   => '/usr/local/sbin/iptables',
+        :iptables   => build_router_service(:bin_path => '/usr/local/sbin/iptables'),
         :extif      => 'eth1',
         :intif      => 'eth0',
         :extip      => '192.168.249.103',

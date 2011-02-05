@@ -3,15 +3,16 @@ PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
 export PATH
 
 <% 
-  iptables = @data[:iptables]
-  extif    = @data[:extif]
-  extip    = @data[:extip]
-  intif    = @data[:intif]
-  intip    = @data[:intip]
-  intnet   = @data[:intnet]
-  universe = "0.0.0.0/0"
-  connlimit = @data[:connlimit]
-  grep     = @data[:grep]
+  iptables  = @data[:iptables].try(:bin_path) || 'iptables'
+  extif     = @data[:extif]
+  extip     = @data[:extip]
+  intif     = @data[:intif]
+  intip     = @data[:intip]
+  intnet    = @data[:intnet]
+  universe  = "0.0.0.0/0"
+  computers = @data[:computers]
+  connlimit = @data[:connlimit] || 30
+  grep      = @data[:grep] || 'grep'
 %>
 # wlaczenie mechanizmu antyspoofingu - filtrowanie falszywych adresow IP
 for f in /proc/sys/net/ipv4/conf/*/rp_filter

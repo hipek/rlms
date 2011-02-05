@@ -1,4 +1,13 @@
 module Factory
+  def build_router_service params={}
+    Router::Service::Base.new({ 
+      :name => 'service_name',
+      :init_path => '/tmp/init.path',
+      :config_path => '/etc/program/path.conf',
+      :bin_path => '/sbin/program'
+    }.merge(params))
+  end
+  
   def build_router_computer options={}
     stub_others Router::Computer.new({
       :mac_address => "00:ab:bc:cd:12:12",

@@ -21,15 +21,23 @@ class Router::Interface < Router::BaseSetting
     a.pop
     a.push('').join('.')
   end
-  
+
+  def subnet_short_mask
+    ip_mask.split('.').map{|m| m == '255' ? 8 : 0}.sum.to_s
+  end
+
+  def ip_auto
+    config == 'manually' ? ip_address : ShellCommand.ip(name)
+  end
+
   protected
-  
+
   def build_ip_address num, mask='255'
     zipped_ip_with_mask.map do |ip, m|
       m == mask ? ip : num
     end.join('.')    
   end
-  
+
   def zipped_ip_with_mask
     ip_address.split('.').zip(ip_mask.split('.'))
   end

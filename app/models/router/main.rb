@@ -43,6 +43,23 @@ class Router::Main < Router::BaseSetting
     }
   end
 
+  def iptables_attrs
+    { :computers => Router::Computer.all_for_dhcpd,
+      :iptables => Router::Service::Base.iptables,
+      :extif => ext_inf.name,
+      :extip => ext_inf.ip_auto,
+      :intif => int_inf.name,
+      :intip => int_inf.ip_auto,
+      :intnet => "#{int_inf.subnet}/#{int_inf.subnet_short_mask}"
+    }
+  end
+
+  def install_iptables_conf
+    ip_conf = ConfTemplate.new("iptables.sh", iptables_attrs)
+    ip_conf.write
+    ip_conf
+  end
+
   protected
 
   def interfaces_attributes= attrs
