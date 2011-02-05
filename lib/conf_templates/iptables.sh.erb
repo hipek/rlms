@@ -91,11 +91,11 @@ fi
 ##################################################################################
 # lstat:
 <%= iptables %> -N lstat
-<% allow_computers.each_with_index do |computer, i| %>
-  <%= iptables %> -A lstat -i <%= intif %> -s <%= computer.ip_address %> -j ACCEPT
-  <%= iptables %> -A lstat -m state --state ESTABLISHED,RELATED -d <%= computer.ip_address %> -j ACCEPT
-  <%= iptables %> -t mangle -A OUTPUT -o <%= intif %> -p tcp --sport 8080 -d <%= computer.ip_address %> -j MARK --set-mark <%= 50 + i %>
-<% end %>
+<%  allow_computers.each_with_index do |computer, i| %>
+<%=   iptables %> -A lstat -i <%= intif %> -s <%= computer.ip_address %> -j ACCEPT
+<%=   iptables %> -A lstat -m state --state ESTABLISHED,RELATED -d <%= computer.ip_address %> -j ACCEPT
+<%=   iptables %> -t mangle -A OUTPUT -o <%= intif %> -p tcp --sport 8080 -d <%= computer.ip_address %> -j MARK --set-mark <%= 50 + i %>
+<%  end %>
 ###################################################################################
 
 ###################################################################################
@@ -114,12 +114,12 @@ fi
 <%= iptables %> -A INPUT -i <%= intif %> -p udp --sport 68 --dport 67 -j ACCEPT
 
 <% open_ports.each do |oport| %>
-  <% if %w"tcp all".include?(oport.protocol.downcase) %>
-    <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p tcp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
-  <% end %>
-  <% if %w"udp all".include?(oport.protocol.downcase) %>
-    <%= iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p udp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
-  <% end %>
+<%  if %w"tcp all".include?(oport.protocol.downcase) %>
+<%=   iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p tcp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
+<%  end %>
+<%  if %w"udp all".include?(oport.protocol.downcase) %>
+<%=   iptables %> -A INPUT -i <%= extif %> -m state --state NEW,ESTABLISHED,RELATED -p udp -s <%= universe %> -d <%= extip %> --dport <%= oport.port %> -j ACCEPT
+<%  end %>
 <% end %>
 
 <%= iptables %> -A INPUT -s <%= universe %> -d <%= universe %> -j drop-and-log-it
@@ -147,14 +147,14 @@ fi
   <%= iptables %> -A PREROUTING -t nat -s IP_ADDRESS -p tcp --dport 1:65535 -j DNAT --to-destination <%= intip %>:9000
 <% end %>
 
-<% allow_computers.each do |computer| %>
-  <%= iptables %> -t nat -A POSTROUTING -o <%= extif %> -s <%= computer.ip_address %> -d 0.0.0.0/0 -j SNAT --to <%= extip %>
-  <%= iptables %> -A FORWARD -p tcp -s <%= computer.ip_address %> --dport 1024:65535 --syn -m connlimit --connlimit-above <%= connlimit %> -j drop-and-log-it
-  <% if false %>
-    <%= iptables %> -A FORWARD -p tcp -d IP_ADDRESS --dport PORT -j ACCEPT
-    <%= iptables %> -t nat -A PREROUTING -i <%= extif %> -p tcp -d <%= extip %> --dport PORT -j DNAT --to IP_ADDRESS:PORT
-  <% end %>
-<% end %>
+<%  allow_computers.each do |computer| %>
+<%=   iptables %> -t nat -A POSTROUTING -o <%= extif %> -s <%= computer.ip_address %> -d 0.0.0.0/0 -j SNAT --to <%= extip %>
+<%=   iptables %> -A FORWARD -p tcp -s <%= computer.ip_address %> --dport 1024:65535 --syn -m connlimit --connlimit-above <%= connlimit %> -j drop-and-log-it
+<%    if false %>
+<%=     iptables %> -A FORWARD -p tcp -d IP_ADDRESS --dport PORT -j ACCEPT
+<%=     iptables %> -t nat -A PREROUTING -i <%= extif %> -p tcp -d <%= extip %> --dport PORT -j DNAT --to IP_ADDRESS:PORT
+<%    end %>
+<%  end %>
 
 <%= iptables %> -A FORWARD -j lstat
 <%= iptables %> -A FORWARD -i <%= extif %> -o <%= intif %> -m state --state ESTABLISHED,RELATED -j ACCEPT
