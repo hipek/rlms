@@ -6,3 +6,4 @@ config/database.yml
 config/rtorrent.yml
 tmp/dhcpd.conf
 tmp/*
+config/settings.yml
