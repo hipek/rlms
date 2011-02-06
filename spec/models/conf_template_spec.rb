@@ -5,7 +5,7 @@ describe ConfTemplate do
     before :each do
       @conf_template = ConfTemplate.new('dhcpd.conf', 
                                         :computers => [build_router_computer], 
-                                        :dhcp => build_dhcp_server)
+                                        :dhcp => build_router_dhcp)
     end
 
     it "should return new object" do
@@ -21,7 +21,7 @@ describe ConfTemplate do
     it "should render erb file" do
       @conf_template.render.should include(build_router_computer.mac_address)
       @conf_template.render.should include(build_router_computer.ip_address)
-      @conf_template.render.should include(build_dhcp_server.router)
+      @conf_template.render.should include(build_router_dhcp.gateway)
     end
   
     it "should return path to rendered file" do

@@ -52,31 +52,6 @@ def build_computer params={}
   c
 end
 
-def build_local_network params={}
-  LocalNetwork.new({
-    :name => "TestLan",
-    :int_inf => 'eth0',
-    :int_ip =>'10.5.5.100',
-    :ext_inf => 'eth1',
-    :ext_ip => '96.130.22.19'
-  }.merge(params))
-end
-
-def build_dhcp_server(options={})
-  d = DhcpServer.new({
-       :router => '10.5.5.1',
-       :subnet => '10.0.0.0',
-       :broadcast_address => '10.255.255.255',
-       :range_from => '10.5.5.10',
-       :range_to => '10.5.5.20',
-       :subnet_mask => '255.0.0.0',
-       :domain_name_server1 => '194.204.159.1',
-       :domain_name_server2 => '194.204.152.34',
-     }.merge(options))
-  d.stub!(:id).and_return(options[:id])
-  d
-end
-
 def build_model model, options={}
   m = model.new options
   m.stub!(:id).and_return(options[:id])

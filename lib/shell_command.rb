@@ -6,7 +6,7 @@ class ShellCommand
   end
 
   def self.restart_dhcpd
-    change_service Service.by_name('dhcp')
+    change_service Router::Service::Base.by_name('dhcp')
   end
 
   def self.change_service srv, options="restart"
@@ -18,26 +18,26 @@ class ShellCommand
   end
 
   def self.install_dhcpd_config dhcpd_template
-    install_config Service.by_name('dhcp'), dhcpd_template.dest_path
+    install_config Router::Service::Base.by_name('dhcp'), dhcpd_template.dest_path
   end
 
   def self.ifconfig options=''
-    ifconfig = Service.by_name('ifconfig')
+    ifconfig = Router::Service::Base.by_name('ifconfig')
     run_command ifconfig.bin_path, options
   end
 
   def self.arp options="-a"
-    arp = Service.by_name('arp')
+    arp = Router::Service::Base.by_name('arp')
     run_command arp.bin_path, options
   end
 
   def self.ip_tables options='-L -t nat'
-    ip_tables = Service.by_name('iptables')
+    ip_tables = Router::Service::Base.by_name('iptables')
     run_command ip_tables.bin_path, options
   end
   
   def self.ip_tables_save ip_table="nat"
-    iptables = Service.by_name('iptables-save')
+    iptables = Router::Service::Base.by_name('iptables-save')
     options = "-t #{ip_table}" unless ip_table.blank?
     run_command iptables.bin_path, (options || '')
   end

@@ -11,5 +11,9 @@ class Router::Service::Base < ActiveRecord::Base
     def iptables
       find_by_name 'iptables'
     end
+    
+    def by_name name
+      find_by_name name
+    end
   end
 end

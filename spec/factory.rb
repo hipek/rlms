@@ -52,7 +52,7 @@ module Factory
   end
 
   def stub_shell_commands
-    Service.stub!(:find_by_name).and_return(mock('service', :bin_path => '', :config_path => '/tmp', :init_path => '/tmp'))
+    Router::Service::Base.stub!(:find_by_name).and_return(mock('service', :bin_path => '', :config_path => '/tmp', :init_path => '/tmp'))
     ShellCommand.stub!(:run_command).and_return('')
   end
 
