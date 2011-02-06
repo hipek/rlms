@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+YAML.load_file('data/computers.yml').each{|a| Router::Computer.new(   a.ivars['attributes'] ).save}
+YAML.load_file('data/tcclassid.yml').each{|a| Router::Tc::Classid.new(a.ivars['attributes'] ).save}
