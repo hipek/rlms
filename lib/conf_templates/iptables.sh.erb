@@ -152,8 +152,9 @@ fi
 <%    computer.forward_ports.each do |fport| %>
 <%      fport.protocols.each do |fpro| %>
 <%        fport.ports.each do |port| %>
+<%          dport = fport.dports.include?(port) ? ":#{port}" : '' %>
 <%=         iptables %> -A FORWARD -p <%= fpro %> -d <%= computer.ip_address %> --dport <%= port %> -j ACCEPT
-<%=         iptables %> -t nat -A PREROUTING -i <%= extif %> -p <%= fpro %> -d <%= extip %> --dport <%= port %> -j DNAT --to <%= computer.ip_address %>
+<%=         iptables %> -t nat -A PREROUTING -i <%= extif %> -p <%= fpro %> -d <%= extip %> --dport <%= port %> -j DNAT --to <%= computer.ip_address %><%= dport %>
 <%        end %>
 <%      end %>
 <%    end %>

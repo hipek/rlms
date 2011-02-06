@@ -12,6 +12,9 @@
   = f.label :computer_id, _('Computer IP')
   = f.select :computer_id, Router::Computer.all_as_pairs
 .field
+  = f.label :dport, _('Dest port')
+  = f.text_field :dport
+.field
   = f.label :protocol
   = f.select :protocol, all_protocols
 

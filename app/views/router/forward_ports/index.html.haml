@@ -5,6 +5,7 @@
     %th Port
     %th Protocol
     %th Computer IP
+    %th Dest port
     %th= _('Action')
 
   - @forward_ports.each do |forward_port|
@@ -12,6 +13,7 @@
       %td= forward_port.port
       %td= forward_port.protocol
       %td= forward_port.computer.try:name_with_ip
+      %td= forward_port.dport
       %td
         = link_to 'Edit', edit_router_forward_port_path(forward_port)
         = link_to 'Destroy', router_forward_port_path(forward_port), :confirm => 'Are you sure?', :method => :delete

@@ -21,14 +21,6 @@ describe Router::ForwardPortsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested forward_port as @forward_port" do
-      Router::Rule::ForwardPort.stub(:find).with("37") { mock_forward_port }
-      get :show, :id => "37"
-      assigns(:forward_port).should be(mock_forward_port)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new forward_port as @forward_port" do
       Router::Rule::ForwardPort.stub(:new) { mock_forward_port }
@@ -56,7 +48,7 @@ describe Router::ForwardPortsController do
       it "redirects to the created forward_port" do
         Router::Rule::ForwardPort.stub(:new) { mock_forward_port(:save => true) }
         post :create, :forward_port => {}
-        response.should redirect_to(router_forward_port_url(mock_forward_port))
+        response.should redirect_to(router_forward_ports_url)
       end
     end
 
@@ -92,7 +84,7 @@ describe Router::ForwardPortsController do
       it "redirects to the forward_port" do
         Router::Rule::ForwardPort.stub(:find) { mock_forward_port(:update_attributes => true) }
         put :update, :id => "1"
-        response.should redirect_to(router_forward_port_url(mock_forward_port))
+        response.should redirect_to(router_forward_ports_url)
       end
     end
 
