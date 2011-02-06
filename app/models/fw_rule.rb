@@ -1,6 +1,4 @@
 class FwRule < ActiveRecord::Base
-  belongs_to :firewall
-
   scope :ip_table, lambda {|filter|
     filter = '%' if filter.nil? || (!filter.nil? && filter == '')
     {:conditions => ['lower(ip_table) like lower(?)', filter ]}
