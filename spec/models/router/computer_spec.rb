@@ -29,6 +29,6 @@ describe Router::Computer do
     @computer.save!
     @computer2 = build_router_computer :ip_address => "10.5.5.15", :mac_address => "10:12:13:14:15:16"
     @computer2.save!
-#    Computer.next_ip.should == "10.5.5.22"
+    Router::Computer.next_ip.should == "10.5.5.22"
   end
 end
