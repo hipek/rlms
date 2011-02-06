@@ -9,6 +9,8 @@ class Router::Computer < ActiveRecord::Base
 
   scope :without_router, where("lower(name) != lower('router')")
   scope :sorted_by_ip, order(SORT_BY_IP)
+  scope :active, where(:active => 1)
+  scope :not_active, where(:active => 0)
 
   has_many :forward_ports, :class_name => 'Router::Rule::ForwardPort', :foreign_key => 'computer_id'
 
@@ -18,11 +20,11 @@ class Router::Computer < ActiveRecord::Base
     end
 
     def allow_computers
-      without_router.sorted_by_ip.all
+      active.all_for_dhcpd
     end
 
     def blocked_computers
-      []
+      not_active.all_for_dhcpd
     end
 
     def find_router

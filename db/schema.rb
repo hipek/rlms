@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110205222308) do
+ActiveRecord::Schema.define(:version => 20110206184004) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20110205222308) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ip_address"
+    t.boolean  "active",      :default => true, :null => false
   end
 
   create_table "firewalls", :force => true do |t|
