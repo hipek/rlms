@@ -5,7 +5,7 @@ class Router::Computer < ActiveRecord::Base
 
   before_validation :upcase_mac
 
-  SORT_BY_IP = "substr( `ip_address` , '.', -1 ) + 0"
+  SORT_BY_IP = "substr( `ip_address` , 8) + 0"
 
   scope :without_router, where("lower(name) != lower('router')")
   scope :sorted_by_ip, order(SORT_BY_IP)

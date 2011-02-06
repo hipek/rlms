@@ -1,7 +1,7 @@
 class Router::TcClassidsController < Router::BaseController
   def index
     new
-    @tc_classids = Router::Tc::Classid.all
+    @tc_classids = Router::Tc::Classid.ordered.all
   end
 
   def new
