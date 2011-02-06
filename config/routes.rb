@@ -1,4 +1,8 @@
 Rlms::Application.routes.draw do
+  namespace :admin do
+    get "base/index", :as => :admin
+  end
+
   namespace :router do
     resources :config_files do
       collection do
