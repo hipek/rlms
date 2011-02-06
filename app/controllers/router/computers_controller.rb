@@ -10,10 +10,6 @@ class Router::ComputersController < Router::BaseController
     @blocked_ips = FwRule.blocked_ips
   end
 
-  def show
-    @computer = Router::Computer.find(params[:id])
-  end
-
   def block
     if @computer = Router::Computer.find_by_id(params[:id])  
       #@computer.block(current_lan.default_firewall)

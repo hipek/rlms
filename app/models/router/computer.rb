@@ -7,7 +7,7 @@ class Router::Computer < ActiveRecord::Base
 
   SORT_BY_IP = "substr( `ip_address` , '.', -1 ) + 0"
 
-  scope :without_router, where("name != 'router'")
+  scope :without_router, where("lower(name) != lower('router')")
   scope :sorted_by_ip, order(SORT_BY_IP)
 
   has_many :forward_ports, :class_name => 'Router::Rule::ForwardPort', :foreign_key => 'computer_id'
@@ -69,7 +69,7 @@ class Router::Computer < ActiveRecord::Base
   end
 
   def router?
-    name.match(/ROUTER/)
+    name.match(/ROUTER/i)
   end
 
   def upcase_mac

@@ -24,7 +24,6 @@
     <td><%= @blocked_ips.include?(computer.ip_address) ? content_tag(:span, 'BLOCKED', :style => "color:red;font-weight:bold") : 'PASSED' -%></td>
     <td>
       <% unless computer.router? %>
-      <%= link_to 'Show', router_computer_path(computer) %>
       <%= link_to 'Edit', edit_router_computer_path(computer) if current_user.has_permission?("computer_update") %>
       <%= link_to 'Destroy', router_computer_path(computer), :confirm => 'Are you sure?', :method => :delete if current_user.has_permission?("computer_delete") %> | 
       <%= link_to 'Block', block_router_computer_path(computer), :confirm => 'Are you sure?', :method => :post %>
