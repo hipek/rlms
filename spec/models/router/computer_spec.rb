@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Computer do
+describe Router::Computer do
   before(:each) do
     @computer = build_router_computer
   end
 
   it "should validate mac address entry" do
-    @computer = build_computer :mac_address => "10-12;13:af.dc,ag"
+    @computer = build_router_computer :mac_address => "10-12;13:af.dc,ag"
     @computer.should_not be_valid
   end
 
@@ -15,7 +15,7 @@ describe Computer do
   end
   
   it "should save valid mac address" do
-    @computer = build_computer :mac_address => "10-12;13:af.dc,ab"
+    @computer = build_router_computer :mac_address => "10-12;13:af.dc,ab"
     @computer.save!
     @computer.mac_address.should == "10:12:13:AF:DC:AB"
   end
@@ -27,7 +27,7 @@ describe Computer do
   it "should return next free IP" do
     @computer.ip_address = "10.5.5.21"
     @computer.save!
-    @computer2 = build_computer :ip_address => "10.5.5.15", :mac_address => "10:12:13:14:15:16"
+    @computer2 = build_router_computer :ip_address => "10.5.5.15", :mac_address => "10:12:13:14:15:16"
     @computer2.save!
 #    Computer.next_ip.should == "10.5.5.22"
   end

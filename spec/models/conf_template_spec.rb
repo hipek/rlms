@@ -1,12 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ConfTemplate do
-  fixtures :computers
-
   describe 'Dhcp config' do
     before :each do
       @conf_template = ConfTemplate.new('dhcpd.conf', 
-                                        :computers => [computers(:one), computers(:two)], 
+                                        :computers => [build_router_computer], 
                                         :dhcp => build_dhcp_server)
     end
 
@@ -21,8 +19,8 @@ describe ConfTemplate do
     end
 
     it "should render erb file" do
-      @conf_template.render.should include(computers(:one).mac_address)
-      @conf_template.render.should include(computers(:two).ip_address)
+      @conf_template.render.should include(build_router_computer.mac_address)
+      @conf_template.render.should include(build_router_computer.ip_address)
       @conf_template.render.should include(build_dhcp_server.router)
     end
   
