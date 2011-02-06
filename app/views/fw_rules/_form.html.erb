@@ -1,8 +1,4 @@
 <p>
-  <%= f.label :firewall %><br />
-  <%= f.select :firewall_id, Firewall.all_as_pairs %>
-</p>
-<p>
   <%= f.label :order %><br />
   <%= f.select :order, (1..FwRule.count+1).to_a %>
 </p>

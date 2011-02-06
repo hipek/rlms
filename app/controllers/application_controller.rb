@@ -3,24 +3,12 @@ class ApplicationController < ActionController::Base
   include GetText
 
   helper :all
-  helper_method :current_lan
 
   layout 'application'
 
   before_filter :login_required, :authorize
 
   protected
-  
-  def local_network_required
-    unless current_lan
-      flash[:error] = "Local network configuration required!"
-      redirect_to local_networks_path
-    end
-  end
-
-  def current_lan
-    @local_network ||= LocalNetwork.first || LocalNetwork.new
-  end
 
   def params_or_session key
     session[key] = params.key?(key) ? params[key] : session[key]
@@ -31,7 +19,7 @@ class ApplicationController < ActionController::Base
     redirect_to request.env["HTTP_REFERER"] || root_url
     false
   end
-  
+
   def authorize(permissions = [])
     if c = current_user
       c.full_permissions_hash
