@@ -1,6 +1,7 @@
 class Router::ComputersController < Router::BaseController
   before_filter :check_permission, :only => [:index, :show, :block, :pass]
-  
+  submenu nil
+
   def index
     FwRuleContainer.read
     @computers = Router::Computer.find(:all, :order => Router::Computer::SORT_BY_IP)
