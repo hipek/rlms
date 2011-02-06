@@ -26,11 +26,13 @@ Rlms::Application.routes.draw do
     put "main/update",          :as => :update_main
   end
 
-  resources :torrents do
-    resources :files
-    resources :peers
-    collection do
-      post :set_rate
+  namespace :torrent do
+    resources :items do
+      collection do
+        post :set_rate
+      end
+      resources :files
+      resources :peers
     end
   end
 
@@ -42,45 +44,12 @@ Rlms::Application.routes.draw do
     end
   end
 
+  resources :fw_rules
+
   match 'user_groups' => 'user_groups#index', :as => :user_groups
   match 'user_group/:user_id/:group_id' => 'user_groups#update', :as => :update_user_group
   match 'group_permissions/' => 'group_permissions#index', :as => :group_permissions
   match 'group_permission/' => 'group_permissions#update', :as => :group_permission
-
-  resources :local_networks do
-    collection do
-      post :set
-    end
-    member do
-      post :get_ip
-    end
-  end
-
-  resources :firewalls
-  resources :fw_rules do
-    collection do
-      get :nat
-    end
-  end
-
-  resources :forward_ports
-  resources :open_ports
-  resources :dhcp_servers
-  resources :services do
-    member do
-      post :find
-    end
-  end
-
-  resources :computers do
-    collection do
-      get :dhcp_list
-    end
-    member do
-      post :pass
-      post :block
-    end
-  end
 
   resources :users
   resource :session

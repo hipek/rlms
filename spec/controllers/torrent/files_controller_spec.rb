@@ -1,6 +1,6 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
-describe FilesController do
+describe Torrent::FilesController do
   fixtures :users, :groups, :group_memberships
   render_views
 
@@ -12,7 +12,7 @@ describe FilesController do
   describe "GET 'index'" do
     it "should be successful" do
       RTorrent::Item.stub!(:new).with('a').and_return(mock('Items', :files => []))
-      get 'index', :torrent_id => 'a'
+      get 'index', :item_id => 'a'
       response.should be_success
     end
   end

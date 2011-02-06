@@ -10,8 +10,8 @@
   <td><%=h torrent.display_priority %></td>
   <td><%=h torrent.time_left %></td>
   <td>
-    <%= link_to 'Info', torrent_path(torrent) %>
-    <%= link_to 'Files', torrent_files_path(torrent) %>
-    <%= link_to 'Peers', torrent_peers_path(torrent) %>
+    <%= link_to 'Info', torrent_item_path(torrent) %>
+    <%= link_to 'Files', torrent_item_files_path(torrent) %>
+    <%= link_to 'Peers', torrent_item_peers_path(torrent) %>
   </td>
 </tr>

@@ -5,4 +5,4 @@
     = content_tag :li, link_to('Configs', dhcp_router_config_files_path), selected_option("config_files") if current_user.has_permission?('admin')
     = content_tag :li, link_to('Computers', router_computers_path), selected_option("computer") if current_user.has_permission?('computers')
     = content_tag :li, link_to('Web Jobs', dwnl_web_jobs_path), selected_option("web_jobs") if current_user.has_permission?('admin')
-    = content_tag :li, link_to('Torents', torrents_path), selected_option("torrents") if current_user.has_permission?('admin')
+    = content_tag :li, link_to('Torents', torrent_items_path), selected_option("torrents") if current_user.has_permission?('admin')

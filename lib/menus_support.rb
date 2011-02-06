@@ -4,6 +4,10 @@ module MenusSupport
     klass.send :extend, ClassMethods
   end
 
+  def views_dir
+    @views_dir ||= nil
+  end
+
   module HelperMethods
     def mainmenu
       render :partial => "#{menus_folder}/#{@menu_name}_menu" unless @menu_name.blank?
@@ -14,7 +18,9 @@ module MenusSupport
     end
     
     def menus_folder
-      'menus'
+      names = self.controller.class.name.dup.gsub('Controller', '').underscore.split('/')
+      names.pop
+      names.join('/') + '/menus'
     end
   end
 

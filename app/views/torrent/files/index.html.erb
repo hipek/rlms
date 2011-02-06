@@ -1,11 +1,6 @@
-<% content_for :col1 do %>
-  <%= render :partial => 'menus/torrent' -%>
-<% end %>
+<h1>>Listing torrent files</h1>
 
-<% content_for :col2 do %>
-<h1>Listing torrent files</h1>
-
-<%= form_tag torrent_file_path(params[:torrent_id], 0), :method => :put do %>
+<%= form_tag torrent_item_file_path(params[:item_id], 0), :method => :put do %>
 
 <table class="centerAll">
   <tr>
@@ -33,5 +28,4 @@
 
 <br />
 
-<%= link_to 'Back', torrents_path %>
-<% end %>
+<%= link_to 'Back', torrent_items_path %>

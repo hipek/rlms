@@ -1,4 +1,3 @@
-<% content_for :col2 do %>
 <h1>Editing torrent</h1>
 
 <% form_for(:torrent, :url => torrent_path(@torrent), :html => {:method => :put}) do |f| %>
@@ -29,4 +28,3 @@
 
 <%= link_to 'Show', torrent_path(@torrent) %> |
 <%= link_to 'Back', torrents_path %>
-<% end %>

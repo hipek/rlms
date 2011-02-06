@@ -1,8 +1,3 @@
-<% content_for :col1 do %>
-  <%= render :partial => 'menus/torrent' -%>
-<% end %>
-
-<% content_for :col2 do %>
 <table class="noborder">
   <tbody>
     <%= tr_td_row 'Name:', @torrent.name %>
@@ -30,6 +25,5 @@
   </tbody>
 </table>
 
-<%= link_to 'Files', torrent_files_path(@torrent) %> |
-<%= link_to 'Back', torrents_path %>
-<% end %>
+<%= link_to 'Files', torrent_item_files_path(@torrent) %> |
+<%= link_to 'Back', torrent_items_path %>
