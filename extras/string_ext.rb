@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class String
   PL_CHARS = { 
     'ą' => 'a', 'ę' => 'e', 'ó' => 'o',
