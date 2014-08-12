@@ -77,6 +77,7 @@ GEM
     rake (10.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
+    restful-authentication (1.2.1)
     rspec-collection_matchers (1.0.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (2.99.1)
@@ -116,6 +117,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails (>= 0.2.6)
   rails (= 3.2.18)
+  restful-authentication
   rspec-rails (~> 2.9)
   sqlite3
   state_machine

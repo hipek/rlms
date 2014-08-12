@@ -8,6 +8,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'state_machine'
 gem 'dynamic_form'
+gem 'restful-authentication'
 
 # gem 'rails3-generators'
 
