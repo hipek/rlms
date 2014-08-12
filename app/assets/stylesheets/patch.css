@@ -8,10 +8,10 @@
  * @file        patch_my_layout.css
  */
 
-/* Layout independent adjustments | Layout-unabhängige Anpassungen  */
+/* Layout independent adjustments | Layout-unabhÃ¤ngige Anpassungen  */
 @import url(../yaml/core/iehacks.css);
 
-/* Layout-dependent adjustments | Layout-abhängige Anpassungen */
+/* Layout-dependent adjustments | Layout-abhÃ¤ngige Anpassungen */
 @media screen, projection
 {
  /**

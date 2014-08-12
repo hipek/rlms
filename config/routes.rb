@@ -51,7 +51,7 @@ Rlms::Application.routes.draw do
   resources :fw_rules
 
   get 'user_groups' => 'user_groups#index', :as => :user_groups
-  get 'user_group/:user_id/:group_id' => 'user_groups#update', :as => :update_user_group
+  post 'user_group/:user_id/:group_id' => 'user_groups#update', :as => :update_user_group
   get 'group_permissions/' => 'group_permissions#index', :as => :group_permissions
   get 'group_permission/' => 'group_permissions#update', :as => :group_permission
 

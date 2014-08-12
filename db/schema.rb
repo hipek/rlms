@@ -9,46 +9,46 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110206184847) do
+ActiveRecord::Schema.define(version: 20110206184847) do
 
-  create_table "base_settings", :force => true do |t|
+  create_table "base_settings", force: true do |t|
     t.string   "type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "parent_id"
   end
 
-  create_table "computers", :force => true do |t|
+  create_table "computers", force: true do |t|
     t.string   "name"
     t.string   "mac_address"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "ip_address"
-    t.boolean  "active",      :default => true, :null => false
+    t.boolean  "active",      default: true, null: false
   end
 
-  create_table "firewalls", :force => true do |t|
+  create_table "firewalls", force: true do |t|
     t.string   "name"
     t.integer  "visibility"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "lan_id"
   end
 
-  create_table "forward_ports", :force => true do |t|
+  create_table "forward_ports", force: true do |t|
     t.string   "port"
     t.string   "protocol"
-    t.integer  "computer_id", :limit => 255
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.integer  "computer_id", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "dport"
   end
 
-  create_table "fw_rules", :force => true do |t|
+  create_table "fw_rules", force: true do |t|
     t.integer  "order"
     t.string   "ip_table"
     t.string   "cmd"
@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.text     "description"
     t.string   "type"
     t.integer  "firewall_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "target"
     t.string   "mod_option"
     t.string   "mod_protocol"
@@ -77,104 +77,104 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.string   "aft_argument"
   end
 
-  create_table "group_memberships", :force => true do |t|
+  create_table "group_memberships", force: true do |t|
     t.integer  "roleable_id"
     t.string   "roleable_type"
     t.integer  "group_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "groups", :force => true do |t|
+  create_table "groups", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "open_ports", :force => true do |t|
+  create_table "open_ports", force: true do |t|
     t.string   "port"
     t.string   "protocol"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "permissions", :force => true do |t|
+  create_table "permissions", force: true do |t|
     t.integer  "permissible_id"
     t.string   "permissible_type"
     t.string   "action"
     t.boolean  "granted"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "rule_flows", :force => true do |t|
+  create_table "rule_flows", force: true do |t|
     t.string   "port"
     t.string   "net_type"
     t.integer  "tc_classid_id"
     t.string   "port_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "services", :force => true do |t|
+  create_table "services", force: true do |t|
     t.string   "name"
     t.string   "init_path"
     t.string   "config_path"
     t.integer  "visibility"
     t.integer  "status"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "bin_path"
-    t.string   "type",        :limit => 32
+    t.string   "type",        limit: 32
   end
 
-  create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
     t.text     "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
-  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
 
-  create_table "settings", :force => true do |t|
+  create_table "settings", force: true do |t|
     t.string   "field_name"
     t.string   "value"
     t.integer  "base_setting_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "tc_classids", :force => true do |t|
+  create_table "tc_classids", force: true do |t|
     t.integer  "prio"
     t.string   "net_type"
     t.string   "rate"
     t.string   "ceil"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "router_id"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "users", force: true do |t|
     t.string   "login"
     t.string   "email"
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+    t.string   "crypted_password",          limit: 40
+    t.string   "salt",                      limit: 40
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
   end
 
-  create_table "web_jobs", :force => true do |t|
+  create_table "web_jobs", force: true do |t|
     t.string   "name"
     t.string   "state"
     t.text     "body"
     t.datetime "started_at"
     t.datetime "ended_at"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "source"
     t.text     "format_num"
     t.string   "category"

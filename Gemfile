@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '4.0.8'
 gem "will_paginate", "~> 3.0"
-gem 'jquery-rails'
 gem 'sqlite3'
 gem 'haml'
 gem 'haml-rails'
@@ -13,13 +12,28 @@ gem 'active_record_defaults', git: 'git@github.com:hipek/active_record_defaults.
 gem 'activerecord-session_store'
 gem 'protected_attributes'
 
-# gem 'rails3-generators'
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.0'
+gem 'sass-globbing'
+gem 'compass-rails'
+gem 'font-awesome-rails'
+# Use Uglifier as compressor for JavaScript assets
+gem 'uglifier'
+# Use CoffeeScript for .js.coffee assets and views
+gem 'coffee-rails', '~> 4.0.0'
+#gem 'haml_coffee_assets', git: "https://github.com/netzpirat/haml_coffee_assets"
+# gem 'execjs'
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer',  platforms: :ruby
 
-# gem 'wirble'
-# gem 'looksee'
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'jquery-turbolinks'
+gem 'backbone-on-rails'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
 
 # Use unicorn as the web server
 gem 'unicorn'
