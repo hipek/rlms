@@ -13,7 +13,7 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule)
-      allow(FwRuleContainer).to receive(:rules_for).and_return(:input => [@fw_rule])
+      allow(FwRuleContainer).to receive(:rules_for).and_return('input' => [@fw_rule])
     end
   
     def do_get

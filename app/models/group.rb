@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
     GROUPS.each do |group|
       class_eval "
         def #{group}
-          @@_role_#{group}_ ||= find_or_create_by_name('#{group}')
+          @@_role_#{group}_ ||= find_or_create_by(name: '#{group}')
         end"
     end
 

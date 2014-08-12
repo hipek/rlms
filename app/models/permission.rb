@@ -20,12 +20,12 @@ class Permission < ActiveRecord::Base
     self.new_record? ? {} : {self.action => self.granted}
   end
   
-  def self.find_or_create_by_group_id_and_action group_id, permission
-    find_or_create_by_permissible_type_and_permissible_id_and_action_and_granted('Group', group_id, permission, true)
+  def self.find_or_create_by_group_id_and_action(group_id, permission)
+    where(permissible_type: 'Group', permissible_id: group_id, action: permission, granted: true).first_or_create
   end
 
-  def self.find_by_group_id_and_action group_id, permission
-    find_by_permissible_type_and_permissible_id_and_action_and_granted('Group', group_id, permission, true)
+  def self.find_by_group_id_and_action(group_id, permission)
+    where(permissible_type: 'Group', permissible_id: group_id, action: permission, granted: true).first
   end
   
 end
