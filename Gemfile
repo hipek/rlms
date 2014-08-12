@@ -20,7 +20,8 @@ gem 'active_record_defaults', git: 'git@github.com:hipek/active_record_defaults.
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
+gem 'thin'
 
 # Deploy with Capistrano
 # gem 'capistrano'
