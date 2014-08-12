@@ -4,8 +4,8 @@ describe Router::TcClassidsController do
   fixtures :users
   render_views
 
-  def mock_tc_classid(stubs={})
-    @mock_tc_classid ||= mock_model(Router::Tc::Classid, stubs).as_null_object
+  let(:tc_classid) do
+    build :router_tc_classid, id: 1
   end
 
   before(:each) do
@@ -29,9 +29,9 @@ describe Router::TcClassidsController do
 
   describe "GET 'edit'" do
     it "should be successful" do
-      Router::Tc::Classid.stub(:find).with("37") { mock_tc_classid }
+      expect(Router::Tc::Classid).to receive(:find).with("37") { tc_classid }
       get :edit, :id => "37"
-      assigns(:tc_classid).should be(mock_tc_classid)
+      assigns(:tc_classid).should be(tc_classid)
       response.should be_success
     end
   end

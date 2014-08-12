@@ -27,9 +27,7 @@ module NoamBenAri
         def find_permissions_for(obj)
           permissible = obj.class.base_class.name
          
-          Permission.find(:all,
-            :conditions => ["permissible_id = ? and permissible_type = ?", obj.id, permissible]
-          )
+          Permission.where(["permissible_id = ? and permissible_type = ?", obj.id, permissible])
         end
       end
       

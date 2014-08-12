@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe Dwnl::WebJobsController do
   fixtures :users, :groups, :group_memberships
@@ -14,7 +14,7 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob, :id => 123, :state => 'pending')
-      allow(WebJob).to receive(:find).and_return([@web_job])
+      allow(WebJob).to receive(:all).and_return([@web_job])
     end
   
     def do_get
@@ -32,7 +32,7 @@ describe Dwnl::WebJobsController do
     end
   
     it "should find all dwnl_web_jobs" do
-      WebJob.should_receive(:find).with(:all).and_return([@web_job])
+      WebJob.should_receive(:all).and_return([@web_job])
       do_get
     end
   

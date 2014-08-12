@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   requires_permission "admin"
   
   def index
-    @users = User.find(:all)
+    @users = User.all
   end
 
   def new

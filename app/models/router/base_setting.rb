@@ -16,9 +16,10 @@ class Router::BaseSetting < ActiveRecord::Base
     def define_instance_methods
       fields.each do |field|
         has_one(:"#{field}_setting", 
+                ->{ where(["field_name = ?", field.to_s]) },
                 :class_name => 'Router::Setting', 
                 :foreign_key => 'base_setting_id' , 
-                :conditions => ["field_name = ?", field.to_s], :dependent => :destroy)
+                :dependent => :destroy)
         define_method field do
           result = self.send(:"#{field}_setting") || Router::Setting.new
           result.value

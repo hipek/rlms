@@ -27,7 +27,7 @@ class Group < ActiveRecord::Base
     end
         
     def all_as_pairs
-      map_to_pairs(find(:all))
+      map_to_pairs(all)
     end
         
     def map_to_pairs options={}

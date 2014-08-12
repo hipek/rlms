@@ -1,6 +1,6 @@
 class Dwnl::WebJobsController < ApplicationController
   def index
-    @web_jobs = WebJob.find(:all)
+    @web_jobs = WebJob.all
 
     respond_to do |format|
       format.html # index.html.erb

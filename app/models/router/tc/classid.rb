@@ -29,11 +29,11 @@ class Router::Tc::Classid < ActiveRecord::Base
 
   has_many :flow_rules, :class_name => 'Router::Rule::Flow', :foreign_key => 'tc_classid_id'
 
-  scope :download, where(:net_type => 'int')
-  scope :upload, where(:net_type => 'ext')
+  scope :download, ->{ where(:net_type => 'int') }
+  scope :upload, ->{ where(:net_type => 'ext') }
   scope :net_type, lambda {|t| where(:net_type => t)}
-  scope :ordered, order('net_type DESC, prio ASC')
-  scope :no_network, where("prio != ?", NETWORK)
+  scope :ordered, ->{ order('net_type DESC, prio ASC') }
+  scope :no_network, ->{ where("prio != ?", NETWORK) }
 
   class <<self
     def priorities
@@ -45,7 +45,7 @@ class Router::Tc::Classid < ActiveRecord::Base
     end
 
     def all_as_pairs
-      no_network.order.all.map{|c| 
+      no_network.ordered.map{|c| 
         [c.full_name, c.id]
       }
     end

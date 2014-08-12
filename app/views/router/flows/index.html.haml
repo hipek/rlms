@@ -14,7 +14,7 @@
       %td= display_port_type(router_flow.port_type)
       %td
         = link_to 'Edit', edit_router_flow_path(router_flow)
-        = link_to 'Destroy', router_flow_path(router_flow), :confirm => 'Are you sure?', :method => :delete
+        = link_to 'Destroy', router_flow_path(router_flow), data:{:confirm => 'Are you sure?'}, :method => :delete
 
 %br
 

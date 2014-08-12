@@ -14,9 +14,9 @@ class User < ActiveRecord::Base
 
   USERS_WITH_GROUP_SQL = "select * from group_memberships where group_id = ? and roleable_id = users.id and roleable_type = 'User'"
   
-  filtered_by_group_id_lambda = lambda {|group_id| group_id.blank? ? {} : {:conditions => ["exists(#{USERS_WITH_GROUP_SQL})", group_id]} }
+  filtered_by_group_id_lambda = lambda {|group_id| group_id.blank? ? where({}) : where(["exists(#{USERS_WITH_GROUP_SQL})", group_id]) }
   scope :filtered_by_group_id, filtered_by_group_id_lambda
-  scope :filtered_by_login, lambda {|query| {:conditions => ['login LIKE ?', '%' + query.to_s + '%']} }
+  scope :filtered_by_login, lambda {|query| where(['login LIKE ?', '%' + query.to_s + '%']) }
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.

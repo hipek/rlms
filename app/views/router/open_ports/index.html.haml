@@ -12,7 +12,7 @@
       %td= open_port.protocol
       %td
         = link_to 'Edit', edit_router_open_port_path(open_port)
-        = link_to 'Destroy', router_open_port_path(open_port), :confirm => 'Are you sure?', :method => :delete
+        = link_to 'Destroy', router_open_port_path(open_port), data:{:confirm => 'Are you sure?'}, :method => :delete
 
 %br
 

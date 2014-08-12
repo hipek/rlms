@@ -17,7 +17,7 @@
         = tc_classid.ceil
       %td
         = link_to 'Edit', edit_router_tc_classid_path(tc_classid)
-        = link_to 'Destroy', router_tc_classid_path(tc_classid), :confirm => 'Are you sure?', :method => :delete
+        = link_to 'Destroy', router_tc_classid_path(tc_classid), data:{:confirm => 'Are you sure?'}, :method => :delete
 
 %br
 

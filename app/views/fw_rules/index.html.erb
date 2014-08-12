@@ -61,7 +61,7 @@
       <td>
 	<%#= link_to 'Show', fw_rule %>
 	<%= link_to 'Edit', edit_fw_rule_path(0) %>
-	<%#= link_to 'Destroy', fw_rule_path(fw_rule), :confirm => 'Are you sure?', :method => :delete %>
+	<%#= link_to 'Destroy', fw_rule_path(fw_rule), :data => {confirm => 'Are you sure?'}, :method => :delete %>
       </td>
     </tr>
     <tr class="<%= klass -%>">

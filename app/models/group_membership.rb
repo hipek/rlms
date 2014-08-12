@@ -23,10 +23,10 @@ class GroupMembership < ActiveRecord::Base
   end
   
   def belongs_to_itself_through_other?(original_roleable_id, current_group_id)
-    if self.class.find(:first, :select => "id", :conditions => ["roleable_id=? AND roleable_type='Group' AND group_id=?",current_group_id,original_roleable_id])
+    if self.class.where(["roleable_id=? AND roleable_type='Group' AND group_id=?",current_group_id,original_roleable_id]).select("id").first
       return true
     else
-      memberships = self.class.find(:all, :select => "group_id", :conditions => ["roleable_id=? AND roleable_type='Group'",current_group_id])
+      memberships = self.class.select("group_id").where(["roleable_id=? AND roleable_type='Group'",current_group_id])
       if memberships.any? {|membership| belongs_to_itself_through_other?(original_roleable_id,membership.group_id)}
         return true
       end

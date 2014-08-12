@@ -21,7 +21,7 @@
     <td>
       <%= link_to 'Show', dwnl_web_job_path(web_job) %>
       <%= link_to 'Edit', edit_dwnl_web_job_path(web_job) if web_job.pending? %>
-      <%= link_to 'Destroy', dwnl_web_job_path(web_job), :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to 'Destroy', dwnl_web_job_path(web_job), data:{:confirm => 'Are you sure?'}, :method => :delete %>
       <%= link_to 'Add to queue', start_dwnl_web_job_path(web_job) %>
     </td>
   </tr>

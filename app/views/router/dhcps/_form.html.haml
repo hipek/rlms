@@ -42,4 +42,4 @@
 
 .actions
   = f.submit _('Update')
-  = link_to _('Reset'), router_dhcp_path(0), :method => :delete, :confirm => _('Are you sure?')
+  = link_to _('Reset'), router_dhcp_path(0), :method => :delete, data:{:confirm => 'Are you sure?'}

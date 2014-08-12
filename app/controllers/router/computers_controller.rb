@@ -4,7 +4,7 @@ class Router::ComputersController < Router::BaseController
 
   def index
     FwRuleContainer.read
-    @computers = Router::Computer.find(:all, :order => Router::Computer::SORT_BY_IP)
+    @computers = Router::Computer.order(Router::Computer::SORT_BY_IP)
     @online_computers = Router::Computer.all_online
     @online_ips = @online_computers.map(&:ip_address)
     @online_computers = @online_computers.select{|cmp| !@computers.map(&:mac_address).include?(cmp.mac_address.upcase)}

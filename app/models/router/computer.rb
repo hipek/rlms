@@ -7,16 +7,16 @@ class Router::Computer < ActiveRecord::Base
 
   SORT_BY_IP = "substr( `ip_address` , 8) + 0"
 
-  scope :without_router, where("lower(name) != lower('router')")
-  scope :sorted_by_ip, order(SORT_BY_IP)
-  scope :active, where(:active => 1)
-  scope :not_active, where(:active => 0)
+  scope :without_router, ->{ where("lower(name) != lower('router')") }
+  scope :sorted_by_ip, ->{ order(SORT_BY_IP) }
+  scope :active, ->{ where(:active => 1) }
+  scope :not_active, ->{ where(:active => 0) }
 
   has_many :forward_ports, :class_name => 'Router::Rule::ForwardPort', :foreign_key => 'computer_id'
 
   class <<self
     def all_for_dhcpd
-      without_router.sorted_by_ip.all
+      without_router.sorted_by_ip
     end
 
     def allow_computers
@@ -32,7 +32,7 @@ class Router::Computer < ActiveRecord::Base
     end
 
     def next_ip
-      ip = all_for_dhcpd.last.try:ip_address
+      ip = all_for_dhcpd.to_a.last.try:ip_address
       return ip if ip.blank?
       elements = ip.split('.')
       elements[elements.length - 1] = (elements.last.to_i + 1).to_s
