@@ -398,8 +398,8 @@ describe FwRuleParser, "POSTROUTING" do
 end
 
 describe FwRuleParser, "MARK" do
-  it "should return valid rule for '-A MYSHAPER-IN ! -p tcp -j MARK --set-mark 0x1e'" do
-    pending
+  skip "should return valid rule for '-A MYSHAPER-IN ! -p tcp -j MARK --set-mark 0x1e'" do
+    # pending
     @rule = FwRuleParser.new('-t MANGLE -A MYSHAPER-IN ! -p tcp -j MARK --set-mark 0x1e').parse    
     @rule.cmd.should eql('A')
     @rule.chain_name.should eql('MYSHAPER-IN')

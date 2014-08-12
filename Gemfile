@@ -40,5 +40,5 @@ gem 'state_machine'
 # end
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.4"
+  gem "rspec-rails", "~> 2.9"
 end
