@@ -7,3 +7,4 @@ config/rtorrent.yml
 tmp/dhcpd.conf
 tmp/*
 config/settings.yml
+coverage/
