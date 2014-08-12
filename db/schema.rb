@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -14,16 +15,16 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
 
   create_table "base_settings", :force => true do |t|
     t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "parent_id"
   end
 
   create_table "computers", :force => true do |t|
     t.string   "name"
     t.string   "mac_address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "ip_address"
     t.boolean  "active",      :default => true, :null => false
   end
@@ -33,8 +34,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.integer  "visibility"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "lan_id"
   end
 
@@ -42,8 +43,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.string   "port"
     t.string   "protocol"
     t.integer  "computer_id", :limit => 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.string   "dport"
   end
 
@@ -65,8 +66,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.text     "description"
     t.string   "type"
     t.integer  "firewall_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "target"
     t.string   "mod_option"
     t.string   "mod_protocol"
@@ -80,21 +81,21 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.integer  "roleable_id"
     t.string   "roleable_type"
     t.integer  "group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "groups", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "open_ports", :force => true do |t|
     t.string   "port"
     t.string   "protocol"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "permissions", :force => true do |t|
@@ -102,8 +103,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.string   "permissible_type"
     t.string   "action"
     t.boolean  "granted"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "rule_flows", :force => true do |t|
@@ -111,8 +112,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.string   "net_type"
     t.integer  "tc_classid_id"
     t.string   "port_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "services", :force => true do |t|
@@ -121,8 +122,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.string   "config_path"
     t.integer  "visibility"
     t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "bin_path"
     t.string   "type",        :limit => 32
   end
@@ -130,8 +131,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
@@ -141,8 +142,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.string   "field_name"
     t.string   "value"
     t.integer  "base_setting_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "tc_classids", :force => true do |t|
@@ -150,8 +151,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.string   "net_type"
     t.string   "rate"
     t.string   "ceil"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "router_id"
   end
 
@@ -172,8 +173,8 @@ ActiveRecord::Schema.define(:version => 20110206184847) do
     t.text     "body"
     t.datetime "started_at"
     t.datetime "ended_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.text     "source"
     t.text     "format_num"
     t.string   "category"

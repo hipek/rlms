@@ -1,5 +1,5 @@
 class Router::Tc::Classid < ActiveRecord::Base
-  set_table_name 'tc_classids'
+  self.table_name = 'tc_classids'
 
   NETWORK = -1
   HIGHEST = 0

@@ -1,5 +1,5 @@
 class Router::Service::Base < ActiveRecord::Base
-  set_table_name 'services'
+  self.table_name = 'services'
 
   KINDS = {
     :config => '/etc',

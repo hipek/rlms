@@ -7,22 +7,25 @@ class WebJob < ActiveRecord::Base
 
   validates_presence_of :category, :name, :source
   
-  acts_as_state_machine :initial => :pending, :column => 'state'
+  state_machine :state, :initial => :pending do
 
-  state :pending
-  state :queuing
-  state :running, :enter => :run
-  state :done
+    state :pending
+    state :queuing
+    state :running
+    state :done
 
-  state :returned
+    state :returned
 
-  event :start do
-    transitions :to => :queuing, :from => :pending
-    transitions :to => :running, :from => :queuing
-  end
+    event :start do
+      transition :pending => :queuing
+      transition :queuing => :running
+    end
+    after_transition :queuing => :running, do: :run
 
-  event :finish do
-    transitions :to => :done, :from => :running
+    event :finish do
+      transition :running => :done
+    end
+
   end
 
   def run
