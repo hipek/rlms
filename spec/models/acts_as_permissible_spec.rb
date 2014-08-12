@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 class Permission < ActiveRecord::Base
   acts_as_permissible
@@ -88,7 +88,7 @@ describe "acts_as_permissible" do
       @mutables.destroy
       @wierdos.destroy
       @perm.groups.reset
-      @perm.groups_list.should == []
+      @perm.reload.groups_list.should == []
     end
 
     it "should return the correct list" do
