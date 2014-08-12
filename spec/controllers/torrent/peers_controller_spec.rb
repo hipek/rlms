@@ -10,7 +10,7 @@ describe Torrent::PeersController do
 
   describe "GET 'index'" do
     it "should be successful" do
-      RTorrent::Item.stub!(:new).with('aaa').and_return(mock('Items', :peers => []))
+      allow(RTorrent::Item).to receive(:new).with('aaa').and_return(double('Items', :peers => []))
       get 'index', :item_id => 'aaa'
       response.should be_success
     end

@@ -11,7 +11,7 @@ describe Torrent::FilesController do
 
   describe "GET 'index'" do
     it "should be successful" do
-      RTorrent::Item.stub!(:new).with('a').and_return(mock('Items', :files => []))
+      allow(RTorrent::Item).to receive(:new).with('a').and_return(double('Items', :files => []))
       get 'index', :item_id => 'a'
       response.should be_success
     end

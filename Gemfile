@@ -45,6 +45,7 @@ gem 'thin'
 
 group :test, :development do
   gem "rspec-rails", "~> 2.9"
+  gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
   gem 'simplecov-rcov'
 end

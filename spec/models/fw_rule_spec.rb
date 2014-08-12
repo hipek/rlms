@@ -1,10 +1,10 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe FwRule do
   fixtures :fw_rules
 
   before(:each) do
-    @fw_rule = FwRule.new
+    @fw_rule = described_class.new
   end
 
   it "should be valid" do
@@ -12,7 +12,7 @@ describe FwRule do
   end
 
   it "should have blocked ips" do
-    FwRuleContainer.stub!(:rules_for).and_return([FwRule.new(:chain_name => 'PREROUTING', :src_ip => "10.5.5.5"), FwRule.new(:chain_name => 'PREROUTING', :src_ip => nil),])
-    FwRule.blocked_ips.should include("10.5.5.5")
+    allow(FwRuleContainer).to receive(:rules_for).and_return([described_class.new(:chain_name => 'PREROUTING', :src_ip => "10.5.5.5"), described_class.new(:chain_name => 'PREROUTING', :src_ip => nil),])
+    described_class.blocked_ips.should include("10.5.5.5")
   end
 end
