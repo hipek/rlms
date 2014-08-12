@@ -9,6 +9,7 @@ gem 'haml-rails'
 gem 'state_machine'
 gem 'dynamic_form'
 gem 'restful-authentication'
+gem 'active_record_defaults', git: 'git@github.com:hipek/active_record_defaults.git'
 
 # gem 'rails3-generators'
 

@@ -1,3 +1,9 @@
+GIT
+  remote: git@github.com:hipek/active_record_defaults.git
+  revision: 41835d7be7a9c1af447e23a47e04476a6cdb4173
+  specs:
+    active_record_defaults (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -112,6 +118,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_record_defaults!
   dynamic_form
   haml
   haml-rails
