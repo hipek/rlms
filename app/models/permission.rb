@@ -8,7 +8,7 @@ class Permission < ActiveRecord::Base
   belongs_to :permissible, :polymorphic => true
   
   validates_presence_of :permissible_id, :permissible_type, :action
-  validates_format_of :action, :with => /^[a-z_]+$/
+  validates_format_of :action, :with => /\A[a-z_]+\z/
   validates_numericality_of :permissible_id
   validates_uniqueness_of :action, :scope => [:permissible_id,:permissible_type]
 

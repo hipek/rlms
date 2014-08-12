@@ -40,6 +40,7 @@ module Rlms
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    config.active_record.whitelist_attributes = false
 
     config.generators do |g|
       g.test_framework :rspec, :fixture_replacement => 'factory_girl', :view_specs => false, :routing_specs => false

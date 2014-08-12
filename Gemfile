@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails', '4.0.8'
 gem "will_paginate", "~> 3.0"
-gem 'jquery-rails', '>= 0.2.6'
+gem 'jquery-rails'
 gem 'sqlite3'
 gem 'haml'
 gem 'haml-rails'
@@ -10,6 +10,8 @@ gem 'state_machine'
 gem 'dynamic_form'
 gem 'restful-authentication'
 gem 'active_record_defaults', git: 'git@github.com:hipek/active_record_defaults.git'
+gem 'activerecord-session_store'
+gem 'protected_attributes'
 
 # gem 'rails3-generators'
 
@@ -48,4 +50,6 @@ group :test, :development do
   gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
   gem 'simplecov-rcov'
+  gem 'rspec-collection_matchers'
+  gem 'shoulda-matchers', require: false, git: 'https://github.com/thoughtbot/shoulda-matchers.git'
 end

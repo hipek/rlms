@@ -6,7 +6,7 @@ class GroupMembership < ActiveRecord::Base
   validates_presence_of :roleable_id, :roleable_type, :group_id
   validates_uniqueness_of :group_id, :scope => [:roleable_id, :roleable_type]
   validates_numericality_of :roleable_id, :group_id
-  validates_format_of :roleable_type, :with => /^[A-Z]{1}[a-z0-9]+([A-Z]{1}[a-z0-9]+)*$/
+  validates_format_of :roleable_type, :with => /\A[A-Z]{1}[a-z0-9]+([A-Z]{1}[a-z0-9]+)*\z/
   validate :group_does_not_belong_to_itself_in_a_loop
   
   protected

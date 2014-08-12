@@ -50,15 +50,15 @@ Rlms::Application.routes.draw do
 
   resources :fw_rules
 
-  match 'user_groups' => 'user_groups#index', :as => :user_groups
-  match 'user_group/:user_id/:group_id' => 'user_groups#update', :as => :update_user_group
-  match 'group_permissions/' => 'group_permissions#index', :as => :group_permissions
-  match 'group_permission/' => 'group_permissions#update', :as => :group_permission
+  get 'user_groups' => 'user_groups#index', :as => :user_groups
+  get 'user_group/:user_id/:group_id' => 'user_groups#update', :as => :update_user_group
+  get 'group_permissions/' => 'group_permissions#index', :as => :group_permissions
+  get 'group_permission/' => 'group_permissions#update', :as => :group_permission
 
   resources :users
   resource :session
 
-  match '/' => 'sessions#new'
-  match '/logout' => 'sessions#destroy', :as => :logout
-  match '/login' => 'sessions#new', :as => :login
+  get '/' => 'sessions#new'
+  get '/logout' => 'sessions#destroy', :as => :logout
+  get '/login' => 'sessions#new', :as => :login
 end
