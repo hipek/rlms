@@ -43,7 +43,7 @@ describe SessionsController do
     users(:quentin).remember_me
     request.cookies["auth_token"] = cookie_for(:quentin)
     get :new
-    controller.send(:logged_in?).should be_true
+    expect(controller.send(:logged_in?)).to eql true
   end
   
   it 'fails expired cookie login' do
@@ -51,14 +51,14 @@ describe SessionsController do
     users(:quentin).update_attribute :remember_token_expires_at, 5.minutes.ago
     request.cookies["auth_token"] = cookie_for(:quentin)
     get :new
-    controller.send(:logged_in?).should_not be_true
+    expect(controller.send(:logged_in?)).to_not eql true
   end
   
   it 'fails cookie login' do
     users(:quentin).remember_me
     request.cookies["auth_token"] = auth_token('invalid_auth_token')
     get :new
-    controller.send(:logged_in?).should_not be_true
+    expect(controller.send(:logged_in?)).to_not eql true
   end
 
   def auth_token(token)

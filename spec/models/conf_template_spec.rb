@@ -1,11 +1,13 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe ConfTemplate do
   describe 'Dhcp config' do
     before :each do
-      @conf_template = ConfTemplate.new('dhcpd.conf', 
-                                        :computers => [build_router_computer], 
-                                        :dhcp => build_router_dhcp)
+      @conf_template = ConfTemplate.new(
+        'dhcpd.conf', 
+        :computers => [build_router_computer], 
+        :dhcp => build_router_dhcp
+      )
     end
 
     it "should return new object" do
@@ -30,7 +32,7 @@ describe ConfTemplate do
   
     it "should save rendered file in tmp dir" do
       @conf_template.write
-      File.exist?(@conf_template.dest_path).should be_true
+      expect(File.exist?(@conf_template.dest_path)).to eql true
       File.delete(@conf_template.dest_path)
     end
   end
@@ -55,7 +57,7 @@ describe ConfTemplate do
 
     it "should save rendered file in tmp dir" do
       @conf_template.write
-      File.exist?(@conf_template.dest_path).should be_true
+      expect(File.exist?(@conf_template.dest_path)).to eql true
       # File.delete(@conf_template.dest_path)
     end
   end

@@ -11,7 +11,7 @@ describe Router::ConfigFilesController do
 
   describe "GET 'dhcp'" do
     it "should be successful" do
-      Router::Dhcp.stub!(:instance).and_return(build_router_dhcp)
+      allow(Router::Dhcp).to receive(:instance).and_return(build_router_dhcp)
       get 'dhcp'
       response.should be_success
     end
@@ -19,7 +19,7 @@ describe Router::ConfigFilesController do
 
   describe "GET 'iptables'" do
     it "should be successful" do
-      Router::Main.stub!(:instance).and_return(build_router_main)
+      allow(Router::Main).to receive(:instance).and_return(build_router_main)
       get 'iptables'
       response.should be_success
     end

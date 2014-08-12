@@ -30,8 +30,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 end
 
-def stub_current_user user=mock_model(User)
-  @controller.template.stub!(:current_user).and_return(user)
+def stub_current_user(user = nil)
+  @controller.template.stub!(:current_user).and_return(
+    user || FactoryGirl.build(:user)
+  )
 end
 
 def build_service params={}
@@ -49,12 +51,12 @@ def build_computer params={}
     :name => 'iT a cool Bame', 
     :ip_address => "1.1.1.1"  
   }.merge(params))
-  c.stub!(:id).and_return(params[:id])
+  allow(c).to receive(:id).and_return(params[:id])
   c
 end
 
 def build_model model, options={}
   m = model.new options
-  m.stub!(:id).and_return(options[:id])
+  allow(m).to receive(:id).and_return(options[:id])
   m
 end

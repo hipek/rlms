@@ -7,10 +7,10 @@ describe Torrent::ItemsController do
   before(:each) do
     login_as(:admin)
     #add_permission groups(:administrator), "admin"
-    RTorrent::Client.stub!(:download_rate).and_return(100)
-    RTorrent::Client.stub!(:down_rate).and_return(100)
-    RTorrent::Client.stub!(:upload_rate).and_return(100)
-    RTorrent::Client.stub!(:up_rate).and_return(100)
+    allow(RTorrent::Client).to receive(:download_rate).and_return(100)
+    allow(RTorrent::Client).to receive(:down_rate).and_return(100)
+    allow(RTorrent::Client).to receive(:upload_rate).and_return(100)
+    allow(RTorrent::Client).to receive(:up_rate).and_return(100)
   end
 
   
@@ -79,13 +79,13 @@ describe Torrent::ItemsController do
     # describe "with invalid params" do
     # 
     #   it "should expose a newly created but unsaved torrent as @torrent" do
-    #     RTorrent::Item.stub!(:new).with({'these' => 'params'}).and_return(mock_torrent(:save => false))
+    #     allow(RTorrent::Item).to receive(:new).with({'these' => 'params'}).and_return(mock_torrent(:save => false))
     #     post :create, :torrent => {:these => 'params'}
     #     assigns(:torrent).should equal(mock_torrent)
     #   end
     # 
     #   it "should re-render the 'new' template" do
-    #     RTorrent::Item.stub!(:new).and_return(mock_torrent(:save => false))
+    #     allow(RTorrent::Item).to receive(:new).and_return(mock_torrent(:save => false))
     #     post :create, :torrent => {}
     #     response.should render_template('new')
     #   end
@@ -122,13 +122,13 @@ describe Torrent::ItemsController do
     #   end
     # 
     #   it "should expose the torrent as @torrent" do
-    #     RTorrent::Item.stub!(:find).and_return(mock_torrent(:update_attributes => false))
+    #     allow(RTorrent::Item).to receive(:find).and_return(mock_torrent(:update_attributes => false))
     #     put :update, :id => "1"
     #     assigns(:torrent).should equal(mock_torrent)
     #   end
     # 
     #   it "should re-render the 'edit' template" do
-    #     RTorrent::Item.stub!(:find).and_return(mock_torrent(:update_attributes => false))
+    #     allow(RTorrent::Item).to receive(:find).and_return(mock_torrent(:update_attributes => false))
     #     put :update, :id => "1"
     #     response.should render_template('edit')
     #   end
@@ -146,7 +146,7 @@ describe Torrent::ItemsController do
     end
   
     it "should redirect to the torrents list" do
-      RTorrent::Item.stub!(:new).and_return(mock_torrent(:destroy => true))
+      allow(RTorrent::Item).to receive(:new).and_return(mock_torrent(:destroy => true))
       delete :destroy, :id => "1"
       response.should redirect_to(torrent_items_url)
     end

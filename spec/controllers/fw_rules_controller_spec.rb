@@ -13,7 +13,7 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule)
-      FwRuleContainer.stub!(:rules_for).and_return(:input => [@fw_rule])
+      allow(FwRuleContainer).to receive(:rules_for).and_return(:input => [@fw_rule])
     end
   
     def do_get
@@ -44,7 +44,7 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule, :id => 1)
-      FwRule.stub!(:find_by_id).and_return(@fw_rule)
+      allow(FwRule).to receive(:find_by_id).and_return(@fw_rule)
     end
   
     def do_get
@@ -75,7 +75,7 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule)
-      FwRule.stub!(:new).and_return(@fw_rule)
+      allow(FwRule).to receive(:new).and_return(@fw_rule)
     end
   
     def do_get
@@ -112,7 +112,7 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule)
-      FwRule.stub!(:find_by_id).and_return(@fw_rule)
+      allow(FwRule).to receive(:find_by_id).and_return(@fw_rule)
     end
   
     def do_get
@@ -143,7 +143,7 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule, :id => "1")
-      FwRule.stub!(:new).and_return(@fw_rule)
+      allow(FwRule).to receive(:new).and_return(@fw_rule)
     end
     
     describe "with successful save" do
@@ -184,7 +184,7 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule, :id => "1")
-      FwRule.stub!(:find_by_id).and_return(@fw_rule)
+      allow(FwRule).to receive(:find_by_id).and_return(@fw_rule)
     end
     
     describe "with successful update" do
@@ -234,8 +234,8 @@ describe FwRulesController do
 
     before(:each) do
       @fw_rule = build_model(FwRule)
-      @fw_rule.stub!(:destroy).and_return(true)
-      FwRule.stub!(:find_by_id).and_return(@fw_rule)
+      allow(@fw_rule).to receive(:destroy).and_return(true)
+      allow(FwRule).to receive(:find_by_id).and_return(@fw_rule)
     end
   
     def do_delete

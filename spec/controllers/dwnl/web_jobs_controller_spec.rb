@@ -14,7 +14,7 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob, :id => 123, :state => 'pending')
-      WebJob.stub!(:find).and_return([@web_job])
+      allow(WebJob).to receive(:find).and_return([@web_job])
     end
   
     def do_get
@@ -46,7 +46,7 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob, :id => 123)
-      WebJob.stub!(:find).and_return(@web_job)
+      allow(WebJob).to receive(:find).and_return(@web_job)
     end
   
     def do_get
@@ -78,7 +78,7 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob)
-      WebJob.stub!(:new).and_return(@web_job)
+      allow(WebJob).to receive(:new).and_return(@web_job)
     end
   
     def do_get
@@ -115,7 +115,7 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob, :id => 122)
-      WebJob.stub!(:find).and_return(@web_job)
+      allow(WebJob).to receive(:find).and_return(@web_job)
     end
   
     def do_get
@@ -147,8 +147,8 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob, :id => 1)
-      @web_job.stub!(:create_directory)
-      WebJob.stub!(:new).and_return(@web_job)
+      allow(@web_job).to receive(:create_directory)
+      allow(WebJob).to receive(:new).and_return(@web_job)
     end
     
     describe "with successful save" do
@@ -189,7 +189,7 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob, :id => 1)
-      WebJob.stub!(:find).and_return(@web_job)
+      allow(WebJob).to receive(:find).and_return(@web_job)
     end
     
     describe "with successful update" do
@@ -240,8 +240,8 @@ describe Dwnl::WebJobsController do
 
     before(:each) do
       @web_job = build_model(WebJob)
-      @web_job.stub!(:destroy).and_return(true)
-      WebJob.stub!(:find).and_return(@web_job)
+      allow(@web_job).to receive(:destroy).and_return(true)
+      allow(WebJob).to receive(:find).and_return(@web_job)
     end
   
     def do_delete

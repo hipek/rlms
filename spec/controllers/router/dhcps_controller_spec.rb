@@ -7,7 +7,7 @@ describe Router::DhcpsController do
   before(:each) do
     login_as(:quentin)
     stub_shell_commands
-    Router::Dhcp.stub!(:first).and_return(build_router_dhcp)
+    allow(Router::Dhcp).to receive(:first).and_return(build_router_dhcp)
   end
 
   describe "GET 'index'" do

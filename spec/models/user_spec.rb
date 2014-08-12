@@ -82,7 +82,7 @@ describe User do
     after = 1.week.from_now.utc
     users(:quentin).remember_token.should_not be_nil
     users(:quentin).remember_token_expires_at.should_not be_nil
-    users(:quentin).remember_token_expires_at.between?(before, after).should be_true
+    expect(users(:quentin).remember_token_expires_at.between?(before, after)).to eql true
   end
 
   it 'remembers me until one week' do
@@ -99,7 +99,7 @@ describe User do
     after = 2.weeks.from_now.utc
     users(:quentin).remember_token.should_not be_nil
     users(:quentin).remember_token_expires_at.should_not be_nil
-    users(:quentin).remember_token_expires_at.between?(before, after).should be_true
+    expect(users(:quentin).remember_token_expires_at.between?(before, after)).to eql true
   end
 
 protected

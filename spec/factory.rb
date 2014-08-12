@@ -52,8 +52,10 @@ module Factory
   end
 
   def stub_shell_commands
-    Router::Service::Base.stub!(:find_by_name).and_return(mock('service', :bin_path => '', :config_path => '/tmp', :init_path => '/tmp'))
-    ShellCommand.stub!(:run_command).and_return('')
+    allow(Router::Service::Base).to receive(:find_by_name).and_return(
+      double('service', :bin_path => '', :config_path => '/tmp', :init_path => '/tmp')
+    )
+    allow(ShellCommand).to receive(:run_command).and_return('')
   end
 
   def array_to_will_paginate elements, page=1, per_page=100
@@ -67,7 +69,7 @@ module Factory
   protected
 
   def stub_others object, options={}
-    object.stub!(:id).and_return(options[:id]) if options[:id].present?
+    allow(object).to receive(:id).and_return(options[:id]) if options[:id].present?
     object
   end
 end
