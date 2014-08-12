@@ -31,6 +31,7 @@ GEM
     arel (3.0.3)
     builder (3.0.4)
     diff-lcs (1.2.5)
+    dynamic_form (1.1.4)
     erubis (2.7.0)
     haml (3.1.8)
     haml-rails (0.3.4)
@@ -110,6 +111,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dynamic_form
   haml
   haml-rails
   jquery-rails (>= 0.2.6)
