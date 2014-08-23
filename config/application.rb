@@ -46,5 +46,12 @@ module Rlms
       g.template_engine :haml
       g.orm :active_record
     end
+
+    config.relative_url_root = case Rails.env
+      when 'testing', 'staging', 'production'
+        '/rlms'
+      else
+        ''
+    end
   end
 end
