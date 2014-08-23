@@ -1,48 +1,60 @@
-set :application, "r-lms"
-set :repository,  "http://ltg.one.pl/svn/repos/r-lms/"
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-set :user, "rails"
-set :use_sudo,  false
+set :application, 'rlms4'
+set :repo_url, 'git@jac.zapto.org:ruby/rlms.git'
 
-set :deploy_to, "/home/rails/production/#{application}"
-set :config,    "#{deploy_to}/config"
-set :deploy_via, :export
-#set :copy_strategy, :export
+# Default branch is :master
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-set :krd_server, "krd.webhop.org"
+# Default deploy_to directory is /var/www/my_app
+set :deploy_to, '/home/deploy/rlms4'
 
-role :app, krd_server
-role :web, krd_server
-role :db,  krd_server, :primary => true
+# Default value for :scm is :git
+# set :scm, :git
 
-task :after_setup, :roles => :app do
-  run "umask 02 && mkdir -p #{deploy_to}/config"
-  run "cd #{deploy_to}/config && cp ../current/config/database.yml.example ./database.yml"
-  run "cd #{deploy_to}/config && cp ../current/config/mongrel_cluster.yml.example ./mongrel_cluster.yml"  
-  run "cd #{deploy_to}/config && cp ../current/config/environments/production.rb.example ./production.rb"
-end
+# Default value for :format is :pretty
+# set :format, :pretty
 
-task :before_finalize_update, :roles => :app do
-  run "cd #{current_release} && ln -fs #{config}/database.yml ./config/database.yml"
-  run "cd #{current_release} && ln -fs #{config}/rtorrent.yml ./config/rtorrent.yml"
-  run "cd #{current_release} && ln -fs #{config}/mongrel_cluster.yml ./config/mongrel_cluster.yml"  
-  run "cd #{current_release} && ln -fs #{config}/production.rb ./config/environments/production.rb"
-  run "cd #{current_release} && ln -fs #{deploy_to}/shared/downloads ./public/downloads"
-end
+# Default value for :log_level is :debug
+# set :log_level, :debug
 
-task :passenger_restart, :roles => :app do
-  run "touch #{current_release}/tmp/restart.txt"
-end
+# Default value for :pty is false
+# set :pty, true
+
+# Default value for :linked_files is []
+set :linked_files, %w{config/database.yml config/rtorrent.yml config/settings.yml}
+
+# Default value for linked_dirs is []
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+set :keep_releases, 5
+
+set :rbenv_ruby, '2.1.2'
 
 namespace :deploy do
+
+  desc 'Restart application'
   task :restart do
-    #sudo "/etc/init.d/apache2 restart"
-    passenger_restart
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      # execute :touch, release_path.join('tmp/restart.txt')
+    end
   end
-  task :start do
-    # nothing
+
+  after :publishing, :restart
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
   end
-  task :stop do
-    # nothing
-  end
+
 end

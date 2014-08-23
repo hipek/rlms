@@ -59,6 +59,12 @@ gem 'thin'
 #   gem 'webrat'
 # end
 
+group :development do
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv', '~> 2.0'
+end
+
 group :test, :development do
   gem "rspec-rails", "~> 2.9"
   gem 'rspec-activemodel-mocks'
