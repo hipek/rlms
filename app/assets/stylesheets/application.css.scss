@@ -1,11 +1,19 @@
-@charset "UTF-8";
+/*
+ *= require yaml/core/base
+ *= require yaml/navigation/nav_shinybuttons.css
+ *= require screen/basemod.css
+ *= require screen/content.css
+ *= require_self
+ */
+
+// @charset "UTF-8";
 /* import core styles | Basis-Stylesheets einbinden */
-@import url(yaml/core/base.css);
+// @import url('yaml/core/base.css');
 
 /* import screen layout | Screen-Layout einbinden */
-@import url(yaml/navigation/nav_shinybuttons.css);
-@import url(screen/basemod.css);
-@import url(screen/content.css);
+// @import url('yaml/navigation/nav_shinybuttons.css');
+// @import url('screen/basemod.css');
+// @import url('screen/content.css');
 
 /* import print layout | Druck-Layout einbinden */
 /* @import url(../yaml/print/print_003_draft.css); */
