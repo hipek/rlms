@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_filter :login_required, :local_network_required, :authorize
+  before_filter :redirect_when_logged_in, only: :new
 
   def new
   end
@@ -28,6 +29,12 @@ class SessionsController < ApplicationController
     reset_session
     flash[:notice] = "You have been logged out."
     redirect_back_or_default(root_url)
+  end
+
+  protected
+
+  def redirect_when_logged_in
+    redirect_to url_after_login if logged_in?
   end
 
   def url_after_login
