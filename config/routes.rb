@@ -59,7 +59,7 @@ Rlms::Application.routes.draw do
     resources :users
     resource :session
 
-    get '/' => 'sessions#new'
+    root 'sessions#new'
     get '/logout' => 'sessions#destroy', :as => :logout
     get '/login' => 'sessions#new', :as => :login
   end

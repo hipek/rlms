@@ -9,9 +9,12 @@ class SessionsController < ApplicationController
     if logged_in?
       if params[:remember_me] == "1"
         current_user.remember_me unless current_user.remember_token?
-        cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
+        cookies[:auth_token] = {
+          :value   => current_user.remember_token,
+          :expires => current_user.remember_token_expires_at
+        }
       end
-      redirect_back_or_default router_computers_url
+      redirect_back_or_default url_after_login
       flash[:notice] = "Logged in successfully"
     else
       flash[:error] = "Bad login or password!"
@@ -24,6 +27,16 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default('/')
+    redirect_back_or_default(root_url)
+  end
+
+  def url_after_login
+    if current_user.has_permission?('computers')
+      router_computers_url
+    elsif current_user.has_permission?('torrent')
+      torrent_items_url
+    else
+      root_url
+    end
   end
 end
