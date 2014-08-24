@@ -31,7 +31,10 @@ class SessionsController < ApplicationController
   end
 
   def url_after_login
-    if current_user.has_permission?('computers')
+    current_user.full_permissions_hash
+    if current_user.has_permission?('admin')
+      users_url
+    elsif current_user.has_permission?('computers')
       router_computers_url
     elsif current_user.has_permission?('torrent')
       torrent_items_url
