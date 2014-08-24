@@ -1,3 +1,5 @@
+require 'scgi_xml_client'
+
 class RTorrent::Base
   CONFIG = Rails.root.join('config', 'rtorrent.yml')
   SOCKET_PATH = YAML.load_file(CONFIG)['socket']
