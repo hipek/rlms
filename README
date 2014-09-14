@@ -5,3 +5,9 @@ TODO:
 - add more info to README file :)
 - add installtion script for configs and iptables
 - add support for multi-user torrent access
+
+NETGEM
+
+http://www.oodlestechnologies.com/blogs/How-to-Establish-Android-App-Connection-with-Netgem-STB
+http://192.168.1.10/UPnP/ServiceDescription/Basic.xml
+curl -X POST -i http://192.168.1.10:5678/remote.control  -d '<action name="get_volume"></action>' -H "Content-Type: application/xml"
