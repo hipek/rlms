@@ -1,5 +1,5 @@
-= submit_tag "Start"
-= submit_tag "Stop"
-= submit_tag "Delete"
-= select_tag "priority", options_for_select(RTorrent::Item::PRIORITIES)
-= submit_tag "Update"
+= small_btn_tag "Start"
+= small_btn_tag "Stop"
+= small_btn_tag "Delete"
+= select_tag "priority", options_for_select(RTorrent::Item::PRIORITIES), class: 'select btn btn-primary btn-xs'
+= small_btn_tag "Update"
