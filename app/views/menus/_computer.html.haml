@@ -1,3 +1,2 @@
-%ul.nav.nav-sidebar
-  %li= link_to 'Computers', computers_path
-  %li= link_to 'Dhcp list', dhcp_list_computers_path if current_user.has_permission?('services')
+%li= link_to 'Computers', computers_path
+%li= link_to 'Dhcp list', dhcp_list_computers_path if current_user.has_permission?('services')

@@ -1,21 +1,22 @@
 %h1.page-header Listing forward ports
 
 %table.std
-  %tr
-    %th Port
-    %th Protocol
-    %th Computer IP
-    %th Dest port
-    %th= _('Action')
-
-  - @forward_ports.each do |forward_port|
+  %thead
     %tr
-      %td= forward_port.port
-      %td= forward_port.protocol
-      %td= forward_port.computer.try:name_with_ip
-      %td= forward_port.dport
-      %td
-        = link_to 'Edit', edit_router_forward_port_path(forward_port)
-        = link_to 'Destroy', router_forward_port_path(forward_port), data:{:confirm => 'Are you sure?'}, :method => :delete
+      %th Port
+      %th Protocol
+      %th Computer IP
+      %th Dest port
+      %th= _('Action')
+  %tbody
+    - @forward_ports.each do |forward_port|
+      %tr
+        %td= forward_port.port
+        %td= forward_port.protocol
+        %td= forward_port.computer.try:name_with_ip
+        %td= forward_port.dport
+        %td
+          = link_to 'Edit', edit_router_forward_port_path(forward_port)
+          = link_to 'Destroy', router_forward_port_path(forward_port), data:{:confirm => 'Are you sure?'}, :method => :delete
 
 = link_to 'New Forward port', new_router_forward_port_path

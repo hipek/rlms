@@ -3,12 +3,14 @@
 - content_for :col2 do
   %h1.page-header= "Group permissions"
   %table.std
-    %tr
-      %th= "Permission"
-      - @groups.each do |group|
-        %th= group.name
-    - @permissions.each do |permission|
+    %thead
       %tr
-        %td= permission
-        = render :partial => 'group', :collection => @groups, :locals => {:permission => permission, :group_permissions => @group_permissions}
+        %th= "Permission"
+        - @groups.each do |group|
+          %th= group.name
+    %tbody
+      - @permissions.each do |permission|
+        %tr
+          %td= permission
+          = render :partial => 'group', :collection => @groups, :locals => {:permission => permission, :group_permissions => @group_permissions}
   = observe_input_field "name='group_permission'", :with => "'&value=' + this.checked"

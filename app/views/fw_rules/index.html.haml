@@ -12,58 +12,60 @@
   %pre#iptables_raw{:style => "display: none;"}
     = ShellCommand.ip_tables_list(@filter)
   %table.std
-    %tr
-      %th Order
-      %th Target
-      %th
-        Src/Dest
-        %br>/
-        ip
-      %th In/Out int
-      %th Protocol
-      %th
-        Mod
-        %br>/
-        Protocol
-      %th
-        Src/Dest
-        %br>/
-        port
-      %th Mod
-      %th Action
-    - @fw_rules.each do |chain_name,rules|
+    %thead
       %tr
-        %td{:colspan => "9"}
-          %h3= chain_name
-      - for fw_rule in rules do
-        - klass = cycle('',"gray")
-        %tr{:class => klass}
-          %td= h fw_rule.order
-          %td= h fw_rule.target
-          %td
-            si: #{h fw_rule.src_ip}
-            %br/
-            di: #{h fw_rule.dest_ip}
-          %td
-            i: #{h fw_rule.in_int}
-            %br/
-            o: #{h fw_rule.out_int}
-          %td= h fw_rule.protocol
-          %td= h fw_rule.mod_protocol
-          %td
-            sp: #{h fw_rule.src_port}
-            %br/
-            dp: #{h fw_rule.dest_port}
-          %td= h fw_rule.mod
-          %td
-        = link_to 'Edit', edit_fw_rule_path(0)
-        %tr{:class => klass}
-          %td &nbsp;
-          %td{:colspan => "8"}
-            = h fw_rule.aft_option
-            = h fw_rule.aft_argument
-            = h fw_rule.mod_option
-            = h fw_rule.tcp_flags
-            = h fw_rule.tcp_flags_option
-  %br/
+        %th Order
+        %th Target
+        %th
+          Src/Dest
+          %br>/
+          ip
+        %th In/Out int
+        %th Protocol
+        %th
+          Mod
+          %br>/
+          Protocol
+        %th
+          Src/Dest
+          %br>/
+          port
+        %th Mod
+        %th Action
+    %tbody
+      - @fw_rules.each do |chain_name,rules|
+        %tr
+          %td{:colspan => "9"}
+            %h3= chain_name
+        - for fw_rule in rules do
+          - klass = cycle('',"gray")
+          %tr{:class => klass}
+            %td= h fw_rule.order
+            %td= h fw_rule.target
+            %td
+              si: #{h fw_rule.src_ip}
+              %br/
+              di: #{h fw_rule.dest_ip}
+            %td
+              i: #{h fw_rule.in_int}
+              %br/
+              o: #{h fw_rule.out_int}
+            %td= h fw_rule.protocol
+            %td= h fw_rule.mod_protocol
+            %td
+              sp: #{h fw_rule.src_port}
+              %br/
+              dp: #{h fw_rule.dest_port}
+            %td= h fw_rule.mod
+            %td
+          = link_to 'Edit', edit_fw_rule_path(0)
+          %tr{:class => klass}
+            %td &nbsp;
+            %td{:colspan => "8"}
+              = h fw_rule.aft_option
+              = h fw_rule.aft_argument
+              = h fw_rule.mod_option
+              = h fw_rule.tcp_flags
+              = h fw_rule.tcp_flags_option
+
   = link_to 'New fw rule', new_fw_rule_path

@@ -15,14 +15,16 @@
       %br/
       = select_tag 'group_id', options_for_select([['All','']] + Group.all_as_pairs, params[:group_id].try(:to_i)), :onchange => "submit();"
   %table.std
-    %tr
-      %th= "User"
-      - @groups.each do |group|
-        %th= group.name
-    - @users.each do |user|
+    %thead
       %tr
-        %td= user.login
-        = render :partial => 'group', :collection => @groups, :locals => {:user => user}
+        %th= "User"
+        - @groups.each do |group|
+          %th= group.name
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.login
+          = render :partial => 'group', :collection => @groups, :locals => {:user => user}
   %p
     = will_paginate @users
   = observe_input_field "name='user_group'", :with => "'?value=' + this.checked"
