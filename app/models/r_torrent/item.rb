@@ -32,6 +32,7 @@ class RTorrent::Item < RTorrent::Base
   }
   
   attr_accessor *METHODS.values
+  attr_accessor :torrent_url
   alias_method :id, :hash
   alias_method :to_param, :id
 
