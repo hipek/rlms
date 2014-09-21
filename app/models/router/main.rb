@@ -16,6 +16,8 @@ class Router::Main < Router::BaseSetting
     end
   end
 
+  accepts_nested_attributes_for :interfaces
+
   class <<self
     def instance
       first || new
@@ -60,13 +62,5 @@ class Router::Main < Router::BaseSetting
     ip_conf = ConfTemplate.new("iptables.sh", iptables_attrs)
     ip_conf.write
     ip_conf
-  end
-
-  protected
-
-  def interfaces_attributes= attrs
-    self.interfaces = attrs.map{ |key, att|
-      Router::Interface.new(att || key)
-    }
   end
 end

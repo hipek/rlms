@@ -37,11 +37,14 @@
           #col1
             #col1_content.clearfix
               = yield(:col1)
+              = submenu
           #col3
             #col3_content.clearfix
               = yield(:col2)
+              = yield
             / IE Column Clearing
-            #ie_clearing  
+            #ie_clearing
+              &#160;
         / begin: #footer
         #footer
           Layout based on
