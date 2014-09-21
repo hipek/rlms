@@ -2,7 +2,7 @@
 lock '3.2.1'
 
 set :application, 'rlms4'
-set :repo_url, 'git@jac.zapto.org:ruby/rlms.git'
+set :repo_url, 'git@git.jacekhiszpanski.tk:ruby/rlms.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
