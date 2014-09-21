@@ -1,14 +1,19 @@
 !!!
-%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+%html
   %head
-    %title Rails Lan Management System
-    %meta{:content => "text/html; charset=US-ASCII", "http-equiv" => "Content-type"}/
-    / add your meta tags here
-    = csrf_meta_tag
-    = stylesheet_link_tag 'application', media: 'all'
-    /[if lte IE 7]
-      <haml_loud> stylesheet_link_tag 'patch', media: 'all' </haml_loud>
-    = javascript_include_tag "application"
+    %meta{:charset => "utf-8"}
+    %title= "Rails Lan Management System"
+    %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}
+    %meta{:content => "", :name => "description"}
+    %meta{:content => "", :name => "author"}
+
+    / Le HTML5 shim, for IE6-8 support of HTML5 elements
+    /[if lt IE 9]
+      = javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js", "https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
   %body
     #page_margins
       #border-top
@@ -45,10 +50,7 @@
             / IE Column Clearing
             #ie_clearing
               &#160;
-        / begin: #footer
         #footer
-          Layout based on
-          %a{:href => "http://www.yaml.de/"} YAML
       #border-bottom
         #edge-bl
         #edge-br
