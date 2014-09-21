@@ -1,0 +1,69 @@
+- content_for :col1 do
+  = render :partial => 'menus/firewall'
+
+- content_for :col2 do
+  %h1.page-header
+    Listing #{@filter.camelize} Rules
+  .form
+    = form_tag fw_rules_path, :method => :get do
+      IP table
+      \#{select_tag 'filter', options_for_select(FwRule.ip_tables, @filter), :onchange => "submit();"}    IP chain
+      \#{select_tag 'filter_chain', options_for_select([['select','']] + FwRule.chain_names(@filter), @filter_chain), :onchange => "submit();"}    #{link_to 'Raw Iptables', '#', :onclick => "$('#iptables_raw').toggle();"}
+  %pre#iptables_raw{:style => "display: none;"}
+    = ShellCommand.ip_tables_list(@filter)
+  %table
+    %tr
+      %th Order
+      %th Target
+      %th
+        Src/Dest
+        %br>/
+        ip
+      %th In/Out int
+      %th Protocol
+      %th
+        Mod
+        %br>/
+        Protocol
+      %th
+        Src/Dest
+        %br>/
+        port
+      %th Mod
+      %th Action
+    - @fw_rules.each do |chain_name,rules|
+      %tr
+        %td{:colspan => "9"}
+          %h3= chain_name
+      - for fw_rule in rules do
+        - klass = cycle('',"gray")
+        %tr{:class => klass}
+          %td= h fw_rule.order
+          %td= h fw_rule.target
+          %td
+            si: #{h fw_rule.src_ip}
+            %br/
+            di: #{h fw_rule.dest_ip}
+          %td
+            i: #{h fw_rule.in_int}
+            %br/
+            o: #{h fw_rule.out_int}
+          %td= h fw_rule.protocol
+          %td= h fw_rule.mod_protocol
+          %td
+            sp: #{h fw_rule.src_port}
+            %br/
+            dp: #{h fw_rule.dest_port}
+          %td= h fw_rule.mod
+          %td
+        = link_to 'Edit', edit_fw_rule_path(0)
+        %tr{:class => klass}
+          %td &nbsp;
+          %td{:colspan => "8"}
+            = h fw_rule.aft_option
+            = h fw_rule.aft_argument
+            = h fw_rule.mod_option
+            = h fw_rule.tcp_flags
+            = h fw_rule.tcp_flags_option
+  %br/
+  = link_to 'New fw rule', new_fw_rule_path

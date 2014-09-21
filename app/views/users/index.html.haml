@@ -1,0 +1,23 @@
+- content_for :col1 do
+  = render :partial => 'menus/admin'
+
+- content_for :col2 do
+  %h1.page-header= 'Users'
+
+  %table
+    %thead
+      %tr
+        %th ID
+        %th Login
+        %th Email
+        %th Action
+    %tbody
+      - for user in @users
+        %tr
+          %td= h user.id
+          %td= h user.login
+          %td= h user.email
+          %td
+            = link_to 'Delete', user_path(user), data:{:confirm => 'Are you sure?'}, :method => :delete
+
+  = link_to 'New User', new_user_path

@@ -1,0 +1,27 @@
+%h1.page-header Listing torrent peers
+
+%table
+  %thead
+    %tr
+      %th IP address
+      %th Uploaded
+      %th Downloaded
+      %th Peer
+      %th Up rate
+      %th Down rate
+      %th Done
+      %th Client name
+  %tbody
+    - @peers.each do |peer|
+      %tr
+        %td= h peer.address
+        %td= h peer.up_total.to_mb
+        %td= h peer.down_total.to_mb
+        %td= h peer.peer_total.to_mb
+        %td= h peer.up_rate.to_mb
+        %td= h peer.down_rate.to_mb
+        %td= h peer.completed_percent
+        %td= h peer.client_version
+        %td
+
+= link_to 'Back', torrent_items_path
