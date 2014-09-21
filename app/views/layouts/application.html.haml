@@ -15,42 +15,19 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    #page_margins
-      #border-top
-        #edge-tl
-        #edge-tr
-      #page
-        #header
-          %h1 Rails Lan Management System
-          #topnav
-            = logged_in? ? link_to('Logout', logout_path) : link_to('Login', login_path)
-            |
-            %a{:href => "#"} Contact
-            |
-            %a{:href => "#"} Imprint
-        #nav
-          / skiplink anchor: navigation
-          %a#navigation{:name => "navigation"}
-          #nav_main
-            / main navigation: #nav_main
-            = render :partial => 'router/shared/nav_bar'
-        #flash.bold.center
-          %p.green= flash[:notice]
-          %p.red= flash[:error]
-          .blue= simple_format(flash[:warn])
-        #main
-          #col1
-            #col1_content.clearfix
-              = yield(:col1)
-              = submenu
-          #col3
-            #col3_content.clearfix
-              = yield(:col2)
-              = yield
-            / IE Column Clearing
-            #ie_clearing
-              &#160;
-        #footer
-      #border-bottom
-        #edge-bl
-        #edge-br
+    .navbar.navbar-inverse.navbar-fixed-top
+      .container-fluid
+        = render 'layouts/navbar/menu'
+
+    .container-fluid
+      - flash.each do |name, msg|
+        = content_tag :div, class: "alert alert-#{[:error, :warn].include?(name) ? "danger" : "success" } alert-dismissable" do
+          %button.close{:type => "button", :data => {:dismiss => "alert"}, :aria => {:hidden => "true"} } &times;
+          = msg
+      .row
+        .col-sm-3.col-md-2.sidebar
+          = yield(:col1)
+          = submenu
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+          = yield(:col2)
+          = yield

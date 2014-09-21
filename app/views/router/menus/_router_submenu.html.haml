@@ -1,15 +1,8 @@
-%hr/
-= link_to('Router', router_main_path)
-%hr/
-= link_to('Server DHCP', router_dhcps_path)
-%hr/
-= link_to('Services', router_services_path)
-%hr/
-= link_to('Tc Classids', router_tc_classids_path)
-%hr/
-= link_to('Flow rules', router_flows_path)
-%hr/
-= link_to('Open ports', router_open_ports_path)
-%hr/
-= link_to('Forward ports', router_forward_ports_path)
-%hr/
+%ul.nav.nav-sidebar
+  %li= link_to('Router', router_main_path)
+  %li= link_to('Server DHCP', router_dhcps_path)
+  %li= link_to('Services', router_services_path)
+  %li= link_to('Tc Classids', router_tc_classids_path)
+  %li= link_to('Flow rules', router_flows_path)
+  %li= link_to('Open ports', router_open_ports_path)
+  %li= link_to('Forward ports', router_forward_ports_path)

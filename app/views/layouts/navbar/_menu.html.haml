@@ -1,0 +1,12 @@
+.navbar-header
+  %button.navbar-toggle{:type => "button", :data => {:toggle => "collapse", :target => ".navbar-collapse"} }
+    %span.sr-only Toggle navigation
+    %span.icon-bar
+    %span.icon-bar
+    %span.icon-bar
+  = link_to "Rails Lan Management System", root_url, :class => "navbar-brand"
+.collapse.navbar-collapse
+  %ul.nav.navbar-nav
+    = render :partial => 'layouts/navbar/items'
+  %ul.nav.navbar-nav.navbar-right
+    %li= logged_in? ? link_to('Logout', logout_path) : link_to('Login', login_path)
