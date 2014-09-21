@@ -16,10 +16,9 @@ class Group < ActiveRecord::Base
 
   class << self
     GROUPS.each do |group|
-      class_eval "
-        def #{group}
-          @@_role_#{group}_ ||= find_or_create_by(name: '#{group}')
-        end"
+      define_method group do
+        where(name: group).first_or_create
+      end
     end
 
     def all_groups
@@ -34,5 +33,4 @@ class Group < ActiveRecord::Base
       options.map{|r| [r.name, r.id]}
     end
   end
-
 end
