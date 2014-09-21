@@ -11,7 +11,7 @@
       \#{select_tag 'filter_chain', options_for_select([['select','']] + FwRule.chain_names(@filter), @filter_chain), :onchange => "submit();"}    #{link_to 'Raw Iptables', '#', :onclick => "$('#iptables_raw').toggle();"}
   %pre#iptables_raw{:style => "display: none;"}
     = ShellCommand.ip_tables_list(@filter)
-  %table
+  %table.std
     %tr
       %th Order
       %th Target

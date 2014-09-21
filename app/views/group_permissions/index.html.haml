@@ -2,7 +2,7 @@
   = render :partial => 'menus/admin'
 - content_for :col2 do
   %h1.page-header= "Group permissions"
-  %table
+  %table.std
     %tr
       %th= "Permission"
       - @groups.each do |group|

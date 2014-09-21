@@ -14,7 +14,7 @@
       = 'Group'
       %br/
       = select_tag 'group_id', options_for_select([['All','']] + Group.all_as_pairs, params[:group_id].try(:to_i)), :onchange => "submit();"
-  %table
+  %table.std
     %tr
       %th= "User"
       - @groups.each do |group|

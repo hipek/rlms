@@ -1,6 +1,6 @@
 %h1.page-header Listing open ports
 
-%table
+%table.std
   %tr
     %th Port
     %th Protocol
@@ -13,7 +13,5 @@
       %td
         = link_to 'Edit', edit_router_open_port_path(open_port)
         = link_to 'Destroy', router_open_port_path(open_port), data:{:confirm => 'Are you sure?'}, :method => :delete
-
-%br
 
 = link_to 'New Open port', new_router_open_port_path

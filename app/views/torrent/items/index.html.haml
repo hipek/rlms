@@ -2,7 +2,7 @@
 
 - unless @r_error.present?
   = form_tag torrent_item_path(0), :method => :put, :id => "rform" do
-    %table
+    %table.std
       %thead
         %tr
           %th &nbsp;
@@ -24,7 +24,6 @@
   #bandwidth_form{:style => "display: none;"}
     = form_tag :url => set_rate_torrent_items_path, :success => "$('bandwidth_form').hide();", :remote => true do
       Down: #{text_field_tag "bandwidth[down]", RTorrent::Client.download_rate.to_kb, :size => 3}    Up: #{text_field_tag "bandwidth[up]", RTorrent::Client.upload_rate.to_kb, :size => 3}    #{submit_tag "Update"}
-  %br/
   %br/
   = link_to 'New torrent', new_torrent_item_path
 - else

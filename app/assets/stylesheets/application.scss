@@ -100,3 +100,10 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+/* table */
+
+.std {
+  @extend .table;
+  @extend .table-striped;
+}
