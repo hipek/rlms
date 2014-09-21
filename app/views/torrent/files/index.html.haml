@@ -1,7 +1,7 @@
 %h1.page-header Listing torrent files
 
 = form_tag torrent_item_file_path(params[:item_id], 0), :method => :put do
-  %table.std
+  %table.torrent-items
     %thead
       %tr
         %th Name
@@ -17,6 +17,7 @@
           %td= h f.bytes_completed.to_mb
           %td= h f.percent_complete
           %td= select_tag "priorities[#{i}]", options_for_select(RTorrent::File::PRIORITIES, f.priority)
+
   = submit_tag "Update"
 
 = link_to 'Back', torrent_items_path

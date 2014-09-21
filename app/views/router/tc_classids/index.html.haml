@@ -19,8 +19,6 @@
         = link_to 'Edit', edit_router_tc_classid_path(tc_classid)
         = link_to 'Destroy', router_tc_classid_path(tc_classid), data:{:confirm => 'Are you sure?'}, :method => :delete
 
-%br
-
 = form_for :tc_classid, :url => router_tc_classids_path,:html => {:method => :post} do |f|
   = render 'form', :f => f
 

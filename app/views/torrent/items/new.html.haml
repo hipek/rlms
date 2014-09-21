@@ -1,0 +1,15 @@
+%h1.page-header New torrent
+
+= form_for(:torrent, :url => torrent_items_path, :html => {:multipart => true}) do |f|
+  %p
+    = content_tag :label, 'Torrent file name'
+    %br/
+    = file_field_tag "torrents[]"
+  %p
+    = content_tag :label, 'Torrent Url'
+    %br/
+    = text_field_tag "torrent_url", '', :size => 50
+  %p
+    = f.submit "Create"
+
+= link_to 'Back', torrent_items_path

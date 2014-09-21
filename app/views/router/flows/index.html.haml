@@ -16,8 +16,6 @@
         = link_to 'Edit', edit_router_flow_path(router_flow)
         = link_to 'Destroy', router_flow_path(router_flow), data:{:confirm => 'Are you sure?'}, :method => :delete
 
-%br
-
 = link_to 'New IN Flow', new_router_flow_path(:t => 'int')
 |
 = link_to 'New OUT Flow', new_router_flow_path(:t => 'ext')
