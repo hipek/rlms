@@ -10,7 +10,7 @@ module ApplicationHelper
     VISIBILITIES.index(visibility)
   end
   
-  def indicator_image_tag id='', div='indicator', image = 'ajax_loader.gif'
+  def indicator_image_tag id='', div='indicator', image = 'ajax-loader.gif'
     content_tag :span, image_tag(image), :id => "#{div}_#{id}", :style => "display: none"
   end
 
