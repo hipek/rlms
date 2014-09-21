@@ -110,4 +110,9 @@ body {
 
 .torrent-items {
   @extend .std;
+  tr {
+    td {
+      font-size: 12px;
+    }
+  }
 }
