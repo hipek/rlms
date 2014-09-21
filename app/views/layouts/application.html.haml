@@ -1,0 +1,51 @@
+!!!
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %title Rails Lan Management System
+    %meta{:content => "text/html; charset=US-ASCII", "http-equiv" => "Content-type"}/
+    / add your meta tags here
+    = csrf_meta_tag
+    = stylesheet_link_tag 'application', media: 'all'
+    /[if lte IE 7]
+      <haml_loud> stylesheet_link_tag 'patch', media: 'all' </haml_loud>
+    = javascript_include_tag "application"
+  %body
+    #page_margins
+      #border-top
+        #edge-tl
+        #edge-tr
+      #page
+        #header
+          %h1 Rails Lan Management System
+          #topnav
+            = logged_in? ? link_to('Logout', logout_path) : link_to('Login', login_path)
+            |
+            %a{:href => "#"} Contact
+            |
+            %a{:href => "#"} Imprint
+        #nav
+          / skiplink anchor: navigation
+          %a#navigation{:name => "navigation"}
+          #nav_main
+            / main navigation: #nav_main
+            = render :partial => 'router/shared/nav_bar'
+        #flash.bold.center
+          %p.green= flash[:notice]
+          %p.red= flash[:error]
+          .blue= simple_format(flash[:warn])
+        #main
+          #col1
+            #col1_content.clearfix
+              = yield(:col1)
+          #col3
+            #col3_content.clearfix
+              = yield(:col2)
+            / IE Column Clearing
+            #ie_clearing  
+        / begin: #footer
+        #footer
+          Layout based on
+          %a{:href => "http://www.yaml.de/"} YAML
+      #border-bottom
+        #edge-bl
+        #edge-br
