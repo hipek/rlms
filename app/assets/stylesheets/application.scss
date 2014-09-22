@@ -20,3 +20,11 @@ body {
 .torrent-items {
   @extend .std;
 }
+
+/* forms */
+
+.simple_form {
+  @extend .form-horizontal;
+  @extend .well;
+  @extend .col-lg-8;
+}

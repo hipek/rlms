@@ -21,8 +21,8 @@ class Torrent::ItemsController < Torrent::BaseController
 
   def create
     respond_to do |format|
-      flash[:notice] = 'Torrent was successfully added.' if RTorrent::Client.upload(params[:torrents])
-      flash[:notice] = 'Torrent url was successfully added.' if RTorrent::Client.load_start(params[:torrent_url])
+      flash[:notice] = 'Torrent was successfully added.' if RTorrent::Client.upload([items_params[:torrents]])
+      flash[:notice] = 'Torrent url was successfully added.' if RTorrent::Client.load_start(items_params[:torrent_url])
       format.html { redirect_to(new_torrent_item_url) }
     end
   end
@@ -59,5 +59,11 @@ class Torrent::ItemsController < Torrent::BaseController
       flash[:notice] = 'Torrent has been deleted.'
       format.html { redirect_to(torrent_items_url) }
     end
+  end
+
+  protected
+
+  def items_params
+    params.require(:torrent).permit(:torrent_url, :torrents)
   end
 end

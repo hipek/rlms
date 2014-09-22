@@ -104,3 +104,20 @@ SimpleForm.setup do |config|
   # buttons and other elements.
   config.default_wrapper = :horizontal_form
 end
+
+module FormActions
+  def actions
+    template.content_tag :div, class: 'form-group' do
+      template.content_tag :div, class: 'col-sm-offset-3 col-sm-9' do
+        yield self
+      end
+    end
+  end
+
+  def action(name, url, opts = {})
+    opts[:class] ||= 'btn btn-default'
+    template.link_to name, url, opts
+  end
+end
+
+SimpleForm::FormBuilder.send(:include, FormActions)

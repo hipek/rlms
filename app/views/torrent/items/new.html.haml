@@ -1,10 +1,8 @@
 %h1.page-header New torrent
 
-.well.col-lg-6
-  = simple_form_for(:torrent, :url => torrent_items_path, :html => {:multipart => true}) do |f|
-    = f.input :torrents, as: :file, label: 'Torrent file name'
-    = f.input :torrent_url
-    .form-group
-      .col-sm-offset-3.col-sm-9
-        = link_to 'Cancel', torrent_items_path, class: 'btn btn-default'
-        = f.submit "Create"
+= simple_form_for(:torrent, url: torrent_items_path, html: {multipart: true}) do |f|
+  = f.input :torrents, as: :file, label: 'Torrent file'
+  = f.input :torrent_url
+  = f.actions do |f|
+    = f.action "Cancel", torrent_items_path
+    = f.submit "Create"

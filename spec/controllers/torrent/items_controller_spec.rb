@@ -30,7 +30,8 @@ describe Torrent::ItemsController do
       :path => '/aaa/bbb',
       :display_priority => 2,
       :conn_type => 'normal',
-      :time_left => '10'
+      :time_left => '10',
+      :torrent_url => '',
     }.merge(stubs))
   end
   
@@ -69,8 +70,8 @@ describe Torrent::ItemsController do
     describe "with valid params" do
       
       it "should redirect to the created torrent" do
-        RTorrent::Client.should_receive(:upload).with('aaa').and_return(true)
-        post :create, :torrents => 'aaa'
+        RTorrent::Client.should_receive(:upload).with(['aaa']).and_return(true)
+        post :create, torrent:{:torrents => 'aaa'}
         response.should redirect_to(new_torrent_item_url)
       end
       
