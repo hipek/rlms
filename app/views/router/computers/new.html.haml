@@ -1,6 +1,4 @@
-%h1= _('New computer')
+%h1.page-header= _('New computer')
 
-= form_for(@computer) do |f|
+= simple_form_for(@computer) do |f|
   = render "form", :f => f
-
-= link_to 'Back', router_computers_path
