@@ -1,31 +1,18 @@
--if @router_main.errors.any?
-  #error_explanation
-    %h2= "#{pluralize(@router_main.errors.count, "error")} prohibited these settings from being saved:"
-    %ul
-      - @router_main.errors.full_messages.each do |msg|
-        %li= msg
-
-%h3= _('Internet settings')
-.field
-  = f.label :name, _('Domain name')
-  = f.text_field :name
-
+%legend= _('Internet settings')
+= f.input :name, label: _('Domain name')
 = render 'interface', :net_type => 'ext', :f => f
 
-%h3= _('DNS servers')
-.field
-  = f.label :dns_server1, _('First DNS Server')
-  = f.text_field :dns_server1
-.field
-  = f.label :dns_server2, _('Second DNS Server')
-  = f.text_field :dns_server2
+%legend= _('DNS servers')
+= f.input :dns_server1, label: _('First DNS Server')
+= f.input :dns_server2, label: _('Second DNS Server')
 
-%h3= _('LAN settings')
+%legend= _('LAN settings')
 = render 'interface', :net_type => 'int', :f => f
 
-.actions
+= f.actions do |f|
   = f.submit 'Update'
 
+/ TODO: move to js file
 :javascript
   $(function() {
     $("select[data-ip-config]").change(function() {

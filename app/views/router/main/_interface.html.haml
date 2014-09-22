@@ -1,19 +1,10 @@
 - interface = @router_main.interfaces.find_by_net_type(net_type) || Router::Interface.new
 = f.fields_for "interfaces_attributes[]", interface do |inf|
-  .field
-    = inf.label :name, _('Interface')
-    = inf.select :name, interfaces
-    = inf.hidden_field :net_type, :value => net_type
-  .field
-    = inf.label :config, _('Configuration IPv4')
-    = inf.select :config, ip_configs, {}, {'data-ip-config' => net_type}
+  = inf.input :name, label: _('Interface'), collection: interfaces
+  = inf.hidden_field :net_type, :value => net_type
+  = inf.input :config, label: _('Configuration IPv4'), collection: ip_configs, input_html: {'data-ip-config' => net_type}
+
   %div{:id => net_type, :style => interface.config == 'auto' ? "display: none;" : ''}
-    .field
-      = inf.label :ip_address, _('IP')
-      = inf.text_field :ip_address
-    .field
-      = inf.label :ip_mask, _('Mask')
-      = inf.text_field :ip_mask
-    .field
-      = inf.label :ip_gateway, _('Gateway')
-      = inf.text_field :ip_gateway
+    = inf.input :ip_address, label: _('IP')
+    = inf.input :ip_mask, label: _('Mask')
+    = inf.input :ip_gateway, label: _('Gateway')
