@@ -1,4 +1,7 @@
 class FwRulesController < ApplicationController
+  include MenusSupport
+  submenu :firewall
+
   def index
     FwRuleContainer.read
     @filter = params[:filter].blank? ? 'filter' : params[:filter]

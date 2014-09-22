@@ -1,27 +1,26 @@
-- content_for :col2 do
-  %h1.page-header Listing jobs
+%h1.page-header Listing jobs
 
-  %table.std
-    %thead
+%table.std
+  %thead
+    %tr
+      %th Name
+      %th State
+      %th Body
+      %th Started at
+      %th Ended at
+      %th Action
+  %tbody
+    - for web_job in @web_jobs
       %tr
-        %th Name
-        %th State
-        %th Body
-        %th Started at
-        %th Ended at
-        %th Action
-    %tbody
-      - for web_job in @web_jobs
-        %tr
-          %td= h web_job.name
-          %td= h web_job.state
-          %td= h truncate(web_job.body, :length => 150)
-          %td= h web_job.started_at
-          %td= h web_job.ended_at
-          %td
-            = link_to 'Show', dwnl_web_job_path(web_job)
-            = link_to 'Edit', edit_dwnl_web_job_path(web_job) if web_job.pending?
-            = link_to 'Destroy', dwnl_web_job_path(web_job), data:{:confirm => 'Are you sure?'}, :method => :delete
-            = link_to 'Add to queue', start_dwnl_web_job_path(web_job)
+        %td= h web_job.name
+        %td= h web_job.state
+        %td= h truncate(web_job.body, :length => 150)
+        %td= h web_job.started_at
+        %td= h web_job.ended_at
+        %td
+          = link_to 'Show', dwnl_web_job_path(web_job)
+          = link_to 'Edit', edit_dwnl_web_job_path(web_job) if web_job.pending?
+          = link_to 'Destroy', dwnl_web_job_path(web_job), data:{:confirm => 'Are you sure?'}, :method => :delete
+          = link_to 'Add to queue', start_dwnl_web_job_path(web_job)
 
-  = link_to 'New web job', new_dwnl_web_job_path
+= link_to 'New web job', new_dwnl_web_job_path

@@ -1,30 +1,27 @@
-- content_for :col1 do
-  = render :partial => 'menus/admin'
-- content_for :col2 do
-  %h1.page-header= "User groups"
+%h1.page-header= "User groups"
+%p
+  = will_paginate @users
+= form_tag user_groups_path, :method => :get do
   %p
-    = will_paginate @users
-  = form_tag user_groups_path, :method => :get do
-    %p
-      = 'Login'
-      %br/
-      = text_field_tag :q, params[:q]
-      = submit_tag 'Filter'
-    %p
-      = 'Group'
-      %br/
-      = select_tag 'group_id', options_for_select([['All','']] + Group.all_as_pairs, params[:group_id].try(:to_i)), :onchange => "submit();"
-  %table.std
-    %thead
+    = 'Login'
+    %br/
+    = text_field_tag :q, params[:q]
+    = submit_tag 'Filter'
+  %p
+    = 'Group'
+    %br/
+    = select_tag 'group_id', options_for_select([['All','']] + Group.all_as_pairs, params[:group_id].try(:to_i)), :onchange => "submit();"
+%table.std
+  %thead
+    %tr
+      %th= "User"
+      - @groups.each do |group|
+        %th= group.name
+  %tbody
+    - @users.each do |user|
       %tr
-        %th= "User"
-        - @groups.each do |group|
-          %th= group.name
-    %tbody
-      - @users.each do |user|
-        %tr
-          %td= user.login
-          = render :partial => 'group', :collection => @groups, :locals => {:user => user}
-  %p
-    = will_paginate @users
-  = observe_input_field "name='user_group'", :with => "'?value=' + this.checked"
+        %td= user.login
+        = render :partial => 'group', :collection => @groups, :locals => {:user => user}
+%p
+  = will_paginate @users
+= observe_input_field "name='user_group'", :with => "'?value=' + this.checked"

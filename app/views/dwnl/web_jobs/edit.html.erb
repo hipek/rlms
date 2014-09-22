@@ -1,4 +1,3 @@
-<% content_for :col2 do %>
 <h1>Editing job</h1>
 
 <%= form_for(:web_job, :url => dwnl_web_job_path(@web_job), :html => {:method => :put}) do |f| %>
@@ -11,4 +10,3 @@
 
 <%= link_to 'Show', dwnl_web_job_path(@web_job) %> |
 <%= link_to 'Back', dwnl_web_jobs_path %>
-<% end %>

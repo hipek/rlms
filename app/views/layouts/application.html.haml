@@ -21,7 +21,6 @@
 
     .container
       %ul{class: "nav nav-tabs", role: "tablist"}
-        = yield(:col1)
         = submenu
 
       - flash.each do |name, msg|
@@ -29,5 +28,4 @@
           %button.close{:type => "button", :data => {:dismiss => "alert"}, :aria => {:hidden => "true"} } &times;
           = msg
 
-      = yield(:col2)
       = yield

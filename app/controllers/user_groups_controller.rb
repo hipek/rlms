@@ -1,4 +1,7 @@
 class UserGroupsController < ApplicationController
+  include MenusSupport
+  submenu :admin
+
   requires_permission "admin"
   
   def index

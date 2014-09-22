@@ -1,8 +1,3 @@
-<% content_for :col1 do %>
-  <%= render :partial => 'menus/firewall' -%>
-<% end %>
-
-<% content_for :col2 do %>
 <h1>Editing fw_rule</h1>
 
 <%= form_for(@fw_rule) do |f| %>
@@ -15,4 +10,3 @@
 
 <%= link_to 'Show', @fw_rule %> |
 <%= link_to 'Back', fw_rules_path %>
-<% end %>
