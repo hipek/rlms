@@ -1,0 +1,10 @@
+%h1.page-header= 'New user'
+
+= simple_form_for @user do |f|
+  = f.input :login
+  = f.input :email
+  = f.input :password, as: :password
+  = f.input :password_confirmation, as: :password
+  = f.actions do |f|
+    = f.submit 'Create'
+    = f.action 'Cancel', users_url

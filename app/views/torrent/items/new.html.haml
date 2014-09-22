@@ -4,5 +4,6 @@
   = f.input :torrents, as: :file, label: 'Torrent file'
   = f.input :torrent_url
   = f.actions do |f|
-    = f.action "Cancel", torrent_items_path
     = f.submit "Create"
+    = f.action "Cancel", torrent_items_path
+
