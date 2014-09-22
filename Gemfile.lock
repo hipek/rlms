@@ -84,6 +84,7 @@ GEM
       execjs
     coffee-script-source (1.7.1)
     colorize (0.7.3)
+    commonjs (0.2.7)
     compass (0.12.7)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -130,6 +131,11 @@ GEM
       railties (>= 3.2.16)
     json (1.8.1)
     kgio (2.9.2)
+    less (2.5.1)
+      commonjs (~> 0.2.7)
+    less-rails (2.5.0)
+      actionpack (>= 3.1)
+      less (~> 2.5.0)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     mime-types (2.3)
@@ -256,6 +262,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   jquery-ui-rails
+  less-rails
   protected_attributes
   rails (= 4.1.6)
   restful-authentication
