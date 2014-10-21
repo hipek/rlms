@@ -29,6 +29,7 @@ gem 'backbone-on-rails'
 gem 'turbolinks'
 gem 'unicorn'
 gem 'thin'
+gem 'nokogiri'
 
 group :development do
   gem 'capistrano-rails'

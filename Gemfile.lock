@@ -133,11 +133,14 @@ GEM
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     mime-types (2.3)
+    mini_portile (0.6.0)
     minitest (5.4.1)
     multi_json (1.10.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
+    nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
     protected_attributes (1.0.8)
       activemodel (>= 4.0.1, < 5.0)
     rack (1.5.2)
@@ -256,6 +259,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   jquery-ui-rails
+  nokogiri
   protected_attributes
   rails (= 4.1.6)
   restful-authentication
