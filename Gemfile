@@ -29,7 +29,10 @@ gem 'backbone-on-rails'
 gem 'turbolinks'
 gem 'unicorn'
 gem 'thin'
+# netgem
 gem 'nokogiri'
+gem 'playful', git: 'https://github.com/turboladen/playful.git'
+gem 'log_switch', '0.4.0'
 
 group :development do
   gem 'capistrano-rails'

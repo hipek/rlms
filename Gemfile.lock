@@ -11,6 +11,18 @@ GIT
     shoulda-matchers (2.6.2)
       activesupport (>= 3.0.0)
 
+GIT
+  remote: https://github.com/turboladen/playful.git
+  revision: 86f9dcab0ef98818f0317ebe6efe8e3e611ae050
+  specs:
+    playful (0.1.0.alpha.1)
+      em-http-request (>= 1.0.2)
+      em-synchrony
+      eventmachine (>= 1.0.0)
+      log_switch (>= 0.4.0)
+      nori (>= 2.0.2)
+      savon (~> 2.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -48,6 +60,10 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
+    akami (1.2.2)
+      gyoku (>= 0.4.0)
+      nokogiri
     arel (5.0.1.20140414130214)
     backbone-on-rails (1.1.1.0)
       actionmailer
@@ -90,6 +106,7 @@ GEM
       sass (~> 3.2.19)
     compass-rails (2.0.0)
       compass (>= 0.12.2)
+    cookiejar (0.3.2)
     daemons (1.1.9)
     diff-lcs (1.2.5)
     docile (1.1.5)
@@ -100,6 +117,16 @@ GEM
       execjs
     eco-source (1.1.0.rc.1)
     ejs (1.1.1)
+    em-http-request (1.1.2)
+      addressable (>= 2.3.4)
+      cookiejar
+      em-socksify (>= 0.3)
+      eventmachine (>= 1.0.3)
+      http_parser.rb (>= 0.6.0)
+    em-socksify (0.3.0)
+      eventmachine (>= 1.0.0.beta.4)
+    em-synchrony (1.0.3)
+      eventmachine (>= 1.0.0.beta.1)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.2.1)
@@ -111,6 +138,8 @@ GEM
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
     fssm (0.2.10)
+    gyoku (1.1.1)
+      builder (>= 2.1.2)
     haml (4.0.5)
       tilt
     haml-rails (0.5.3)
@@ -119,6 +148,9 @@ GEM
       haml (>= 3.1, < 5.0)
       railties (>= 4.0.1)
     hike (1.2.3)
+    http_parser.rb (0.6.0)
+    httpi (2.2.7)
+      rack
     i18n (0.6.11)
     jquery-rails (3.1.1)
       railties (>= 3.0, < 5.0)
@@ -130,6 +162,9 @@ GEM
       railties (>= 3.2.16)
     json (1.8.1)
     kgio (2.9.2)
+    log_switch (0.4.0)
+    macaddr (1.7.1)
+      systemu (~> 2.6.2)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     mime-types (2.3)
@@ -141,6 +176,7 @@ GEM
     net-ssh (2.9.1)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
+    nori (2.4.0)
     protected_attributes (1.0.8)
       activemodel (>= 4.0.1, < 5.0)
     rack (1.5.2)
@@ -193,6 +229,15 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    savon (2.7.2)
+      akami (~> 1.2.0)
+      builder (>= 2.1.2)
+      gyoku (~> 1.1.0)
+      httpi (~> 2.2.3)
+      nokogiri (>= 1.4.0)
+      nori (~> 2.4.0)
+      uuid (~> 2.3.7)
+      wasabi (~> 3.3.0)
     simple_form (3.1.0.rc1)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -218,6 +263,7 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     state_machine (1.2.0)
+    systemu (2.6.4)
     thin (1.6.2)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
@@ -236,6 +282,11 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uuid (2.3.7)
+      macaddr (~> 1.0)
+    wasabi (3.3.1)
+      httpi (~> 2.0)
+      nokogiri (>= 1.4.0)
     will_paginate (3.0.7)
 
 PLATFORMS
@@ -259,7 +310,9 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   jquery-ui-rails
+  log_switch (= 0.4.0)
   nokogiri
+  playful!
   protected_attributes
   rails (= 4.1.6)
   restful-authentication
