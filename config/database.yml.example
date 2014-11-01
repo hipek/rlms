@@ -2,16 +2,16 @@ development:
   adapter: mysql
   database: rlms_development
   username: jacek
-  password: jacek81
+  password: 
 
 test:
   adapter: mysql
   database: rlms_test
   username: jacek
-  password: jacek81
+  password: 
 
 production:
   adapter: mysql
   database: rlms_development
   username: jacek
-  password: jacek81
+  password: 
