@@ -1,8 +1,6 @@
 require 'rails_helper'
 
-class Permission < ActiveRecord::Base
-  acts_as_permissible
-end
+Permission.send :acts_as_permissible
 
 describe "acts_as_permissible" do
   fixtures :permissions
