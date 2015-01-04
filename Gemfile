@@ -6,7 +6,7 @@ gem 'rails', '4.1.8'
 gem "will_paginate", "~> 3.0"
 gem 'sqlite3'
 gem 'haml-rails'
-gem 'state_machine'
+gem 'state_machine', git: 'https://github.com/pluginaweek/state_machine.git'
 gem 'dynamic_form'
 gem 'restful-authentication'
 gem 'active_record_defaults', git: 'https://github.com/hipek/active_record_defaults.git'
@@ -41,7 +41,7 @@ group :development do
 end
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.9"
+  gem "rspec-rails", "~> 3.1"
   gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
   gem 'simplecov-rcov'

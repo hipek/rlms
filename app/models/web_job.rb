@@ -20,7 +20,9 @@ class WebJob < ActiveRecord::Base
       transition :pending => :queuing
       transition :queuing => :running
     end
-    after_transition :queuing => :running, do: :run
+    after_transition :queuing => :running do |job, transition|
+      job.run
+    end
 
     event :finish do
       transition :running => :done

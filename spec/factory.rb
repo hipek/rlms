@@ -1,4 +1,10 @@
 module Factory
+  def build_model model, options={}
+    m = model.new options
+    allow(m).to receive(:id).and_return(options[:id])
+    m
+  end
+
   def build_router_service params={}
     Router::Service::Base.new({ 
       :name => 'service_name',

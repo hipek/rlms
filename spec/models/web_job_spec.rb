@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe WebJob do
   before(:each) do
@@ -21,7 +21,7 @@ describe WebJob do
   end
 
   it "should transit from pending to queuing" do
-    @web_job.should_receive(:run).and_return(true)
+    expect(@web_job).to receive(:run).and_return(true)
     @web_job.save!
     @web_job.start!
     @web_job.start!

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "Router::ForwardPorts" do
   describe "GET /router/forward_ports" do

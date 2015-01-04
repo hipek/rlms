@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe FwRulesController do
   fixtures :users
@@ -36,7 +36,7 @@ describe FwRulesController do
   
     it "should assign the found fw_rules for the view" do
       do_get
-      assigns[:fw_rules].should == {'input' => [@fw_rule]}
+      expect(assigns[:fw_rules]).to eql('input' => [@fw_rule])
     end
   end
 
@@ -67,7 +67,7 @@ describe FwRulesController do
   
     it "should assign the found fw_rule for the view" do
       do_get
-      assigns[:fw_rule].should equal(@fw_rule)
+      expect(assigns[:fw_rule]).to equal(@fw_rule)
     end
   end
 
@@ -93,12 +93,12 @@ describe FwRulesController do
     end
   
     it "should create an new fw_rule" do
-      FwRule.should_receive(:new).and_return(@fw_rule)
+      expect(FwRule).to receive(:new).and_return(@fw_rule)
       do_get
     end
   
     it "should not save the new fw_rule" do
-      @fw_rule.should_not_receive(:save)
+      expect(@fw_rule).not_to receive(:save)
       do_get
     end
   
@@ -149,12 +149,12 @@ describe FwRulesController do
     describe "with successful save" do
   
       def do_post
-        @fw_rule.should_receive(:save).and_return(true)
+        expect(@fw_rule).to receive(:save).and_return(true)
         post :create, :fw_rule => {}
       end
   
       it "should create a new fw_rule" do
-        FwRule.should_receive(:new).with({}).and_return(@fw_rule)
+        expect(FwRule).to receive(:new).with({}).and_return(@fw_rule)
         do_post
       end
 
@@ -168,7 +168,7 @@ describe FwRulesController do
     describe "with failed save" do
 
       def do_post
-        @fw_rule.should_receive(:save).and_return(false)
+        expect(@fw_rule).to receive(:save).and_return(false)
         post :create, :fw_rule => {}
       end
   
@@ -190,7 +190,7 @@ describe FwRulesController do
     describe "with successful update" do
 
       def do_put
-        @fw_rule.should_receive(:update_attributes).and_return(true)
+        expect(@fw_rule).to receive(:update_attributes).and_return(true)
         put :update, :id => "1"
       end
 
@@ -218,7 +218,7 @@ describe FwRulesController do
     describe "with failed update" do
 
       def do_put
-        @fw_rule.should_receive(:update_attributes).and_return(false)
+        expect(@fw_rule).to receive(:update_attributes).and_return(false)
         put :update, :id => "1"
       end
 
@@ -247,13 +247,13 @@ describe FwRulesController do
     end
   
     it "should call destroy on the found fw_rule" do
-      @fw_rule.should_receive(:destroy)
+      expect(@fw_rule).to receive(:destroy)
       do_delete
     end
   
     it "should redirect to the fw_rules list" do
       do_delete
-      response.should redirect_to(fw_rules_url)
+      expect(response).to redirect_to(fw_rules_url)
     end
   end
 end

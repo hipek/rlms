@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Torrent::ItemsController do
   fixtures :users, :groups, :group_memberships

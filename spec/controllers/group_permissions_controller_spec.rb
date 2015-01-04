@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe GroupPermissionsController do
   fixtures :users, :groups, :group_memberships
