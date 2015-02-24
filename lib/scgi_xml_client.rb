@@ -4,7 +4,9 @@ require 'socket'
 
 class SCGIXMLClient < XMLRPC::ClientS
   def new_socket( info, async )
-    SCGIWrappedSocket.new(UNIXSocket.new(info.first),info.last)
+    socket = Socket.new Socket::AF_INET, Socket::SOCK_STREAM
+    socket.connect Socket.pack_sockaddr_in info.first[:port], info.first[:host]
+    SCGIWrappedSocket.new(socket, info.last)
   end
 end
 

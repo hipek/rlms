@@ -4,6 +4,8 @@ class RTorrent::Base
   CONFIG = Rails.root.join('config', 'rtorrent.yml')
   SOCKET_PATH = YAML.load_file(CONFIG)['socket']
   WATCH_PATH = YAML.load_file(CONFIG)['watch']
+  PORT = YAML.load_file(CONFIG)['port']
+  HOST = YAML.load_file(CONFIG)['host']
 
   def call *args
     self.class.call(*args)
@@ -24,6 +26,9 @@ class RTorrent::Base
   end
 
   def self.service
-    @@service ||= SCGIXMLClient.new([SOCKET_PATH, "/RPC2"])
+    @@service ||= SCGIXMLClient.new([
+      {port: PORT, host: HOST},
+      "/RPC2"
+    ])
   end
 end
