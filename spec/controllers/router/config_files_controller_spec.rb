@@ -13,7 +13,7 @@ describe Router::ConfigFilesController do
     it "should be successful" do
       allow(Router::Dhcp).to receive(:instance).and_return(build_router_dhcp)
       get 'dhcp'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -21,7 +21,7 @@ describe Router::ConfigFilesController do
     it "should be successful" do
       allow(Router::Main).to receive(:instance).and_return(build_router_main)
       get 'iptables'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 

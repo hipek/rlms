@@ -13,7 +13,7 @@ describe Torrent::FilesController do
     it "should be successful" do
       allow(RTorrent::Item).to receive(:new).with('a').and_return(double('Items', :files => []))
       get 'index', :item_id => 'a'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 end

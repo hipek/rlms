@@ -12,14 +12,14 @@ describe Router::ServicesController do
   describe "GET 'index'" do
     it "should be successful" do
       get 'index'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "PUT 'update'" do
     it "should redirected to router_services_url" do
       put :update, :id => 0
-      response.should redirect_to(router_services_url)
+      expect(response).to redirect_to(router_services_url)
     end
   end
 

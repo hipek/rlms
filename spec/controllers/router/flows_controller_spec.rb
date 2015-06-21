@@ -46,7 +46,7 @@ describe Router::FlowsController do
 
       it "redirects to the created flow" do
         post :create, :router_flow => {}
-        response.should redirect_to(router_flows_url)
+        expect(response).to redirect_to(router_flows_url)
       end
     end
 
@@ -63,7 +63,7 @@ describe Router::FlowsController do
 
       it "re-renders the 'new' template" do
         post :create, :router_flow => {}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -88,7 +88,7 @@ describe Router::FlowsController do
       it "redirects to the flow" do
         expect(rule_flow).to receive(:update_attributes) { true }
         put :update, :id => "37"
-        response.should redirect_to(router_flows_url)
+        expect(response).to redirect_to(router_flows_url)
       end
     end
 
@@ -104,7 +104,7 @@ describe Router::FlowsController do
 
       it "re-renders the 'edit' template" do
         put :update, :id => "37"
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -121,7 +121,7 @@ describe Router::FlowsController do
 
     it "redirects to the router_flows list" do
       delete :destroy, :id => "37"
-      response.should redirect_to(router_flows_url)
+      expect(response).to redirect_to(router_flows_url)
     end
   end
 

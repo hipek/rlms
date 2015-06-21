@@ -12,7 +12,7 @@ describe Router::MainController do
   describe "GET 'index'" do
     it "should be successful" do
       get :index
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -22,7 +22,7 @@ describe Router::MainController do
         dns_server1: '194.204.159.1',
         interfaces_attributes: [{name: 'eth0'}]
       }
-      response.should redirect_to(router_main_url)
+      expect(response).to redirect_to(router_main_url)
     end
   end
 end

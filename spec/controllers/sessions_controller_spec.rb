@@ -7,27 +7,27 @@ describe SessionsController do
   it 'logins and redirects' do
     post :create, :login => 'quentin', :password => 'test'
     session[:user_id].should_not be_nil
-    response.should be_redirect
+    expect(response).to be_redirect
   end
-  
+
   it 'fails login and does not redirect' do
     post :create, :login => 'quentin', :password => 'bad password'
     session[:user_id].should be_nil
-    response.should be_success
+    expect(response).to be_success
   end
 
   it 'logs out' do
     login_as :quentin
     get :destroy
     session[:user_id].should be_nil
-    response.should be_redirect
+    expect(response).to be_redirect
   end
 
   it 'remembers me' do
     post :create, :login => 'quentin', :password => 'test', :remember_me => "1"
     response.cookies["auth_token"].should_not be_nil
   end
-  
+
   it 'does not remember me' do
     post :create, :login => 'quentin', :password => 'test', :remember_me => "0"
     response.cookies["auth_token"].should be_nil
@@ -45,7 +45,7 @@ describe SessionsController do
     get :new
     expect(controller.send(:logged_in?)).to eql true
   end
-  
+
   it 'fails expired cookie login' do
     users(:quentin).remember_me
     users(:quentin).update_attribute :remember_token_expires_at, 5.minutes.ago
@@ -53,7 +53,7 @@ describe SessionsController do
     get :new
     expect(controller.send(:logged_in?)).to_not eql true
   end
-  
+
   it 'fails cookie login' do
     users(:quentin).remember_me
     request.cookies["auth_token"] = auth_token('invalid_auth_token')
@@ -64,7 +64,7 @@ describe SessionsController do
   def auth_token(token)
     CGI::Cookie.new('name' => 'auth_token', 'value' => token)
   end
-    
+
   def cookie_for(user)
     auth_token users(user).remember_token
   end

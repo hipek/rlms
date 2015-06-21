@@ -59,7 +59,7 @@ describe Router::OpenPortsController do
       it "redirects to the created open_port" do
         expect(open_port).to receive(:save) { true }
         post :create, :open_port => {'these' => 'params'}
-        response.should redirect_to(router_open_port_url(open_port))
+        expect(response).to redirect_to(router_open_port_url(open_port))
       end
     end
 
@@ -75,7 +75,7 @@ describe Router::OpenPortsController do
 
       it "re-renders the 'new' template" do
         post :create, :open_port => {'these' => 'params'}
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -99,7 +99,7 @@ describe Router::OpenPortsController do
       it "redirects to the open_port" do
         expect(open_port).to receive(:update_attributes) { true }
         put :update, :id => "37"
-        response.should redirect_to(router_open_port_url(open_port))
+        expect(response).to redirect_to(router_open_port_url(open_port))
       end
     end
 
@@ -115,7 +115,7 @@ describe Router::OpenPortsController do
 
       it "re-renders the 'edit' template" do
         put :update, :id => "37"
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -132,7 +132,7 @@ describe Router::OpenPortsController do
 
     it "redirects to the router_open_ports list" do
       delete :destroy, :id => "1"
-      response.should redirect_to(router_open_ports_url)
+      expect(response).to redirect_to(router_open_ports_url)
     end
   end
 

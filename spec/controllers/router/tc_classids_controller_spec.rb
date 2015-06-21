@@ -16,14 +16,14 @@ describe Router::TcClassidsController do
   describe "GET 'index'" do
     it "should be successful" do
       get 'index'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "GET 'new'" do
     it "should be successful" do
       get 'new'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -32,7 +32,7 @@ describe Router::TcClassidsController do
       expect(Router::Tc::Classid).to receive(:find).with("37") { tc_classid }
       get :edit, :id => "37"
       assigns(:tc_classid).should be(tc_classid)
-      response.should be_success
+      expect(response).to be_success
     end
   end
 end

@@ -12,7 +12,7 @@ describe Torrent::PeersController do
     it "should be successful" do
       allow(RTorrent::Item).to receive(:new).with('aaa').and_return(double('Items', :peers => []))
       get 'index', :item_id => 'aaa'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 end
