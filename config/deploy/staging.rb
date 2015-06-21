@@ -17,6 +17,7 @@ role :db,  %w{rlms@krd.zapto.org}
 server 'krd.zapto.org', user: 'rlms', roles: %w{web app}
 
 set :deploy_to, '/home/projects/rlms/production/rlms4'
+set :thin_params, '--port 3006'
 
 # Custom SSH Options
 # ==================

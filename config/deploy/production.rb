@@ -16,6 +16,8 @@ role :db,  %w{deploy@jacekhiszpanski.tk}
 
 server 'jacekhiszpanski.tk', user: 'deploy', roles: %w{web app}
 
+set :thin_params, '--socket tmp/sockets/thin.0.sock'
+
 # Custom SSH Options
 # ==================
 # You may pass any option but keep in mind that net/ssh understands a
