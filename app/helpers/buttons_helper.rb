@@ -1,6 +1,6 @@
 module ButtonsHelper
   def submit_tag(name, opts = {})
-    opts[:class] ||= 'btn btn-primary'
+    opts[:class] ||= 'btn btn-primary btn-xs'
     super(name, opts)
   end
 

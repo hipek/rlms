@@ -1208,8 +1208,8 @@ a.bg-danger:hover {
   background-color: #e4b9b9;
 }
 .page-header {
-  padding-bottom: 9.5px;
-  margin: 42px 0 21px;
+  padding-bottom: 8.5px;
+  margin: 36px 0 21px;
   border-bottom: 1px solid #dddddd;
 }
 ul,
@@ -1359,9 +1359,9 @@ kbd kbd {
 }
 pre {
   display: block;
-  padding: 10px;
+  padding: 6px;
   margin: 0 0 10.5px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.42857143;
   word-break: break-all;
   word-wrap: break-word;
@@ -2066,7 +2066,7 @@ th {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-  padding: 8px;
+  padding: 4px;
   line-height: 1.42857143;
   vertical-align: top;
   border-top: 1px solid #dddddd;
@@ -2345,8 +2345,8 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 39px;
-  padding: 8px 12px;
+  /*height: 39px;*/
+  padding: 2px 6px;
   font-size: 15px;
   line-height: 1.42857143;
   color: #6f6f6f;
@@ -3577,7 +3577,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  padding: 5px 10px;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {

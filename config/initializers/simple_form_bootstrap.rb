@@ -115,7 +115,7 @@ module FormActions
   end
 
   def action(name, url, opts = {})
-    opts[:class] ||= 'btn btn-default'
+    opts[:class] ||= 'btn btn-default btn-xs'
     template.link_to name, url, opts
   end
 end
