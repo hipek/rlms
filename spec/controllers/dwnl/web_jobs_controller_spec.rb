@@ -16,29 +16,29 @@ describe Dwnl::WebJobsController do
       @web_job = build_model(WebJob, :id => 123, :state => 'pending')
       allow(WebJob).to receive(:all).and_return([@web_job])
     end
-  
+
     def do_get
       get :index
     end
-  
+
     it "should be successful" do
       do_get
-      response.should be_success
+      expect(response).to be_success
     end
 
     it "should render index template" do
       do_get
-      response.should render_template('index')
+      expect(response).to render_template('index')
     end
-  
+
     it "should find all dwnl_web_jobs" do
-      WebJob.should_receive(:all).and_return([@web_job])
+      expect(WebJob).to receive(:all).and_return([@web_job])
       do_get
     end
-  
+
     it "should assign the found dwnl_web_jobs for the view" do
       do_get
-      assigns[:web_jobs].should == [@web_job]
+      expect(assigns[:web_jobs]).to eql [@web_job]
     end
   end
 
@@ -48,29 +48,29 @@ describe Dwnl::WebJobsController do
       @web_job = build_model(WebJob, :id => 123)
       allow(WebJob).to receive(:find).and_return(@web_job)
     end
-  
+
     def do_get
       get :show, :id => "1"
     end
 
     it "should be successful" do
       do_get
-      response.should be_success
+      expect(response).to be_success
     end
-  
+
     it "should render show template" do
       do_get
-      response.should render_template('show')
+      expect(response).to render_template('show')
     end
-  
+
     it "should find the web_job requested" do
-      WebJob.should_receive(:find).with("1").and_return(@web_job)
+      expect(WebJob).to receive(:find).with("1").and_return(@web_job)
       do_get
     end
-  
+
     it "should assign the found web_job for the view" do
       do_get
-      assigns[:web_job].should equal(@web_job)
+      expect(assigns[:web_job]).to equal(@web_job)
     end
   end
 
@@ -80,34 +80,34 @@ describe Dwnl::WebJobsController do
       @web_job = build_model(WebJob)
       allow(WebJob).to receive(:new).and_return(@web_job)
     end
-  
+
     def do_get
       get :new
     end
 
     it "should be successful" do
       do_get
-      response.should be_success
+      expect(response).to be_success
     end
-  
+
     it "should render new template" do
       do_get
-      response.should render_template('new')
+      expect(response).to render_template('new')
     end
-  
+
     it "should create an new web_job" do
-      WebJob.should_receive(:new).and_return(@web_job)
+      expect(WebJob).to receive(:new).and_return(@web_job)
       do_get
     end
-  
+
     it "should not save the new web_job" do
-      @web_job.should_not_receive(:save)
+      expect(@web_job).to_not receive(:save)
       do_get
     end
-  
+
     it "should assign the new web_job for the view" do
       do_get
-      assigns[:web_job].should equal(@web_job)
+      expect(assigns[:web_job]).to equal(@web_job)
     end
   end
 
@@ -117,29 +117,29 @@ describe Dwnl::WebJobsController do
       @web_job = build_model(WebJob, :id => 122)
       allow(WebJob).to receive(:find).and_return(@web_job)
     end
-  
+
     def do_get
       get :edit, :id => "1"
     end
 
     it "should be successful" do
       do_get
-      response.should be_success
+      expect(response).to be_success
     end
-  
+
     it "should render edit template" do
       do_get
-      response.should render_template('edit')
+      expect(response).to render_template('edit')
     end
-  
+
     it "should find the web_job requested" do
-      WebJob.should_receive(:find).and_return(@web_job)
+      expect(WebJob).to receive(:find).and_return(@web_job)
       do_get
     end
-  
+
     it "should assign the found Dwnl::WebJob for the view" do
       do_get
-      assigns[:web_job].should equal(@web_job)
+      expect(assigns[:web_job]).to equal(@web_job)
     end
   end
 
@@ -150,38 +150,38 @@ describe Dwnl::WebJobsController do
       allow(@web_job).to receive(:create_directory)
       allow(WebJob).to receive(:new).and_return(@web_job)
     end
-    
+
     describe "with successful save" do
-  
+
       def do_post
-        @web_job.should_receive(:save).and_return(true)
+        expect(@web_job).to receive(:save).and_return(true)
         post :create, :web_job => {}
       end
-  
+
       it "should create a new web_job" do
-        WebJob.should_receive(:new).with({}).and_return(@web_job)
+        expect(WebJob).to receive(:new).with({}).and_return(@web_job)
         do_post
       end
 
       it "should redirect to the new web_job" do
         do_post
-        response.should redirect_to(dwnl_web_job_url("1"))
+        expect(response).to redirect_to(dwnl_web_job_url("1"))
       end
-      
+
     end
-    
+
     describe "with failed save" do
 
       def do_post
-        @web_job.should_receive(:save).and_return(false)
+        expect(@web_job).to receive(:save).and_return(false)
         post :create, :web_job => {}
       end
-  
+
       it "should re-render 'new'" do
         do_post
-        response.should render_template('new')
+        expect(response).to render_template('new')
       end
-      
+
     end
   end
 
@@ -191,46 +191,46 @@ describe Dwnl::WebJobsController do
       @web_job = build_model(WebJob, :id => 1)
       allow(WebJob).to receive(:find).and_return(@web_job)
     end
-    
+
     describe "with successful update" do
 
       def do_put
-        @web_job.should_receive(:update_attributes).and_return(true)
+        expect(@web_job).to receive(:update_attributes).and_return(true)
         put :update, :id => "1"
       end
 
       it "should find the web_job requested" do
-        WebJob.should_receive(:find).with("1").and_return(@web_job)
+        expect(WebJob).to receive(:find).with("1").and_return(@web_job)
         do_put
       end
 
       it "should update the found web_job" do
         do_put
-        assigns(:web_job).should equal(@web_job)
+        expect(assigns(:web_job)).to equal(@web_job)
       end
 
       it "should assign the found web_job for the view" do
         do_put
-        assigns(:web_job).should equal(@web_job)
+        expect(assigns(:web_job)).to equal(@web_job)
       end
 
       it "should redirect to the web_job" do
         do_put
-        response.should redirect_to(dwnl_web_job_url("1"))
+        expect(response).to redirect_to(dwnl_web_job_url("1"))
       end
 
     end
-    
+
     describe "with failed update" do
 
       def do_put
-        @web_job.should_receive(:update_attributes).and_return(false)
+        expect(@web_job).to receive(:update_attributes).and_return(false)
         put :update, :id => "1"
       end
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('edit')
+        expect(response).to render_template('edit')
       end
 
     end
@@ -243,24 +243,24 @@ describe Dwnl::WebJobsController do
       allow(@web_job).to receive(:destroy).and_return(true)
       allow(WebJob).to receive(:find).and_return(@web_job)
     end
-  
+
     def do_delete
       delete :destroy, :id => "1"
     end
 
     it "should find the web_job requested" do
-      WebJob.should_receive(:find).with("1").and_return(@web_job)
+      expect(WebJob).to receive(:find).with("1").and_return(@web_job)
       do_delete
     end
-  
+
     it "should call destroy on the found web_job" do
-      @web_job.should_receive(:destroy)
+      expect(@web_job).to receive(:destroy)
       do_delete
     end
-  
+
     it "should redirect to the dwnl_web_jobs list" do
       do_delete
-      response.should redirect_to(dwnl_web_jobs_url)
+      expect(response).to redirect_to(dwnl_web_jobs_url)
     end
   end
 end
