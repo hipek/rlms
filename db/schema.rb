@@ -13,14 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20110206184847) do
 
-  create_table "base_settings", force: true do |t|
+  create_table "base_settings", force: :cascade do |t|
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id"
   end
 
-  create_table "computers", force: true do |t|
+  create_table "computers", force: :cascade do |t|
     t.string   "name"
     t.string   "mac_address"
     t.datetime "created_at"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.boolean  "active",      default: true, null: false
   end
 
-  create_table "firewalls", force: true do |t|
+  create_table "firewalls", force: :cascade do |t|
     t.string   "name"
     t.integer  "visibility"
     t.datetime "start_date"
@@ -39,16 +39,16 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.integer  "lan_id"
   end
 
-  create_table "forward_ports", force: true do |t|
+  create_table "forward_ports", force: :cascade do |t|
     t.string   "port"
     t.string   "protocol"
-    t.integer  "computer_id", limit: 255
+    t.integer  "computer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "dport"
   end
 
-  create_table "fw_rules", force: true do |t|
+  create_table "fw_rules", force: :cascade do |t|
     t.integer  "order"
     t.string   "ip_table"
     t.string   "cmd"
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.string   "aft_argument"
   end
 
-  create_table "group_memberships", force: true do |t|
+  create_table "group_memberships", force: :cascade do |t|
     t.integer  "roleable_id"
     t.string   "roleable_type"
     t.integer  "group_id"
@@ -85,20 +85,20 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.datetime "updated_at"
   end
 
-  create_table "groups", force: true do |t|
+  create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "open_ports", force: true do |t|
+  create_table "open_ports", force: :cascade do |t|
     t.string   "port"
     t.string   "protocol"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "permissions", force: true do |t|
+  create_table "permissions", force: :cascade do |t|
     t.integer  "permissible_id"
     t.string   "permissible_type"
     t.string   "action"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.datetime "updated_at"
   end
 
-  create_table "rule_flows", force: true do |t|
+  create_table "rule_flows", force: :cascade do |t|
     t.string   "port"
     t.string   "net_type"
     t.integer  "tc_classid_id"
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.datetime "updated_at"
   end
 
-  create_table "services", force: true do |t|
+  create_table "services", force: :cascade do |t|
     t.string   "name"
     t.string   "init_path"
     t.string   "config_path"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.string   "type",        limit: 32
   end
 
-  create_table "sessions", force: true do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false
     t.text     "data"
     t.datetime "created_at"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
 
-  create_table "settings", force: true do |t|
+  create_table "settings", force: :cascade do |t|
     t.string   "field_name"
     t.string   "value"
     t.integer  "base_setting_id"
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.datetime "updated_at"
   end
 
-  create_table "tc_classids", force: true do |t|
+  create_table "tc_classids", force: :cascade do |t|
     t.integer  "prio"
     t.string   "net_type"
     t.string   "rate"
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.integer  "router_id"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "login"
     t.string   "email"
     t.string   "crypted_password",          limit: 40
@@ -167,7 +167,7 @@ ActiveRecord::Schema.define(version: 20110206184847) do
     t.datetime "remember_token_expires_at"
   end
 
-  create_table "web_jobs", force: true do |t|
+  create_table "web_jobs", force: :cascade do |t|
     t.string   "name"
     t.string   "state"
     t.text     "body"

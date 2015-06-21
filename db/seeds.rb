@@ -6,8 +6,8 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-YAML.load_file('data/computers.yml').each{|a| Router::Computer.new(   a.ivars['attributes'] ).save}
-YAML.load_file('data/tcclassid.yml').each{|a| Router::Tc::Classid.new(a.ivars['attributes'] ).save}
+YAML.load_file('data/computers.yml').each{|a| Router::Computer.new(   a['attributes'] ).save}
+YAML.load_file('data/tcclassid.yml').each{|a| Router::Tc::Classid.new(a['attributes'] ).save}
 
 %w(dhcp iptables iptables-save iptables-save iptables-restore ifconfig arp).each do |n|
   Router::Service::Base.where(:name => n).first_or_create

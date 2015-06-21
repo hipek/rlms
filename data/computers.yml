@@ -1,400 +1,319 @@
---- 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Jacek
     updated_at: 2008-07-20 12:05:15
     mac_address: 00:04:61:00:05:60
     id: "2"
     ip_address: 10.5.5.1
     created_at: 2008-07-20 12:04:50
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Janusz
     updated_at: 2008-07-21 09:12:40
     mac_address: 00:0D:61:12:F9:39
     id: "5"
     ip_address: 10.5.5.3
     created_at: 2008-07-21 09:12:40
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Bekus
     updated_at: 2008-07-21 09:21:52
     mac_address: 00:0F:EA:CF:17:FB
     id: "7"
     ip_address: 10.5.5.18
     created_at: 2008-07-21 09:21:52
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Daniel2
     updated_at: 2008-10-03 09:20:27
     mac_address: 00:0E:E8:F9:64:1B
     id: "9"
     ip_address: 10.5.5.4
     created_at: 2008-07-21 09:53:21
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Kasia
     updated_at: 2008-07-23 19:08:29
     mac_address: 00:1B:38:47:05:6F
     id: "10"
     ip_address: 10.5.5.2
     created_at: 2008-07-23 19:08:29
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Ania Gomula
     updated_at: 2008-07-27 12:36:14
     mac_address: 00:80:48:1A:B1:7B
     id: "11"
     ip_address: 10.5.5.15
     created_at: 2008-07-23 19:08:40
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Kuba
     updated_at: 2008-07-23 22:45:58
     mac_address: 00:0B:6A:A1:63:B9
     id: "13"
     ip_address: 10.5.5.19
     created_at: 2008-07-23 22:45:58
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: ROUTER
     updated_at: 2008-07-25 21:50:22
     mac_address: 00:1C:C5:07:AB:5A
     id: "14"
     ip_address: 10.4.4.101
     created_at: 2008-07-25 21:50:03
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Kasia Maloszyc
     updated_at: 2008-07-27 13:16:02
     mac_address: 00:C0:9F:5C:28:57
     id: "16"
     ip_address: 10.5.5.16
     created_at: 2008-07-27 13:16:02
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Tomek Michalak
     updated_at: 2008-07-27 13:20:21
     mac_address: 00:0E:2E:CD:10:B1
     id: "17"
     ip_address: 10.5.5.9
     created_at: 2008-07-27 13:20:21
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Asia Purgal
     updated_at: 2008-07-27 13:21:32
     mac_address: 00:50:FC:A8:59:91
     id: "18"
     ip_address: 10.5.5.10
     created_at: 2008-07-27 13:21:32
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Kasia2
     updated_at: 2008-08-28 20:43:48
     mac_address: 00:E0:7D:E9:0F:D9
     id: "20"
     ip_address: 10.5.5.20
     created_at: 2008-08-27 15:24:30
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: mikolajczyk2
     updated_at: 2008-10-09 20:39:10
     mac_address: 00:1E:2A:35:B3:3A
     id: "24"
     ip_address: 10.5.5.22
     created_at: 2008-10-09 20:05:14
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Musial 22/46
     updated_at: 2008-12-07 20:30:45
     mac_address: 00:1F:D0:0C:80:64
     id: "27"
     ip_address: 10.5.5.23
     created_at: 2008-12-07 17:07:40
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: MarioLaptop
     updated_at: 2008-12-27 12:44:11
     mac_address: 00:0F:B0:C9:31:5D
     id: "28"
     ip_address: 10.5.5.8
     created_at: 2008-12-27 12:43:44
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: "Lukasz \xC5\xBBurek"
     updated_at: 2009-04-22 19:49:48
     mac_address: 00:22:43:02:34:A8
     id: "30"
     ip_address: 10.5.5.17
     created_at: 2008-12-27 12:55:41
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: MarioLaptopWifi
     updated_at: 2008-12-29 17:46:08
     mac_address: 00:16:CE:47:74:64
     id: "31"
     ip_address: 10.5.5.5
     created_at: 2008-12-27 13:54:37
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: JacekLaptop
     updated_at: 2008-12-29 17:46:52
     mac_address: 00:1D:92:C4:18:5A
     id: "33"
     ip_address: 10.5.5.6
     created_at: 2008-12-28 00:28:16
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: JacekLaptopEth0
     updated_at: 2009-01-09 23:03:22
     mac_address: 00:1D:92:5A:DA:09
     id: "34"
     ip_address: 10.5.5.24
     created_at: 2009-01-09 23:03:22
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: NokiaMac
     updated_at: 2009-04-18 17:50:51
     mac_address: 00:24:7C:51:25:38
     id: "37"
     ip_address: 10.5.5.27
     created_at: 2009-04-18 17:50:51
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: "Rafa\xC5\x82 24/18"
     updated_at: 2009-04-22 19:48:54
     mac_address: 00:16:D3:4B:B7:89
     id: "38"
     ip_address: 10.5.5.28
     created_at: 2009-04-18 19:13:30
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Asus_Mac
     updated_at: 2009-11-13 22:36:55
     mac_address: 00:18:DE:6A:CC:EF
     id: "39"
     ip_address: 10.5.5.29
     created_at: 2009-11-13 22:36:55
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: DanielG
     updated_at: 2009-12-13 15:00:26
     mac_address: 00:1F:16:CF:C4:2D
     id: "41"
     ip_address: 10.5.5.31
     created_at: 2009-12-13 15:00:26
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Kasia Polak kbl
     updated_at: 2009-12-28 18:03:38
     mac_address: 00:13:77:EB:F8:DF
     id: "42"
     ip_address: 10.5.5.32
     created_at: 2009-12-28 18:03:38
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: TP_LINK_Polak
     updated_at: 2009-12-28 19:15:35
     mac_address: 00:27:19:E1:69:7E
     id: "43"
     ip_address: 10.5.5.33
     created_at: 2009-12-28 19:15:35
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Kasia Polak WLAN
     updated_at: 2009-12-28 19:32:01
     mac_address: 90:4C:E5:18:38:DC
     id: "44"
     ip_address: 10.5.5.34
     created_at: 2009-12-28 19:32:01
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Michalak
     updated_at: 2010-03-09 19:18:56
     mac_address: D8:D3:85:02:AB:E6
     id: "45"
     ip_address: 10.5.5.35
     created_at: 2010-03-09 19:18:56
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Maciek2
     updated_at: 2010-04-17 09:39:38
     mac_address: A4:BA:DB:03:56:99
     id: "46"
     ip_address: 10.5.5.36
     created_at: 2010-04-17 09:39:38
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: SE_W715
     updated_at: 2010-06-14 20:08:00
     mac_address: 24:21:AB:24:FC:C4
     id: "47"
     ip_address: 10.5.5.37
     created_at: 2010-06-14 20:08:00
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Darek 22m48
     updated_at: 2010-07-07 18:52:17
     mac_address: 00:26:18:6F:DC:0B
     id: "48"
     ip_address: 10.5.5.38
     created_at: 2010-07-07 18:52:17
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: MarioNokia
     updated_at: 2010-07-15 21:30:06
     mac_address: 00:1F:00:C8:D5:B1
     id: "49"
     ip_address: 10.5.5.21
     created_at: 2010-07-15 21:30:06
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: "Rafa\xC5\x82 Kolasi\xC5\x84ski2"
     updated_at: 2010-07-16 14:30:39
     mac_address: 00:C0:DF:05:31:7B
     id: "50"
     ip_address: 10.5.5.39
     created_at: 2010-07-16 14:30:39
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Kasia Polak2
     updated_at: 2010-08-12 16:14:29
     mac_address: 1C:6F:65:21:EF:91
     id: "51"
     ip_address: 10.5.5.40
     created_at: 2010-08-12 16:14:29
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Jarek 888 445 884
     updated_at: 2010-10-29 18:44:51
     mac_address: 00:02:72:60:70:3A
     id: "52"
     ip_address: 10.5.5.41
     created_at: 2010-10-28 20:17:54
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Samsung 6800
     updated_at: 2010-10-29 19:35:05
     mac_address: 00:1B:B1:1D:77:AA
     id: "53"
     ip_address: 10.5.5.42
     created_at: 2010-10-29 19:35:05
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Audi80
     updated_at: 2010-12-17 17:56:06
     mac_address: 00:1D:7D:71:18:7D
     id: "54"
     ip_address: 10.5.5.43
     created_at: 2010-12-17 17:56:06
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Agnieszka Laptop
     updated_at: 2010-12-23 18:47:12
     mac_address: 00:1F:16:4E:F3:EA
     id: "55"
     ip_address: 10.5.5.44
     created_at: 2010-12-23 18:47:12
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: SE Vivaz Jac
     updated_at: 2010-12-29 12:28:45
     mac_address: 6C:23:B9:E0:62:EA
     id: "56"
     ip_address: 10.5.5.30
     created_at: 2010-12-29 12:28:45
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Exasper
     updated_at: 2011-01-03 22:14:37
     mac_address: 00:D0:59:CF:F4:6B
     id: "58"
     ip_address: 10.5.5.7
     created_at: 2011-01-03 22:14:21
-  attributes_cache: {}
 
-- !ruby/object:Router::Computer 
-  attributes: 
+- attributes:
     name: Szafel
     updated_at: 2011-01-12 20:56:26
     mac_address: 00:30:4F:56:8F:18
     id: "59"
     ip_address: 10.5.5.45
     created_at: 2011-01-12 20:56:26
-  attributes_cache: {}

@@ -1,6 +1,4 @@
---- 
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+- attributes:
     created_at: 2011-01-29 18:03:59.924033
     updated_at: 2011-01-29 18:28:56.683536
     rate: "1920"
@@ -9,9 +7,6 @@
     net_type: int
     router_id: 1
     prio: -1
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -19,8 +14,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:31:44.976250
     updated_at: 2011-01-29 18:31:44.976250
     rate: "320"
@@ -29,9 +24,6 @@
     net_type: int
     router_id: 1
     prio: 0
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -39,8 +31,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:32:01.706409
     updated_at: 2011-01-29 18:32:01.706409
     rate: "320"
@@ -49,9 +41,6 @@
     net_type: int
     router_id: 1
     prio: 1
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -59,8 +48,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:32:28.924191
     updated_at: 2011-01-29 18:32:28.924191
     rate: "320"
@@ -69,9 +58,6 @@
     net_type: int
     router_id: 1
     prio: 2
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -79,8 +65,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:32:58.177825
     updated_at: 2011-01-29 18:55:11.470157
     rate: "210"
@@ -89,9 +75,6 @@
     net_type: ext
     router_id: 1
     prio: -1
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -99,8 +82,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:34:11.317640
     updated_at: 2011-01-29 18:34:11.317640
     rate: "320"
@@ -109,9 +92,6 @@
     net_type: int
     router_id: 1
     prio: 3
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -119,8 +99,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:35:41.446086
     updated_at: 2011-01-29 18:35:41.446086
     rate: "320"
@@ -129,9 +109,6 @@
     net_type: int
     router_id: 1
     prio: 4
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -139,8 +116,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:36:00.090264
     updated_at: 2011-01-29 18:37:22.868335
     rate: "35"
@@ -149,9 +126,6 @@
     net_type: ext
     router_id: 1
     prio: 0
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -159,8 +133,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:37:05.610667
     updated_at: 2011-01-29 18:37:05.610667
     rate: "320"
@@ -169,9 +143,6 @@
     net_type: int
     router_id: 1
     prio: 5
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -179,8 +150,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:41:37.824237
     updated_at: 2011-01-29 18:41:37.824237
     rate: "35"
@@ -189,9 +160,6 @@
     net_type: ext
     router_id: 1
     prio: 1
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -199,8 +167,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:42:01.566662
     updated_at: 2011-01-29 18:42:01.566662
     rate: "35"
@@ -209,9 +177,6 @@
     net_type: ext
     router_id: 1
     prio: 2
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -219,8 +184,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:54:29.770450
     updated_at: 2011-01-29 18:54:29.770450
     rate: "35"
@@ -229,9 +194,6 @@
     net_type: ext
     router_id: 1
     prio: 3
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -239,8 +201,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:54:41.124669
     updated_at: 2011-01-29 18:54:41.124669
     rate: "35"
@@ -249,9 +211,6 @@
     net_type: ext
     router_id: 1
     prio: 4
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
@@ -259,8 +218,8 @@
   previously_changed: {}
 
   readonly: false
-- !ruby/object:Router::Tc::Classid 
-  attributes: 
+
+- attributes:
     created_at: 2011-01-29 18:54:53.693570
     updated_at: 2011-01-29 18:54:53.693570
     rate: "35"
@@ -269,9 +228,6 @@
     net_type: ext
     router_id: 1
     prio: 5
-  attributes_cache: {}
-
-  changed_attributes: {}
 
   destroyed: false
   marked_for_destruction: false
