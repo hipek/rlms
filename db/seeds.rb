@@ -8,3 +8,16 @@
 
 YAML.load_file('data/computers.yml').each{|a| Router::Computer.new(   a.ivars['attributes'] ).save}
 YAML.load_file('data/tcclassid.yml').each{|a| Router::Tc::Classid.new(a.ivars['attributes'] ).save}
+
+%w(dhcp iptables iptables-save iptables-save iptables-restore ifconfig arp).each do |n|
+  Router::Service::Base.where(:name => n).first_or_create
+end
+
+%w(iptables iptables-save iptables-save iptables-restore ifconfig arp).each do |n|
+  s = Router::Service::Base.where(:name => n).first_or_create
+  s.send :write_attribute, :type, 'Router::Service::Simple'
+  s.save
+end
+
+Router::Service::ConfInit.where(:name => 'interfaces').first_or_create
+Router::Service::ConfInit.where(:name => 'resolv').first_or_create
