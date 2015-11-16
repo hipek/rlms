@@ -36,6 +36,7 @@ gem 'log_switch', '0.4.0'
 
 group :development do
   gem 'capistrano-rails'
+  gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-rbenv', '~> 2.0'
 end

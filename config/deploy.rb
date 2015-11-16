@@ -2,7 +2,7 @@
 lock '3.2.1'
 
 set :application, 'rlms4'
-set :repo_url, 'git@git.jacekhiszpanski.tk:ruby/rlms.git'
+set :repo_url, 'git@git.bananapi.dev:ruby/rlms.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -34,18 +34,12 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
-set :rbenv_ruby, '2.1.6'
-
 namespace :deploy do
 
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      within current_path do
-        execute :bundle, "exec thin stop || echo 'OK'"
-        execute :bundle, "exec thin start #{fetch(:thin_params)} -e #{fetch(:stage)} -d --tag '#{fetch(:application)}_#{fetch(:stage)}'"
-      end
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 

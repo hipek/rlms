@@ -4,9 +4,9 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{deploy@jacekhiszpanski.tk}
-role :web, %w{deploy@jacekhiszpanski.tk}
-role :db,  %w{deploy@jacekhiszpanski.tk}
+role :app, %w{deploy@bananapi.dev}
+role :web, %w{deploy@bananapi.dev}
+role :db,  %w{deploy@bananapi.dev}
 
 # Extended Server Syntax
 # ======================
@@ -14,9 +14,7 @@ role :db,  %w{deploy@jacekhiszpanski.tk}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'jacekhiszpanski.tk', user: 'deploy', roles: %w{web app}
-
-set :thin_params, '--socket tmp/sockets/thin.0.sock'
+server 'bananapi.dev', user: 'deploy', roles: %w{web app}
 
 # Custom SSH Options
 # ==================
