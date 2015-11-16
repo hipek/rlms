@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-# ruby '2.1.3'
+# ruby '2.2.3'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 gem "will_paginate", "~> 3.0"
 gem 'sqlite3'
 gem 'haml-rails'
@@ -42,7 +42,7 @@ group :development do
 end
 
 group :test, :development do
-  gem "rspec-rails", "~> 3.1"
+  gem 'rspec-rails', "~> 3.3"
   gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
   gem 'simplecov-rcov'

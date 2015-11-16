@@ -18,7 +18,7 @@ describe Router::OpenPortsController do
     it "assigns all open_ports as @open_ports" do
       expect(Router::Rule::OpenPort).to receive(:all) { [open_port] }
       get :index
-      assigns(:open_ports).should eq([open_port])
+      expect(assigns(:open_ports)).to eq([open_port])
     end
   end
 
@@ -26,14 +26,14 @@ describe Router::OpenPortsController do
     it "assigns the requested open_port as @open_port" do
       expect(Router::Rule::OpenPort).to receive(:find).with("37") { open_port }
       get :show, :id => "37"
-      assigns(:open_port).should be(open_port)
+      expect(assigns(:open_port)).to be(open_port)
     end
   end
 
   describe "GET new" do
     it "assigns a new open_port as @open_port" do
       get :new
-      assigns(:open_port).should be_kind_of(open_port.class)
+      expect(assigns(:open_port)).to be_kind_of(open_port.class)
     end
   end
 
@@ -53,7 +53,7 @@ describe Router::OpenPortsController do
     describe "with valid params" do
       it "assigns a newly created open_port as @open_port" do
         post :create, :open_port => {'these' => 'params'}
-        assigns(:open_port).should be(open_port)
+        expect(assigns(:open_port)).to be(open_port)
       end
 
       it "redirects to the created open_port" do
@@ -70,7 +70,7 @@ describe Router::OpenPortsController do
 
       it "assigns a newly created but unsaved open_port as @open_port" do
         post :create, :open_port => {'these' => 'params'}
-        assigns(:open_port).should be(open_port)
+        expect(assigns(:open_port)).to be(open_port)
       end
 
       it "re-renders the 'new' template" do
@@ -93,7 +93,7 @@ describe Router::OpenPortsController do
 
       it "assigns the requested open_port as @open_port" do
         put :update, :id => "37"
-        assigns(:open_port).should be(open_port)
+        expect(assigns(:open_port)).to be(open_port)
       end
 
       it "redirects to the open_port" do
@@ -110,7 +110,7 @@ describe Router::OpenPortsController do
 
       it "assigns the open_port as @open_port" do
         put :update, :id => "37"
-        assigns(:open_port).should be(open_port)
+        expect(assigns(:open_port)).to be(open_port)
       end
 
       it "re-renders the 'edit' template" do
@@ -126,7 +126,7 @@ describe Router::OpenPortsController do
     end
 
     it "destroys the requested open_port" do
-      open_port.should_receive(:destroy)
+      expect(open_port).to receive(:destroy)
       delete :destroy, :id => "37"
     end
 
