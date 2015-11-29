@@ -1,2 +1,4 @@
 socket: '/home/jacek/torrents/tmp/rpc.socket'
 watch: '/home/jacek/torrents/watch'
+host: '192.168.0.10'
+port: 5558
