@@ -8,3 +8,4 @@ tmp/dhcpd.conf
 tmp/*
 config/settings.yml
 coverage/
+.ruby-version

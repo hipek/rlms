@@ -1,10 +1,4 @@
 GIT
-  remote: https://github.com/hipek/active_record_defaults.git
-  revision: 41835d7be7a9c1af447e23a47e04476a6cdb4173
-  specs:
-    active_record_defaults (0.0.1)
-
-GIT
   remote: https://github.com/pluginaweek/state_machine.git
   revision: 8a3ba81801782ac4ef9d4ace1209d8d50ffccdb0
   specs:
@@ -327,7 +321,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_record_defaults!
   activerecord-session_store
   backbone-on-rails
   bootstrap-sass (~> 3.2)
@@ -368,4 +361,4 @@ DEPENDENCIES
   will_paginate (~> 3.0)
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
