@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 # ruby '2.3.0'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.6'
 gem "will_paginate", "~> 3.0"
 gem 'sqlite3'
 gem 'haml-rails'
