@@ -1,11 +1,9 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'rails_helper'
 
 describe FwSnat do
-  before(:each) do
-    @fw_snat = FwSnat.new
-  end
+  let(:fw_snat) { FwSnat.new }
 
   it "should be valid" do
-    @fw_snat.should be_valid
+    expect(fw_snat).to be_valid
   end
 end

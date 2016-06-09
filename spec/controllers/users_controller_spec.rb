@@ -10,42 +10,42 @@ describe UsersController do
   end
 
   it 'allows signup' do
-    lambda do
+    expect(lambda do
       create_user
       expect(response).to be_redirect
-    end.should change(User, :count).by(1)
+    end).to change(User, :count).by(1)
   end
 
   it 'requires login on signup' do
-    lambda do
+    expect(lambda do
       create_user(:login => nil)
-      assigns[:user].errors[:login].should_not be_nil
+      expect(assigns[:user].errors[:login]).to_not be_nil
       expect(response).to be_success
-    end.should_not change(User, :count)
+    end).to_not change(User, :count)
   end
 
   it 'requires password on signup' do
-    lambda do
+    expect(lambda do
       create_user(:password => nil)
-      assigns[:user].errors[:password].should_not be_nil
+      expect(assigns[:user].errors[:password]).to_not be_nil
       expect(response).to be_success
-    end.should_not change(User, :count)
+    end).to_not change(User, :count)
   end
 
   it 'requires password confirmation on signup' do
-    lambda do
+    expect(lambda do
       create_user(:password_confirmation => nil)
-      assigns[:user].errors[:password_confirmation].should_not be_nil
+      expect(assigns[:user].errors[:password_confirmation]).to_not be_nil
       expect(response).to be_success
-    end.should_not change(User, :count)
+    end).to_not change(User, :count)
   end
 
   it 'requires email on signup' do
-    lambda do
+    expect(lambda do
       create_user(:email => nil)
-      assigns[:user].errors[:email].should_not be_nil
+      expect(assigns[:user].errors[:email]).to_not be_nil
       expect(response).to be_success
-    end.should_not change(User, :count)
+    end).to_not change(User, :count)
   end
 
   def create_user(options = {})

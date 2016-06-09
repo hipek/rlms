@@ -4,43 +4,43 @@ describe ConfTemplate do
   describe 'Dhcp config' do
     before :each do
       @conf_template = ConfTemplate.new(
-        'dhcpd.conf', 
-        :computers => [build_router_computer], 
+        'dhcpd.conf',
+        :computers => [build_router_computer],
         :dhcp => build_router_dhcp
       )
     end
 
     it "should return new object" do
-      @conf_template.class.should == ConfTemplate
-      @conf_template.name.should == "dhcpd.conf"
+      expect(@conf_template.class).to eq ConfTemplate
+      expect(@conf_template.name).to eq "dhcpd.conf"
     end
 
     it "should return string value of template" do
-      @conf_template.read_file.should include("ddns-update-style ad-hoc")
-      @conf_template.read_file.class.should == String    
+      expect(@conf_template.read_file).to include("ddns-update-style ad-hoc")
+      expect(@conf_template.read_file.class).to eq String
     end
 
     it "should render erb file" do
-      @conf_template.render.should include(build_router_computer.mac_address)
-      @conf_template.render.should include(build_router_computer.ip_address)
-      @conf_template.render.should include(build_router_dhcp.gateway)
+      expect(@conf_template.render).to include(build_router_computer.mac_address)
+      expect(@conf_template.render).to include(build_router_computer.ip_address)
+      expect(@conf_template.render).to include(build_router_dhcp.gateway)
     end
-  
+
     it "should return path to rendered file" do
-      @conf_template.dest_path.should == Rails.root.join("tmp", "dhcpd.conf")
+      expect(@conf_template.dest_path).to eq Rails.root.join("tmp", "dhcpd.conf")
     end
-  
+
     it "should save rendered file in tmp dir" do
       @conf_template.write
       expect(File.exist?(@conf_template.dest_path)).to eql true
       File.delete(@conf_template.dest_path)
     end
   end
-  
+
   describe 'Iptables config' do
     before :each do
       @conf_template = ConfTemplate.new(
-        'iptables.sh', 
+        'iptables.sh',
         :allow_computers    => [build_router_computer],
         :disabled_computers => [],
         :open_ports => [],

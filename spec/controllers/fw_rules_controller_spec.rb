@@ -104,7 +104,7 @@ describe FwRulesController do
 
     it "should assign the new fw_rule for the view" do
       do_get
-      assigns[:fw_rule].should equal(@fw_rule)
+      expect(assigns[:fw_rule]).to equal(@fw_rule)
     end
   end
 
@@ -135,7 +135,7 @@ describe FwRulesController do
 
     it "should assign the found FwRule for the view" do
       do_get
-      assigns[:fw_rule].should equal(@fw_rule)
+      expect(assigns[:fw_rule]).to equal(@fw_rule)
     end
   end
 
@@ -200,12 +200,12 @@ describe FwRulesController do
 
       it "should update the found fw_rule" do
         do_put
-        assigns(:fw_rule).should equal(@fw_rule)
+        expect(assigns(:fw_rule)).to equal(@fw_rule)
       end
 
       it "should assign the found fw_rule for the view" do
         do_put
-        assigns(:fw_rule).should equal(@fw_rule)
+        expect(assigns(:fw_rule)).to equal(@fw_rule)
       end
 
       it "should redirect to the fw_rule" do

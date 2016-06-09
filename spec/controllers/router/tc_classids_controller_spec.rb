@@ -31,7 +31,7 @@ describe Router::TcClassidsController do
     it "should be successful" do
       expect(Router::Tc::Classid).to receive(:find).with("37") { tc_classid }
       get :edit, :id => "37"
-      assigns(:tc_classid).should be(tc_classid)
+      expect(assigns(:tc_classid)).to be(tc_classid)
       expect(response).to be_success
     end
   end

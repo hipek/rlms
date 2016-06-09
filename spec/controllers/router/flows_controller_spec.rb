@@ -18,14 +18,14 @@ describe Router::FlowsController do
     it "assigns all router_flows as @router_flows" do
       allow(Router::Rule::Flow).to receive(:all) { [rule_flow] }
       get :index
-      assigns(:router_flows).should eq([rule_flow])
+      expect(assigns(:router_flows)).to eq([rule_flow])
     end
   end
 
   describe "GET new" do
     it "assigns a new flow as @flow" do
       get :new
-      assigns(:router_flow).should be_kind_of(rule_flow.class)
+      expect(assigns(:router_flow)).to be_kind_of(rule_flow.class)
     end
   end
 
@@ -33,7 +33,7 @@ describe Router::FlowsController do
     it "assigns the requested flow as @flow" do
       allow(Router::Rule::Flow).to receive(:find).with("37") { rule_flow }
       get :edit, :id => "37"
-      assigns(:router_flow).should be(rule_flow)
+      expect(assigns(:router_flow)).to be(rule_flow)
     end
   end
 
@@ -41,7 +41,7 @@ describe Router::FlowsController do
     describe "with valid params" do
       it "assigns a newly created flow as @flow" do
         post :create, :router_flow => {'net_type' => 'ext'}
-        assigns(:router_flow).should be_kind_of(rule_flow.class)
+        expect(assigns(:router_flow)).to be_kind_of(rule_flow.class)
       end
 
       it "redirects to the created flow" do
@@ -58,7 +58,7 @@ describe Router::FlowsController do
 
       it "assigns a newly created but unsaved flow as @flow" do
         post :create, :router_flow => {}
-        assigns(:router_flow).should be(rule_flow)
+        expect(assigns(:router_flow)).to be(rule_flow)
       end
 
       it "re-renders the 'new' template" do
@@ -82,7 +82,7 @@ describe Router::FlowsController do
       it "assigns the requested flow as @flow" do
         expect(rule_flow).to receive(:update_attributes) { true }
         put :update, :id => "37"
-        assigns(:router_flow).should be(rule_flow)
+        expect(assigns(:router_flow)).to be(rule_flow)
       end
 
       it "redirects to the flow" do
@@ -99,7 +99,7 @@ describe Router::FlowsController do
 
       it "assigns the flow as @flow" do
         put :update, :id => "37"
-        assigns(:router_flow).should be(rule_flow)
+        expect(assigns(:router_flow)).to be(rule_flow)
       end
 
       it "re-renders the 'edit' template" do
@@ -115,7 +115,7 @@ describe Router::FlowsController do
     end
 
     it "destroys the requested flow" do
-      rule_flow.should_receive(:destroy)
+      expect(rule_flow).to receive(:destroy)
       delete :destroy, :id => "37"
     end
 

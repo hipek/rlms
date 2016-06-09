@@ -6,7 +6,7 @@ describe Torrent::ItemsController do
 
   before(:each) do
     login_as(:admin)
-    #add_permission groups(:administrator), "admin"
+
     allow(RTorrent::Client).to receive(:download_rate).and_return(100)
     allow(RTorrent::Client).to receive(:down_rate).and_return(100)
     allow(RTorrent::Client).to receive(:upload_rate).and_return(100)
@@ -38,9 +38,9 @@ describe Torrent::ItemsController do
   describe "responding to GET index" do
 
     it "should expose all torrents as @torrents" do
-      RTorrent::Client.should_receive(:items).and_return([mock_torrent])
+      expect(RTorrent::Client).to receive(:items).and_return([mock_torrent])
       get :index
-      assigns[:torrents].should == [mock_torrent]
+      expect(assigns[:torrents]).to eql [mock_torrent]
     end
 
   end
@@ -48,9 +48,9 @@ describe Torrent::ItemsController do
   describe "responding to GET show" do
 
     it "should expose the requested torrent as @torrent" do
-      RTorrent::Item.should_receive(:new).with("37").and_return(mock_torrent)
+      expect(RTorrent::Item).to receive(:new).with("37").and_return(mock_torrent)
       get :show, :id => "37"
-      assigns[:torrent].should equal(mock_torrent)
+      expect(assigns[:torrent]).to eq(mock_torrent)
     end
 
   end
@@ -58,9 +58,9 @@ describe Torrent::ItemsController do
   describe "responding to GET new" do
 
     it "should expose a new torrent as @torrent" do
-      RTorrent::Item.should_receive(:new).and_return(mock_torrent)
+      expect(RTorrent::Item).to receive(:new).and_return(mock_torrent)
       get :new
-      assigns[:torrent].should equal(mock_torrent)
+      expect(assigns[:torrent]).to eq(mock_torrent)
     end
 
   end
@@ -70,7 +70,7 @@ describe Torrent::ItemsController do
     describe "with valid params" do
 
       it "should redirect to the created torrent" do
-        RTorrent::Client.should_receive(:upload).with(['aaa']).and_return(true)
+        expect(RTorrent::Client).to receive(:upload).with(['aaa']).and_return(true)
         post :create, torrent:{:torrents => 'aaa'}
         expect(response).to redirect_to(new_torrent_item_url)
       end
@@ -100,14 +100,14 @@ describe Torrent::ItemsController do
     describe "with valid params" do
 
       it "should update the requested torrent" do
-        RTorrent::Client.should_receive(:items).and_return(@torrents = [mock_torrent(:id => 'aaaa')])
-        mock_torrent.should_receive(:send).with(:close)
+        expect(RTorrent::Client).to receive(:items).and_return(@torrents = [mock_torrent(:id => 'aaaa')])
+        expect(mock_torrent).to receive(:send).with(:close)
         put :update, :id => "0", :hashes => ['aaaa'], :commit => "Close"
-        assigns(:torrents).should == (@torrents)
+        expect(assigns(:torrents)).to eql(@torrents)
       end
 
       it "should redirect to the torrent" do
-        RTorrent::Client.should_receive(:items).and_return(@torrents = [mock_torrent(:id => 'aaaa')])
+        expect(RTorrent::Client).to receive(:items).and_return(@torrents = [mock_torrent(:id => 'aaaa')])
         put :update, :id => "0", :hashes => [], :commit => 'Stop'
         expect(response).to redirect_to(torrent_items_url)
       end
@@ -141,8 +141,8 @@ describe Torrent::ItemsController do
   describe "responding to DELETE destroy" do
 
     it "should destroy the requested torrent" do
-      RTorrent::Item.should_receive(:new).with("37").and_return(mock_torrent)
-      mock_torrent.should_receive(:destroy)
+      expect(RTorrent::Item).to receive(:new).with("37").and_return(mock_torrent)
+      expect(mock_torrent).to receive(:destroy)
       delete :destroy, :id => "37"
     end
 
