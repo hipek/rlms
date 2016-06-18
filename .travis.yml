@@ -1,0 +1,4 @@
+language: ruby
+rvm:
+  - 2.3.0
+before_script: cp config/database.yml.example config/database.yml
