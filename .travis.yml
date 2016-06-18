@@ -3,4 +3,5 @@ rvm:
   - 2.3.0
 before_script:
   - cp config/database.yml.example config/database.yml
+  - cp config/rtorrent.yml.example config/rtorrent.yml
   - bundle exec rake db:migrate
