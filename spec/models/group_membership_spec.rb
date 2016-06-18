@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'rails_helper'
 
 describe "GroupMembership" do
-  
+
   describe "validations" do
     before(:all) do
       @groups = []
@@ -19,62 +19,62 @@ describe "GroupMembership" do
       @groups[11] = Group.new(:name => "group11")
       @groups.each {|group| group.save!}
     end
-    
+
     before(:each) do
       @membership = GroupMembership.new(:roleable_id => @groups[0].id, :roleable_type => "Group", :group_id => @groups[1].id)
     end
-    
+
     it "should be valid" do
-      @membership.should be_valid
+      expect(@membership).to be_valid
     end
-    
+
     # roleable_id
     it "should have a roleable_id" do
       @membership.roleable_id = nil
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
     end
-    
+
     it "roleable_id should be an integer" do
       @membership.roleable_id = "asd"
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
     end
-    
+
     # roleable_type
     it "should have a roleable_type" do
       @membership.roleable_type = nil
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
     end
-    
+
     it "roleable_type should be a string" do
       @membership.roleable_type = 123
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
     end
-    
+
     it "roleable_type should have a class name format" do
       @membership.roleable_type = "asd"
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
       @membership.roleable_type = "User"
-      @membership.should be_valid
+      expect(@membership).to be_valid
       @membership.roleable_type = "Some95WierdClassN4m3"
-      @membership.should be_valid
+      expect(@membership).to be_valid
     end
-    
+
     # group_id
     it "should have a group_id" do
       @membership.group_id = nil
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
     end
-    
+
     it "group_id should be an integer" do
       @membership.group_id = "asd"
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
     end
-    
+
     it "should not allow a group to belong to itself" do
       @membership.group_id = @groups[0].id
-      @membership.should_not be_valid
+      expect(@membership).to_not be_valid
     end
-    
+
     # groups cannot belong to each other in a loop
     it "should not a allow a group to belong to a group which belongs to it in a loop" do
       @groups[0].groups << @groups[1]
@@ -89,10 +89,10 @@ describe "GroupMembership" do
       @groups[4].groups << @groups[10]
       @groups[5].groups << @groups[11]
       @membership3 = GroupMembership.new(:roleable_id => @groups[11].id, :roleable_type => "Group", :group_id => @groups[0].id)
-      @membership3.should_not be_valid
-      @membership3.errors.full_messages.should include("A group cannot belong to a group which belongs to it.")
+      expect(@membership3).to_not be_valid
+      expect(@membership3.errors.full_messages).to include("A group cannot belong to a group which belongs to it.")
     end
-    
+
     after(:all) do
       @groups.each {|group| group.destroy}
     end

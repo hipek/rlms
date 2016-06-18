@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'rails_helper'
 
 describe "Group" do
 
@@ -8,13 +8,13 @@ describe "Group" do
     end
 
     it "should be valid" do
-      @group.should be_valid
+      expect(@group).to be_valid
     end
 
     it "should have a unique name" do
       @group.save
       @group2 = Group.new(:name => "Hunters")
-      @group2.should_not be_valid
+      expect(@group2).to_not be_valid
     end
   end
 
@@ -22,16 +22,16 @@ describe "Group" do
     fixtures :groups, :group_memberships
 
     it "should get groups correctly" do
-      groups(:publishers).groups.size.should == 2
+      expect(groups(:publishers).groups.size).to eq 2
       arr = []
       arr << groups(:customers)
       arr << groups(:company)
-      groups(:publishers).groups.should == arr
+      expect(groups(:publishers).groups).to eq arr
 
-      groups(:admins).groups.size.should == 1
+      expect(groups(:admins).groups.size).to eq 1
       arr = []
       arr << groups(:company)
-      groups(:admins).groups.should == arr
+      expect(groups(:admins).groups).to eq arr
     end
   end
 end

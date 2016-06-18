@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'rails_helper'
 
 describe FwDnat do
   before(:each) do
@@ -6,14 +6,14 @@ describe FwDnat do
   end
 
   it "should be valid" do
-    @fw_dnat.should be_valid
+    expect(@fw_dnat).to be_valid
   end
 
   it "should have default values" do
     @fw_dnat.valid?
-    @fw_dnat.ip_table.should eql('NAT')
-    @fw_dnat.chain_name.should eql('PREROUTING')
-    @fw_dnat.target.should eql('DNAT')
-    @fw_dnat.dest_ip.should eql('0.0.0.0')
+    expect(@fw_dnat.ip_table).to eql('NAT')
+    expect(@fw_dnat.chain_name).to eql('PREROUTING')
+    expect(@fw_dnat.target).to eql('DNAT')
+    expect(@fw_dnat.dest_ip).to eql('0.0.0.0')
   end
 end
